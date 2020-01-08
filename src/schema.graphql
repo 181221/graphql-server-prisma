@@ -22,7 +22,7 @@ type AuthPayload {
 
 type User {
   id: ID!
-  name: String!
+  name: String
   email: String!
   movies: [Movie!]!
 }

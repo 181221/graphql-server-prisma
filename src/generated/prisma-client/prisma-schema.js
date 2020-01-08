@@ -269,7 +269,7 @@ type Subscription {
 
 type User {
   id: ID!
-  name: String!
+  name: String
   email: String!
   movies(where: MovieWhereInput, orderBy: MovieOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Movie!]
 }
@@ -282,7 +282,7 @@ type UserConnection {
 
 input UserCreateInput {
   id: ID
-  name: String!
+  name: String
   email: String!
   movies: MovieCreateManyWithoutRequestedByInput
 }
@@ -294,7 +294,7 @@ input UserCreateOneWithoutMoviesInput {
 
 input UserCreateWithoutMoviesInput {
   id: ID
-  name: String!
+  name: String
   email: String!
 }
 
@@ -314,7 +314,7 @@ enum UserOrderByInput {
 
 type UserPreviousValues {
   id: ID!
-  name: String!
+  name: String
   email: String!
 }
 

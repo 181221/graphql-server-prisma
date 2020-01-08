@@ -274,7 +274,7 @@ export interface UserCreateOneWithoutMoviesInput {
 
 export interface UserCreateWithoutMoviesInput {
   id?: Maybe<ID_Input>;
-  name: String;
+  name?: Maybe<String>;
   email: String;
 }
 
@@ -308,7 +308,7 @@ export interface MovieUpdateManyMutationInput {
 
 export interface UserCreateInput {
   id?: Maybe<ID_Input>;
-  name: String;
+  name?: Maybe<String>;
   email: String;
   movies?: Maybe<MovieCreateManyWithoutRequestedByInput>;
 }
@@ -483,7 +483,7 @@ export interface MovieNullablePromise
 
 export interface User {
   id: ID_Output;
-  name: String;
+  name?: String;
   email: String;
 }
 
@@ -757,7 +757,7 @@ export interface UserSubscriptionPayloadSubscription
 
 export interface UserPreviousValues {
   id: ID_Output;
-  name: String;
+  name?: String;
   email: String;
 }
 

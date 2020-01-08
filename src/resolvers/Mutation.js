@@ -11,9 +11,9 @@ const createMovie = async (parent, args, context, info) => {
 };
 
 async function createToken(parent, args, context, info) {
-  const user = await context.prisma.user({ email: args.email });
+  let user = await context.prisma.user({ email: args.email });
   if (!user) {
-    user = await context.prisma.createUser({ ...args });
+    user = await context.prisma.createUser({ email: args.email });
     const token = jwt.sign({ userId: user.id }, APP_SECRET, {
       expiresIn: "1h"
     });
