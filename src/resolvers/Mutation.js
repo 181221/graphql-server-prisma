@@ -4,9 +4,15 @@ const { ApolloError } = require("apollo-server-core");
 
 const createMovie = async (parent, args, context, info) => {
   const { userId } = authenticate(context);
+  console.log("genres", args.genres);
   return await context.prisma.createMovie({
     title: args.title,
-    requestedBy: { connect: { id: userId } }
+    requestedBy: { connect: { id: userId } },
+    genres: { set: args.genres },
+    img: args.img,
+    tmdb_id: args.tmdb_id,
+    vote_average: args.vote_average,
+    overview: args.overview
   });
 };
 

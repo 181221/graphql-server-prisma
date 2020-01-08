@@ -24,6 +24,11 @@ type Movie {
   createdAt: DateTime!
   title: String!
   requestedBy: User
+  img: String
+  tmdb_id: String
+  genres: [String!]!
+  vote_average: String
+  overview: String
 }
 
 type MovieConnection {
@@ -32,10 +37,19 @@ type MovieConnection {
   aggregate: AggregateMovie!
 }
 
+input MovieCreategenresInput {
+  set: [String!]
+}
+
 input MovieCreateInput {
   id: ID
   title: String!
   requestedBy: UserCreateOneWithoutMoviesInput
+  img: String
+  tmdb_id: String
+  genres: MovieCreategenresInput
+  vote_average: String
+  overview: String
 }
 
 input MovieCreateManyWithoutRequestedByInput {
@@ -46,6 +60,11 @@ input MovieCreateManyWithoutRequestedByInput {
 input MovieCreateWithoutRequestedByInput {
   id: ID
   title: String!
+  img: String
+  tmdb_id: String
+  genres: MovieCreategenresInput
+  vote_average: String
+  overview: String
 }
 
 type MovieEdge {
@@ -60,12 +79,25 @@ enum MovieOrderByInput {
   createdAt_DESC
   title_ASC
   title_DESC
+  img_ASC
+  img_DESC
+  tmdb_id_ASC
+  tmdb_id_DESC
+  vote_average_ASC
+  vote_average_DESC
+  overview_ASC
+  overview_DESC
 }
 
 type MoviePreviousValues {
   id: ID!
   createdAt: DateTime!
   title: String!
+  img: String
+  tmdb_id: String
+  genres: [String!]!
+  vote_average: String
+  overview: String
 }
 
 input MovieScalarWhereInput {
@@ -105,6 +137,62 @@ input MovieScalarWhereInput {
   title_not_starts_with: String
   title_ends_with: String
   title_not_ends_with: String
+  img: String
+  img_not: String
+  img_in: [String!]
+  img_not_in: [String!]
+  img_lt: String
+  img_lte: String
+  img_gt: String
+  img_gte: String
+  img_contains: String
+  img_not_contains: String
+  img_starts_with: String
+  img_not_starts_with: String
+  img_ends_with: String
+  img_not_ends_with: String
+  tmdb_id: String
+  tmdb_id_not: String
+  tmdb_id_in: [String!]
+  tmdb_id_not_in: [String!]
+  tmdb_id_lt: String
+  tmdb_id_lte: String
+  tmdb_id_gt: String
+  tmdb_id_gte: String
+  tmdb_id_contains: String
+  tmdb_id_not_contains: String
+  tmdb_id_starts_with: String
+  tmdb_id_not_starts_with: String
+  tmdb_id_ends_with: String
+  tmdb_id_not_ends_with: String
+  vote_average: String
+  vote_average_not: String
+  vote_average_in: [String!]
+  vote_average_not_in: [String!]
+  vote_average_lt: String
+  vote_average_lte: String
+  vote_average_gt: String
+  vote_average_gte: String
+  vote_average_contains: String
+  vote_average_not_contains: String
+  vote_average_starts_with: String
+  vote_average_not_starts_with: String
+  vote_average_ends_with: String
+  vote_average_not_ends_with: String
+  overview: String
+  overview_not: String
+  overview_in: [String!]
+  overview_not_in: [String!]
+  overview_lt: String
+  overview_lte: String
+  overview_gt: String
+  overview_gte: String
+  overview_contains: String
+  overview_not_contains: String
+  overview_starts_with: String
+  overview_not_starts_with: String
+  overview_ends_with: String
+  overview_not_ends_with: String
   AND: [MovieScalarWhereInput!]
   OR: [MovieScalarWhereInput!]
   NOT: [MovieScalarWhereInput!]
@@ -128,17 +216,36 @@ input MovieSubscriptionWhereInput {
   NOT: [MovieSubscriptionWhereInput!]
 }
 
+input MovieUpdategenresInput {
+  set: [String!]
+}
+
 input MovieUpdateInput {
   title: String
   requestedBy: UserUpdateOneWithoutMoviesInput
+  img: String
+  tmdb_id: String
+  genres: MovieUpdategenresInput
+  vote_average: String
+  overview: String
 }
 
 input MovieUpdateManyDataInput {
   title: String
+  img: String
+  tmdb_id: String
+  genres: MovieUpdategenresInput
+  vote_average: String
+  overview: String
 }
 
 input MovieUpdateManyMutationInput {
   title: String
+  img: String
+  tmdb_id: String
+  genres: MovieUpdategenresInput
+  vote_average: String
+  overview: String
 }
 
 input MovieUpdateManyWithoutRequestedByInput {
@@ -160,6 +267,11 @@ input MovieUpdateManyWithWhereNestedInput {
 
 input MovieUpdateWithoutRequestedByDataInput {
   title: String
+  img: String
+  tmdb_id: String
+  genres: MovieUpdategenresInput
+  vote_average: String
+  overview: String
 }
 
 input MovieUpdateWithWhereUniqueWithoutRequestedByInput {
@@ -211,6 +323,62 @@ input MovieWhereInput {
   title_ends_with: String
   title_not_ends_with: String
   requestedBy: UserWhereInput
+  img: String
+  img_not: String
+  img_in: [String!]
+  img_not_in: [String!]
+  img_lt: String
+  img_lte: String
+  img_gt: String
+  img_gte: String
+  img_contains: String
+  img_not_contains: String
+  img_starts_with: String
+  img_not_starts_with: String
+  img_ends_with: String
+  img_not_ends_with: String
+  tmdb_id: String
+  tmdb_id_not: String
+  tmdb_id_in: [String!]
+  tmdb_id_not_in: [String!]
+  tmdb_id_lt: String
+  tmdb_id_lte: String
+  tmdb_id_gt: String
+  tmdb_id_gte: String
+  tmdb_id_contains: String
+  tmdb_id_not_contains: String
+  tmdb_id_starts_with: String
+  tmdb_id_not_starts_with: String
+  tmdb_id_ends_with: String
+  tmdb_id_not_ends_with: String
+  vote_average: String
+  vote_average_not: String
+  vote_average_in: [String!]
+  vote_average_not_in: [String!]
+  vote_average_lt: String
+  vote_average_lte: String
+  vote_average_gt: String
+  vote_average_gte: String
+  vote_average_contains: String
+  vote_average_not_contains: String
+  vote_average_starts_with: String
+  vote_average_not_starts_with: String
+  vote_average_ends_with: String
+  vote_average_not_ends_with: String
+  overview: String
+  overview_not: String
+  overview_in: [String!]
+  overview_not_in: [String!]
+  overview_lt: String
+  overview_lte: String
+  overview_gt: String
+  overview_gte: String
+  overview_contains: String
+  overview_not_contains: String
+  overview_starts_with: String
+  overview_not_starts_with: String
+  overview_ends_with: String
+  overview_not_ends_with: String
   AND: [MovieWhereInput!]
   OR: [MovieWhereInput!]
   NOT: [MovieWhereInput!]

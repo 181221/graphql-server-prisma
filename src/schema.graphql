@@ -2,17 +2,28 @@ type Query {
   users: [User]
   movies: [Movie!]
 }
-
 type Movie {
   id: ID!
   title: String!
   requestedBy: User!
+  img: String
+  tmdb_id: String
+  genres: [String!]!
+  vote_average: String
+  overview: String
 }
 
 type Mutation {
   createToken(email: String!): AuthPayload
   getToken(email: String!): AuthPayload
-  createMovie(title: String!): Movie
+  createMovie(
+    title: String!
+    img: String
+    tmdb_id: String!
+    genres: [String]
+    vote_average: String
+    overview: String
+  ): Movie
 }
 
 type AuthPayload {
