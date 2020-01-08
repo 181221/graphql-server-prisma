@@ -1,0 +1,28 @@
+type Query {
+  users: [User]
+  movies: [Movie!]
+}
+
+type Movie {
+  id: ID!
+  title: String!
+  requestedBy: User!
+}
+
+type Mutation {
+  signup(email: String!, name: String!): AuthPayload
+  login(email: String!): AuthPayload
+  createMovie(title: String!): Movie
+}
+
+type AuthPayload {
+  token: String
+  user: User
+}
+
+type User {
+  id: ID!
+  name: String!
+  email: String!
+  movies: [Movie!]!
+}

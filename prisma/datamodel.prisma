@@ -1,0 +1,14 @@
+type Movie {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  title: String!
+  requestedBy: User @relation(link: INLINE)
+}
+
+type User { 
+  id: ID! @id
+  name: String!
+  email: String! @unique
+  movies: [Movie!]! 
+} 
+

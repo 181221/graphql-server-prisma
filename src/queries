@@ -1,0 +1,49 @@
+mutation{
+  post(
+    url: "www.prisma.io"
+    description:"tester123123123123"
+  ){
+    id
+    url
+    description
+  }
+}
+
+mutation {
+  signup(
+    name: "Alice"
+    email: "alice@prisma.io"
+    password: "graphql"
+  ) {
+    token
+    user {
+      id
+    }
+  }
+}
+
+mutation {
+  post(
+    url: "www.graphqlconf.org"
+    description: "An awesome GraphQL conference"
+  ) {
+    id
+  }
+}
+
+
+mutation {
+  login(
+    email: "alice@prisma.io"
+    password: "graphql"
+  ) {
+    token
+    user {
+      email
+      links {
+        url
+        description
+      }
+    }
+  }
+}

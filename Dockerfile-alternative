@@ -1,0 +1,20 @@
+ARG buildno
+#ARG gitcommithash
+
+FROM node:latest
+
+RUN echo "Build number: $buildno"
+#RUN echo "Based on commit: $gitcommithash"
+
+WORKDIR /usr/src/prisma
+
+COPY package*.json ./
+COPY .env* ./
+
+RUN npm install
+
+RUN npm install -g nodemon
+
+ENV PRISMA_MANAGEMENT_API_SECRET="my-secret"
+
+EXPOSE 4000
