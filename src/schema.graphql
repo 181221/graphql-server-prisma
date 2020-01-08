@@ -10,8 +10,8 @@ type Movie {
 }
 
 type Mutation {
-  signup(email: String!, name: String!): AuthPayload
-  login(email: String!): AuthPayload
+  createToken(email: String!): AuthPayload
+  getToken(email: String!): AuthPayload
   createMovie(title: String!): Movie
 }
 

@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
 const { APP_SECRET, authenticate } = require("../utils");
+const { ApolloError } = require("apollo-server-core");
 
 const createMovie = async (parent, args, context, info) => {
   const { userId } = authenticate(context);
@@ -9,21 +10,22 @@ const createMovie = async (parent, args, context, info) => {
   });
 };
 
-async function signup(parent, args, context, info) {
-  const user = await context.prisma.createUser({ ...args });
-
-  const token = jwt.sign({ userId: user.id }, APP_SECRET, { expiresIn: "1h" });
-
-  return {
-    token,
-    user
-  };
-}
-
-async function login(parent, args, context, info) {
+async function createToken(parent, args, context, info) {
   const user = await context.prisma.user({ email: args.email });
   if (!user) {
-    throw new Error("No such user found");
+    user = await context.prisma.createUser({ ...args });
+    const token = jwt.sign({ userId: user.id }, APP_SECRET, {
+      expiresIn: "1h"
+    });
+    return { user, token };
+  }
+  throw new ApolloError("user already exists", 404);
+}
+
+async function getToken(parent, args, context, info) {
+  const user = await context.prisma.user({ email: args.email });
+  if (!user) {
+    throw new ApolloError("No such user found", 404);
   }
   const token = jwt.sign({ userId: user.id, claims: "read-post" }, APP_SECRET, {
     expiresIn: "1h"
@@ -36,7 +38,7 @@ async function login(parent, args, context, info) {
 }
 
 module.exports = {
-  signup,
-  login,
+  getToken,
+  createToken,
   createMovie
 };
