@@ -140,6 +140,8 @@ export interface ClientConstructor<T> {
  * Types
  */
 
+export type Role = "ADMIN" | "CUSTOMER";
+
 export type MovieOrderByInput =
   | "id_ASC"
   | "id_DESC"
@@ -164,7 +166,9 @@ export type UserOrderByInput =
   | "name_ASC"
   | "name_DESC"
   | "email_ASC"
-  | "email_DESC";
+  | "email_DESC"
+  | "role_ASC"
+  | "role_DESC";
 
 export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
@@ -331,6 +335,10 @@ export interface UserWhereInput {
   movies_every?: Maybe<MovieWhereInput>;
   movies_some?: Maybe<MovieWhereInput>;
   movies_none?: Maybe<MovieWhereInput>;
+  role?: Maybe<Role>;
+  role_not?: Maybe<Role>;
+  role_in?: Maybe<Role[] | Role>;
+  role_not_in?: Maybe<Role[] | Role>;
   AND?: Maybe<UserWhereInput[] | UserWhereInput>;
   OR?: Maybe<UserWhereInput[] | UserWhereInput>;
   NOT?: Maybe<UserWhereInput[] | UserWhereInput>;
@@ -362,6 +370,7 @@ export interface UserCreateWithoutMoviesInput {
   id?: Maybe<ID_Input>;
   name?: Maybe<String>;
   email: String;
+  role?: Maybe<Role>;
 }
 
 export interface MovieCreategenresInput {
@@ -391,6 +400,7 @@ export interface UserUpdateOneWithoutMoviesInput {
 export interface UserUpdateWithoutMoviesDataInput {
   name?: Maybe<String>;
   email?: Maybe<String>;
+  role?: Maybe<Role>;
 }
 
 export interface UserUpsertWithoutMoviesInput {
@@ -417,6 +427,7 @@ export interface UserCreateInput {
   name?: Maybe<String>;
   email: String;
   movies?: Maybe<MovieCreateManyWithoutRequestedByInput>;
+  role?: Maybe<Role>;
 }
 
 export interface MovieCreateManyWithoutRequestedByInput {
@@ -441,6 +452,7 @@ export interface UserUpdateInput {
   name?: Maybe<String>;
   email?: Maybe<String>;
   movies?: Maybe<MovieUpdateManyWithoutRequestedByInput>;
+  role?: Maybe<Role>;
 }
 
 export interface MovieUpdateManyWithoutRequestedByInput {
@@ -616,6 +628,7 @@ export interface MovieUpdateManyDataInput {
 export interface UserUpdateManyMutationInput {
   name?: Maybe<String>;
   email?: Maybe<String>;
+  role?: Maybe<Role>;
 }
 
 export interface MovieSubscriptionWhereInput {
@@ -703,6 +716,7 @@ export interface User {
   id: ID_Output;
   name?: String;
   email: String;
+  role?: Role;
 }
 
 export interface UserPromise extends Promise<User>, Fragmentable {
@@ -718,6 +732,7 @@ export interface UserPromise extends Promise<User>, Fragmentable {
     first?: Int;
     last?: Int;
   }) => T;
+  role: () => Promise<Role>;
 }
 
 export interface UserSubscription
@@ -735,6 +750,7 @@ export interface UserSubscription
     first?: Int;
     last?: Int;
   }) => T;
+  role: () => Promise<AsyncIterator<Role>>;
 }
 
 export interface UserNullablePromise
@@ -752,6 +768,7 @@ export interface UserNullablePromise
     first?: Int;
     last?: Int;
   }) => T;
+  role: () => Promise<Role>;
 }
 
 export interface MovieConnection {
@@ -995,6 +1012,7 @@ export interface UserPreviousValues {
   id: ID_Output;
   name?: String;
   email: String;
+  role?: Role;
 }
 
 export interface UserPreviousValuesPromise
@@ -1003,6 +1021,7 @@ export interface UserPreviousValuesPromise
   id: () => Promise<ID_Output>;
   name: () => Promise<String>;
   email: () => Promise<String>;
+  role: () => Promise<Role>;
 }
 
 export interface UserPreviousValuesSubscription
@@ -1011,6 +1030,7 @@ export interface UserPreviousValuesSubscription
   id: () => Promise<AsyncIterator<ID_Output>>;
   name: () => Promise<AsyncIterator<String>>;
   email: () => Promise<AsyncIterator<String>>;
+  role: () => Promise<AsyncIterator<Role>>;
 }
 
 /*
@@ -1057,6 +1077,10 @@ export const models: Model[] = [
   },
   {
     name: "User",
+    embedded: false
+  },
+  {
+    name: "Role",
     embedded: false
   }
 ];

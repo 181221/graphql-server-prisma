@@ -16,5 +16,10 @@ type User {
   name: String
   email: String! @unique
   movies: [Movie!]! 
+  role: Role  @default(value: CUSTOMER)
 } 
 
+enum Role {
+  ADMIN
+  CUSTOMER
+}

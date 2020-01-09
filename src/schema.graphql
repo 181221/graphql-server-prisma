@@ -38,4 +38,10 @@ type User {
   name: String
   email: String!
   movies: [Movie!]!
+  role: Role
+}
+
+enum Role {
+  ADMIN
+  CUSTOMER
 }

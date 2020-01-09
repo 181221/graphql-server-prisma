@@ -468,6 +468,11 @@ type Query {
   node(id: ID!): Node
 }
 
+enum Role {
+  ADMIN
+  CUSTOMER
+}
+
 type Subscription {
   movie(where: MovieSubscriptionWhereInput): MovieSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
@@ -478,6 +483,7 @@ type User {
   name: String
   email: String!
   movies(where: MovieWhereInput, orderBy: MovieOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Movie!]
+  role: Role
 }
 
 type UserConnection {
@@ -491,6 +497,7 @@ input UserCreateInput {
   name: String
   email: String!
   movies: MovieCreateManyWithoutRequestedByInput
+  role: Role
 }
 
 input UserCreateOneWithoutMoviesInput {
@@ -502,6 +509,7 @@ input UserCreateWithoutMoviesInput {
   id: ID
   name: String
   email: String!
+  role: Role
 }
 
 type UserEdge {
@@ -516,12 +524,15 @@ enum UserOrderByInput {
   name_DESC
   email_ASC
   email_DESC
+  role_ASC
+  role_DESC
 }
 
 type UserPreviousValues {
   id: ID!
   name: String
   email: String!
+  role: Role
 }
 
 type UserSubscriptionPayload {
@@ -546,11 +557,13 @@ input UserUpdateInput {
   name: String
   email: String
   movies: MovieUpdateManyWithoutRequestedByInput
+  role: Role
 }
 
 input UserUpdateManyMutationInput {
   name: String
   email: String
+  role: Role
 }
 
 input UserUpdateOneWithoutMoviesInput {
@@ -565,6 +578,7 @@ input UserUpdateOneWithoutMoviesInput {
 input UserUpdateWithoutMoviesDataInput {
   name: String
   email: String
+  role: Role
 }
 
 input UserUpsertWithoutMoviesInput {
@@ -618,6 +632,10 @@ input UserWhereInput {
   movies_every: MovieWhereInput
   movies_some: MovieWhereInput
   movies_none: MovieWhereInput
+  role: Role
+  role_not: Role
+  role_in: [Role!]
+  role_not_in: [Role!]
   AND: [UserWhereInput!]
   OR: [UserWhereInput!]
   NOT: [UserWhereInput!]
