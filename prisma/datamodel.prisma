@@ -5,7 +5,8 @@ type Movie {
   requestedBy: User @relation(link: INLINE)
   img: String
   tmdb_id: String
-  genres: [String!]!
+  genres: [String]
+  release_date: String
   vote_average: String
   overview: String
 }

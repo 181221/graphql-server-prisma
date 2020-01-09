@@ -27,6 +27,7 @@ type Movie {
   img: String
   tmdb_id: String
   genres: [String!]!
+  release_date: String
   vote_average: String
   overview: String
 }
@@ -48,6 +49,7 @@ input MovieCreateInput {
   img: String
   tmdb_id: String
   genres: MovieCreategenresInput
+  release_date: String
   vote_average: String
   overview: String
 }
@@ -63,6 +65,7 @@ input MovieCreateWithoutRequestedByInput {
   img: String
   tmdb_id: String
   genres: MovieCreategenresInput
+  release_date: String
   vote_average: String
   overview: String
 }
@@ -83,6 +86,8 @@ enum MovieOrderByInput {
   img_DESC
   tmdb_id_ASC
   tmdb_id_DESC
+  release_date_ASC
+  release_date_DESC
   vote_average_ASC
   vote_average_DESC
   overview_ASC
@@ -96,6 +101,7 @@ type MoviePreviousValues {
   img: String
   tmdb_id: String
   genres: [String!]!
+  release_date: String
   vote_average: String
   overview: String
 }
@@ -165,6 +171,20 @@ input MovieScalarWhereInput {
   tmdb_id_not_starts_with: String
   tmdb_id_ends_with: String
   tmdb_id_not_ends_with: String
+  release_date: String
+  release_date_not: String
+  release_date_in: [String!]
+  release_date_not_in: [String!]
+  release_date_lt: String
+  release_date_lte: String
+  release_date_gt: String
+  release_date_gte: String
+  release_date_contains: String
+  release_date_not_contains: String
+  release_date_starts_with: String
+  release_date_not_starts_with: String
+  release_date_ends_with: String
+  release_date_not_ends_with: String
   vote_average: String
   vote_average_not: String
   vote_average_in: [String!]
@@ -226,6 +246,7 @@ input MovieUpdateInput {
   img: String
   tmdb_id: String
   genres: MovieUpdategenresInput
+  release_date: String
   vote_average: String
   overview: String
 }
@@ -235,6 +256,7 @@ input MovieUpdateManyDataInput {
   img: String
   tmdb_id: String
   genres: MovieUpdategenresInput
+  release_date: String
   vote_average: String
   overview: String
 }
@@ -244,6 +266,7 @@ input MovieUpdateManyMutationInput {
   img: String
   tmdb_id: String
   genres: MovieUpdategenresInput
+  release_date: String
   vote_average: String
   overview: String
 }
@@ -270,6 +293,7 @@ input MovieUpdateWithoutRequestedByDataInput {
   img: String
   tmdb_id: String
   genres: MovieUpdategenresInput
+  release_date: String
   vote_average: String
   overview: String
 }
@@ -351,6 +375,20 @@ input MovieWhereInput {
   tmdb_id_not_starts_with: String
   tmdb_id_ends_with: String
   tmdb_id_not_ends_with: String
+  release_date: String
+  release_date_not: String
+  release_date_in: [String!]
+  release_date_not_in: [String!]
+  release_date_lt: String
+  release_date_lte: String
+  release_date_gt: String
+  release_date_gte: String
+  release_date_contains: String
+  release_date_not_contains: String
+  release_date_starts_with: String
+  release_date_not_starts_with: String
+  release_date_ends_with: String
+  release_date_not_ends_with: String
   vote_average: String
   vote_average_not: String
   vote_average_in: [String!]
