@@ -18,7 +18,7 @@ async function users(parent, args, context, info) {
       title
     }
   }`;
-  const user = await context.prisma.users().$fragment(fragment);
+  const user = await context.prisma.users();
   return user;
 }
 
