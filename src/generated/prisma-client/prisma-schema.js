@@ -25,11 +25,12 @@ type Movie {
   title: String!
   requestedBy: User
   img: String
-  tmdb_id: String
+  tmdb_id: String!
   genres: [String!]!
   release_date: String
   vote_average: String
   overview: String
+  downloaded: Boolean
 }
 
 type MovieConnection {
@@ -47,11 +48,12 @@ input MovieCreateInput {
   title: String!
   requestedBy: UserCreateOneWithoutMoviesInput
   img: String
-  tmdb_id: String
+  tmdb_id: String!
   genres: MovieCreategenresInput
   release_date: String
   vote_average: String
   overview: String
+  downloaded: Boolean
 }
 
 input MovieCreateManyWithoutRequestedByInput {
@@ -63,11 +65,12 @@ input MovieCreateWithoutRequestedByInput {
   id: ID
   title: String!
   img: String
-  tmdb_id: String
+  tmdb_id: String!
   genres: MovieCreategenresInput
   release_date: String
   vote_average: String
   overview: String
+  downloaded: Boolean
 }
 
 type MovieEdge {
@@ -92,6 +95,8 @@ enum MovieOrderByInput {
   vote_average_DESC
   overview_ASC
   overview_DESC
+  downloaded_ASC
+  downloaded_DESC
 }
 
 type MoviePreviousValues {
@@ -99,11 +104,12 @@ type MoviePreviousValues {
   createdAt: DateTime!
   title: String!
   img: String
-  tmdb_id: String
+  tmdb_id: String!
   genres: [String!]!
   release_date: String
   vote_average: String
   overview: String
+  downloaded: Boolean
 }
 
 input MovieScalarWhereInput {
@@ -213,6 +219,8 @@ input MovieScalarWhereInput {
   overview_not_starts_with: String
   overview_ends_with: String
   overview_not_ends_with: String
+  downloaded: Boolean
+  downloaded_not: Boolean
   AND: [MovieScalarWhereInput!]
   OR: [MovieScalarWhereInput!]
   NOT: [MovieScalarWhereInput!]
@@ -249,6 +257,7 @@ input MovieUpdateInput {
   release_date: String
   vote_average: String
   overview: String
+  downloaded: Boolean
 }
 
 input MovieUpdateManyDataInput {
@@ -259,6 +268,7 @@ input MovieUpdateManyDataInput {
   release_date: String
   vote_average: String
   overview: String
+  downloaded: Boolean
 }
 
 input MovieUpdateManyMutationInput {
@@ -269,6 +279,7 @@ input MovieUpdateManyMutationInput {
   release_date: String
   vote_average: String
   overview: String
+  downloaded: Boolean
 }
 
 input MovieUpdateManyWithoutRequestedByInput {
@@ -296,6 +307,7 @@ input MovieUpdateWithoutRequestedByDataInput {
   release_date: String
   vote_average: String
   overview: String
+  downloaded: Boolean
 }
 
 input MovieUpdateWithWhereUniqueWithoutRequestedByInput {
@@ -417,6 +429,8 @@ input MovieWhereInput {
   overview_not_starts_with: String
   overview_ends_with: String
   overview_not_ends_with: String
+  downloaded: Boolean
+  downloaded_not: Boolean
   AND: [MovieWhereInput!]
   OR: [MovieWhereInput!]
   NOT: [MovieWhereInput!]
@@ -424,6 +438,7 @@ input MovieWhereInput {
 
 input MovieWhereUniqueInput {
   id: ID
+  tmdb_id: String
 }
 
 type Mutation {

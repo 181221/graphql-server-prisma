@@ -158,7 +158,9 @@ export type MovieOrderByInput =
   | "vote_average_ASC"
   | "vote_average_DESC"
   | "overview_ASC"
-  | "overview_DESC";
+  | "overview_DESC"
+  | "downloaded_ASC"
+  | "downloaded_DESC";
 
 export type UserOrderByInput =
   | "id_ASC"
@@ -174,6 +176,7 @@ export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
 export type MovieWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
+  tmdb_id?: Maybe<String>;
 }>;
 
 export interface MovieWhereInput {
@@ -284,6 +287,8 @@ export interface MovieWhereInput {
   overview_not_starts_with?: Maybe<String>;
   overview_ends_with?: Maybe<String>;
   overview_not_ends_with?: Maybe<String>;
+  downloaded?: Maybe<Boolean>;
+  downloaded_not?: Maybe<Boolean>;
   AND?: Maybe<MovieWhereInput[] | MovieWhereInput>;
   OR?: Maybe<MovieWhereInput[] | MovieWhereInput>;
   NOT?: Maybe<MovieWhereInput[] | MovieWhereInput>;
@@ -354,11 +359,12 @@ export interface MovieCreateInput {
   title: String;
   requestedBy?: Maybe<UserCreateOneWithoutMoviesInput>;
   img?: Maybe<String>;
-  tmdb_id?: Maybe<String>;
+  tmdb_id: String;
   genres?: Maybe<MovieCreategenresInput>;
   release_date?: Maybe<String>;
   vote_average?: Maybe<String>;
   overview?: Maybe<String>;
+  downloaded?: Maybe<Boolean>;
 }
 
 export interface UserCreateOneWithoutMoviesInput {
@@ -386,6 +392,7 @@ export interface MovieUpdateInput {
   release_date?: Maybe<String>;
   vote_average?: Maybe<String>;
   overview?: Maybe<String>;
+  downloaded?: Maybe<Boolean>;
 }
 
 export interface UserUpdateOneWithoutMoviesInput {
@@ -420,6 +427,7 @@ export interface MovieUpdateManyMutationInput {
   release_date?: Maybe<String>;
   vote_average?: Maybe<String>;
   overview?: Maybe<String>;
+  downloaded?: Maybe<Boolean>;
 }
 
 export interface UserCreateInput {
@@ -441,11 +449,12 @@ export interface MovieCreateWithoutRequestedByInput {
   id?: Maybe<ID_Input>;
   title: String;
   img?: Maybe<String>;
-  tmdb_id?: Maybe<String>;
+  tmdb_id: String;
   genres?: Maybe<MovieCreategenresInput>;
   release_date?: Maybe<String>;
   vote_average?: Maybe<String>;
   overview?: Maybe<String>;
+  downloaded?: Maybe<Boolean>;
 }
 
 export interface UserUpdateInput {
@@ -490,6 +499,7 @@ export interface MovieUpdateWithoutRequestedByDataInput {
   release_date?: Maybe<String>;
   vote_average?: Maybe<String>;
   overview?: Maybe<String>;
+  downloaded?: Maybe<Boolean>;
 }
 
 export interface MovieUpsertWithWhereUniqueWithoutRequestedByInput {
@@ -605,6 +615,8 @@ export interface MovieScalarWhereInput {
   overview_not_starts_with?: Maybe<String>;
   overview_ends_with?: Maybe<String>;
   overview_not_ends_with?: Maybe<String>;
+  downloaded?: Maybe<Boolean>;
+  downloaded_not?: Maybe<Boolean>;
   AND?: Maybe<MovieScalarWhereInput[] | MovieScalarWhereInput>;
   OR?: Maybe<MovieScalarWhereInput[] | MovieScalarWhereInput>;
   NOT?: Maybe<MovieScalarWhereInput[] | MovieScalarWhereInput>;
@@ -623,6 +635,7 @@ export interface MovieUpdateManyDataInput {
   release_date?: Maybe<String>;
   vote_average?: Maybe<String>;
   overview?: Maybe<String>;
+  downloaded?: Maybe<Boolean>;
 }
 
 export interface UserUpdateManyMutationInput {
@@ -662,11 +675,12 @@ export interface Movie {
   createdAt: DateTimeOutput;
   title: String;
   img?: String;
-  tmdb_id?: String;
+  tmdb_id: String;
   genres: String[];
   release_date?: String;
   vote_average?: String;
   overview?: String;
+  downloaded?: Boolean;
 }
 
 export interface MoviePromise extends Promise<Movie>, Fragmentable {
@@ -680,6 +694,7 @@ export interface MoviePromise extends Promise<Movie>, Fragmentable {
   release_date: () => Promise<String>;
   vote_average: () => Promise<String>;
   overview: () => Promise<String>;
+  downloaded: () => Promise<Boolean>;
 }
 
 export interface MovieSubscription
@@ -695,6 +710,7 @@ export interface MovieSubscription
   release_date: () => Promise<AsyncIterator<String>>;
   vote_average: () => Promise<AsyncIterator<String>>;
   overview: () => Promise<AsyncIterator<String>>;
+  downloaded: () => Promise<AsyncIterator<Boolean>>;
 }
 
 export interface MovieNullablePromise
@@ -710,6 +726,7 @@ export interface MovieNullablePromise
   release_date: () => Promise<String>;
   vote_average: () => Promise<String>;
   overview: () => Promise<String>;
+  downloaded: () => Promise<Boolean>;
 }
 
 export interface User {
@@ -948,11 +965,12 @@ export interface MoviePreviousValues {
   createdAt: DateTimeOutput;
   title: String;
   img?: String;
-  tmdb_id?: String;
+  tmdb_id: String;
   genres: String[];
   release_date?: String;
   vote_average?: String;
   overview?: String;
+  downloaded?: Boolean;
 }
 
 export interface MoviePreviousValuesPromise
@@ -967,6 +985,7 @@ export interface MoviePreviousValuesPromise
   release_date: () => Promise<String>;
   vote_average: () => Promise<String>;
   overview: () => Promise<String>;
+  downloaded: () => Promise<Boolean>;
 }
 
 export interface MoviePreviousValuesSubscription
@@ -981,6 +1000,7 @@ export interface MoviePreviousValuesSubscription
   release_date: () => Promise<AsyncIterator<String>>;
   vote_average: () => Promise<AsyncIterator<String>>;
   overview: () => Promise<AsyncIterator<String>>;
+  downloaded: () => Promise<AsyncIterator<Boolean>>;
 }
 
 export interface UserSubscriptionPayload {
@@ -1040,6 +1060,11 @@ export type ID_Input = string | number;
 export type ID_Output = string;
 
 /*
+The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
+*/
+export type String = string;
+
+/*
 DateTime scalar input type, allowing Date
 */
 export type DateTimeInput = Date | string;
@@ -1050,19 +1075,14 @@ DateTime scalar output type, which is always a string
 export type DateTimeOutput = string;
 
 /*
-The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
+The `Boolean` scalar type represents `true` or `false`.
 */
-export type String = string;
+export type Boolean = boolean;
 
 /*
 The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.
 */
 export type Int = number;
-
-/*
-The `Boolean` scalar type represents `true` or `false`.
-*/
-export type Boolean = boolean;
 
 export type Long = string;
 

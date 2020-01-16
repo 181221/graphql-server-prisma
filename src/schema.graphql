@@ -13,6 +13,7 @@ type Movie {
   createdAt: String!
   vote_average: String
   overview: String
+  downloaded: Boolean
 }
 
 type Mutation {
@@ -27,6 +28,8 @@ type Mutation {
     release_date: String
     overview: String
   ): Movie
+  updateMovie(tmdb_id: String!, downloaded: Boolean): Movie
+  deleteMovie(id: ID!): Movie
 }
 
 type AuthPayload {

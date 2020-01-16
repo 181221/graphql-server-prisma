@@ -4,11 +4,12 @@ type Movie {
   title: String!
   requestedBy: User @relation(link: INLINE)
   img: String
-  tmdb_id: String
+  tmdb_id: String! @unique
   genres: [String]
   release_date: String
   vote_average: String
   overview: String
+  downloaded: Boolean  @default(value: false)
 }
 
 type User { 

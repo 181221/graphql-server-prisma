@@ -19,6 +19,23 @@ const createMovie = async (parent, args, context, info) => {
   });
 };
 
+async function deleteMovie(parent, args, context, info) {
+  authenticate(context);
+  return await context.prisma.deleteMovie({ id: args.id });
+}
+
+async function updateMovie(parent, args, context, info) {
+  authenticate(context);
+  return await context.prisma.updateMovie({
+    data: {
+      downloaded: args.downloaded
+    },
+    where: {
+      tmdb_id: args.tmdb_id
+    }
+  });
+}
+
 async function createToken(parent, args, context, info) {
   let user = await context.prisma.user({ email: args.email });
   if (!user) {
@@ -49,5 +66,7 @@ async function getToken(parent, args, context, info) {
 module.exports = {
   getToken,
   createToken,
-  createMovie
+  createMovie,
+  deleteMovie,
+  updateMovie
 };
