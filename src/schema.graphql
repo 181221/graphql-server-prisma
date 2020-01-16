@@ -1,6 +1,6 @@
 type Query {
   users: [User]
-  movies: [Movie!]
+  movies(orderBy: MovieOrderByInput): [Movie!]
 }
 type Movie {
   id: ID!
@@ -44,4 +44,9 @@ type User {
 enum Role {
   ADMIN
   CUSTOMER
+}
+
+enum MovieOrderByInput {
+  createdAt_ASC
+  createdAt_DESC
 }
