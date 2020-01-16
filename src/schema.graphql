@@ -10,6 +10,7 @@ type Movie {
   tmdb_id: String
   genres: [String]
   release_date: String
+  createdAt: String!
   vote_average: String
   overview: String
 }

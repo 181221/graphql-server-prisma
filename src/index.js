@@ -4,7 +4,6 @@ const Query = require("./resolvers/Query");
 const Mutation = require("./resolvers/Mutation");
 const User = require("./resolvers/User");
 const Movie = require("./resolvers/Movie");
-
 const resolvers = { Query, Mutation, User, Movie };
 
 const server = new GraphQLServer({
