@@ -1,6 +1,6 @@
 type Query {
   users: [User]
-  movies(orderBy: MovieOrderByInput): [Movie!]
+  movies(orderBy: MovieOrderByInput, first: Int): [Movie!]
 }
 type Movie {
   id: ID!

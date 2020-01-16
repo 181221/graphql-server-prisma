@@ -2,7 +2,10 @@ const { authenticate } = require("../utils");
 
 async function movies(parent, args, context, info) {
   authenticate(context);
-  const movies = await context.prisma.movies({ orderBy: args.orderBy });
+  const movies = await context.prisma.movies({
+    orderBy: args.orderBy,
+    first: args.first
+  });
   return movies;
 }
 
