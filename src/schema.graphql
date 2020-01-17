@@ -2,6 +2,7 @@ type Query {
   users: [User]
   user(email: String!): User
   movies(orderBy: MovieOrderByInput, first: Int): [Movie!]
+  movie(id: ID): Movie
 }
 type Movie {
   id: ID!
@@ -54,4 +55,8 @@ enum Role {
 enum MovieOrderByInput {
   createdAt_ASC
   createdAt_DESC
+}
+
+type Subscription {
+  newMovie: Movie
 }

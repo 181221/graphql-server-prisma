@@ -1,5 +1,5 @@
-function requestedBy(parent, args, context) {
-  return context.prisma.movie({ id: parent.id }).users();
+async function requestedBy(parent, args, context) {
+  return await context.prisma.movie({ id: parent.id }).requestedBy();
 }
 
 module.exports = {
