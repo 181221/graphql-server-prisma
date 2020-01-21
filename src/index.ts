@@ -1,3 +1,6 @@
+import { Movie } from "./generated/prisma-client";
+
+export {};
 const { GraphQLServer } = require("graphql-yoga");
 const { prisma } = require("./generated/prisma-client");
 const Query = require("./resolvers/Query");
@@ -6,7 +9,8 @@ const User = require("./resolvers/User");
 const Movie = require("./resolvers/Movie");
 const Subscription = require("./resolvers/Subscription");
 const resolvers = { Query, Mutation, User, Movie, Subscription };
-const fetch = require("node-fetch");
+require("es6-promise").polyfill();
+const fetch = require("isomorphic-fetch");
 const mailer = require("./mailer");
 
 const dotenv = require("dotenv").config({
@@ -33,7 +37,6 @@ async function main() {
   const options = {
     port: 4000
   };
-
   server.start(options, ({ port }) =>
     console.log(`Server is running on http://localhost:${port}`)
   );
@@ -63,12 +66,15 @@ async function main() {
     while (!result.done) {
       let user = await prisma.user({ id: result.value.requestedById });
       if (user.notification) {
-        let movies = await prisma.movies({
+        let movies: [Movie] = await prisma.movies({
           where: { requestedById: result.value.requestedById }
         });
-        let mov = movies.filter(movie => movie.id === result.value.id);
-        if (mov && mov[0]) {
-          if (mov[0].downloaded) mailer.mailer(mov[0]);
+        movies.filter(movie => {
+          movie;
+        });
+        let mov: Movie = movies.find(movie => movie.id === result.value.id);
+        if (mov) {
+          if (mov.downloaded) mailer.mailer(mov);
         }
       }
       result = await movie.next();

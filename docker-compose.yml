@@ -49,7 +49,7 @@ services:
       - web
     ports:
       - 4000:4000
-    command: bash -c "yarn prisma deploy && nodemon src/index.js"
+    command: bash -c "yarn prisma deploy && yarn dev"
 networks:
   web:
     external: true
