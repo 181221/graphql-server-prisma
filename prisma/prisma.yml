@@ -10,4 +10,5 @@ generate:
     output: ../src/generated/prisma-client
 hooks:
   post-deploy:
-    - prisma generate
+    - graphql get-schema
+    - graphql codegen

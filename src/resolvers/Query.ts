@@ -1,5 +1,5 @@
 const { authenticate } = require("../utils");
-import { Context } from "./Context";
+import { Context } from "./types/Context";
 async function movies(parent, args, context, info) {
   authenticate(context);
   const movies = await context.prisma.movies({

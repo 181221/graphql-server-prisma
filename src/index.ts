@@ -54,6 +54,10 @@ async function main() {
       where: { id: id }
     });
   };
+  let test: Movie = await prisma
+    .user({ id: "5e26d8e8e03dd800075e55cf" })
+    .movies({ where: { id: "5e26dcaae03dd800075e55d2" } });
+  console.log(test);
 
   const movieUpdatePushRequest = async () => {
     let movie = await prisma.$subscribe

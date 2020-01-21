@@ -1,0 +1,8 @@
+language: typescript
+schema: ./src/schema.graphql
+context: ./src/resolvers/types/Context.ts:Context
+output: ./src/generated/prisma.ts
+models:
+  files:
+    - ./src/generated/prisma-client/index.ts
+    - ./src/resolvers/types/AuthPayload.ts
