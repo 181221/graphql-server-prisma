@@ -1,8 +1,9 @@
 const jwt = require("jsonwebtoken");
 const { APP_SECRET, authenticate } = require("../utils");
 const { ApolloError } = require("apollo-server-core");
+import { Context } from "./types/Context";
 
-const createMovie = async (parent, args, context, info) => {
+const createMovie = async (parent, args, context: Context, info) => {
   const { userId } = authenticate(context);
   let gen = Object.values(args.genres)[0]
     .split(",")
@@ -20,12 +21,12 @@ const createMovie = async (parent, args, context, info) => {
   });
 };
 
-async function deleteMovie(parent, args, context, info) {
+async function deleteMovie(parent, args, context: Context, info) {
   authenticate(context);
   return await context.prisma.deleteMovie({ id: args.id });
 }
 
-async function updateMovie(parent, args, context, info) {
+async function updateMovie(parent, args, context: Context, info) {
   authenticate(context);
   return await context.prisma.updateMovie({
     data: {
@@ -37,7 +38,7 @@ async function updateMovie(parent, args, context, info) {
   });
 }
 
-async function createToken(parent, args, context, info) {
+async function createToken(parent, args, context: Context, info) {
   let user = await context.prisma.user({ email: args.email });
   if (!user) {
     user = await context.prisma.createUser({ email: args.email });
