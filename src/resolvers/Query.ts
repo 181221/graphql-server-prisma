@@ -1,5 +1,5 @@
 const { authenticate } = require("../utils");
-
+import { Context } from "./Context";
 async function movies(parent, args, context, info) {
   authenticate(context);
   const movies = await context.prisma.movies({
@@ -9,9 +9,9 @@ async function movies(parent, args, context, info) {
   return movies;
 }
 
-async function user(parent, args, context, info) {
+async function user(parent, args, context: Context, info) {
   authenticate(context);
-  const user = await context.prisma.user({ email: args.email }, info);
+  const user = await context.prisma.user({ email: args.email });
   return user;
 }
 

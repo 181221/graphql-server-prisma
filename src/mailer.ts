@@ -1,8 +1,7 @@
-"use strict";
 const nodemailer = require("nodemailer");
 
 // async..await is not allowed in global scope, must use a wrapper
-async function mailer(movie) {
+async function Mailer(movie) {
   // Generate test SMTP service account from ethereal.email
   // Only needed if you don't have a real mail account for testing
   let testAccount = await nodemailer.createTestAccount();
@@ -26,7 +25,7 @@ async function mailer(movie) {
     html: `
         <div>
             <h2>${movie.title}</h2>
-            <img src="http://image.tmdb.org/t/p/original/wTYZjPq4YA2wC99MdHZTFQuxFpd.jpg">
+            <img src=${movie.img}>
         </div>
     ` // html body
   });
@@ -39,6 +38,4 @@ async function mailer(movie) {
   // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
 }
 
-module.exports = {
-  mailer
-};
+export default Mailer;

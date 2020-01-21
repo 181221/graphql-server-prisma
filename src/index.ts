@@ -1,8 +1,8 @@
-import { Movie } from "./generated/prisma-client";
-
 export {};
-const { GraphQLServer } = require("graphql-yoga");
-const { prisma } = require("./generated/prisma-client");
+import { GraphQLServer } from "graphql-yoga";
+import { Movie, User, prisma } from "./generated/prisma-client";
+import Mailer from "./mailer";
+const fetch = require("isomorphic-fetch");
 const Query = require("./resolvers/Query");
 const Mutation = require("./resolvers/Mutation");
 const User = require("./resolvers/User");
@@ -10,8 +10,6 @@ const Movie = require("./resolvers/Movie");
 const Subscription = require("./resolvers/Subscription");
 const resolvers = { Query, Mutation, User, Movie, Subscription };
 require("es6-promise").polyfill();
-const fetch = require("isomorphic-fetch");
-const mailer = require("./mailer");
 
 const dotenv = require("dotenv").config({
   path: ".env.development"
@@ -20,13 +18,11 @@ const dotenv = require("dotenv").config({
 if (dotenv.error) {
   throw dotenv.error;
 }
-
 console.log(dotenv.parsed);
 async function main() {
   const server = new GraphQLServer({
     typeDefs: "./src/schema.graphql",
     resolvers,
-    debug: true,
     context: request => {
       return {
         ...request,
@@ -34,8 +30,10 @@ async function main() {
       };
     }
   });
+
   const options = {
-    port: 4000
+    port: 4000,
+    debug: true
   };
   server.start(options, ({ port }) =>
     console.log(`Server is running on http://localhost:${port}`)
@@ -66,15 +64,12 @@ async function main() {
     while (!result.done) {
       let user = await prisma.user({ id: result.value.requestedById });
       if (user.notification) {
-        let movies: [Movie] = await prisma.movies({
+        let movies: Array<Movie> = await prisma.movies({
           where: { requestedById: result.value.requestedById }
-        });
-        movies.filter(movie => {
-          movie;
         });
         let mov: Movie = movies.find(movie => movie.id === result.value.id);
         if (mov) {
-          if (mov.downloaded) mailer.mailer(mov);
+          if (mov.downloaded) Mailer(mov);
         }
       }
       result = await movie.next();
