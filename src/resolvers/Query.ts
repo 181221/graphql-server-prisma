@@ -1,4 +1,5 @@
 const { authenticate } = require("../utils");
+
 import { Context } from "./types/Context";
 async function movies(parent, args, context, info) {
   authenticate(context);

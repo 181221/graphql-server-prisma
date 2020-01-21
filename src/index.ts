@@ -9,6 +9,7 @@ const User = require("./resolvers/User");
 const Movie = require("./resolvers/Movie");
 const Subscription = require("./resolvers/Subscription");
 const resolvers = { Query, Mutation, User, Movie, Subscription };
+
 require("es6-promise").polyfill();
 
 const dotenv = require("dotenv").config({
@@ -22,7 +23,7 @@ console.log(dotenv.parsed);
 async function main() {
   const server = new GraphQLServer({
     typeDefs: "./src/schema.graphql",
-    resolvers,
+    resolvers: resolvers,
     context: request => {
       return {
         ...request,
@@ -54,10 +55,6 @@ async function main() {
       where: { id: id }
     });
   };
-  let test: Movie = await prisma
-    .user({ id: "5e26d8e8e03dd800075e55cf" })
-    .movies({ where: { id: "5e26dcaae03dd800075e55d2" } });
-  console.log(test);
 
   const movieUpdatePushRequest = async () => {
     let movie = await prisma.$subscribe
@@ -66,14 +63,14 @@ async function main() {
 
     let result = await movie.next();
     while (!result.done) {
-      let user = await prisma.user({ id: result.value.requestedById });
+      let user: User = await prisma.user({ id: result.value.requestedById });
       if (user.notification) {
-        let movies: Array<Movie> = await prisma.movies({
-          where: { requestedById: result.value.requestedById }
-        });
-        let mov: Movie = movies.find(movie => movie.id === result.value.id);
-        if (mov) {
-          if (mov.downloaded) Mailer(mov);
+        let mov: Array<Movie> = await prisma
+          .user({ id: result.value.requestedById })
+          .movies({ where: { id: result.value.id } });
+
+        if (mov && mov[0]) {
+          if (mov[0].downloaded) Mailer(mov[0]);
         }
       }
       result = await movie.next();

@@ -9,7 +9,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "scaffold-resolvers": "graphql-resolver-codegen scaffold -s src/schema.graphql",
     "generate-resolvers": "graphql-resolver-codegen interfaces -s src/schema.graphql -o src/generated/resolvers.ts",
-    "generate": "graphql-codegen"
+    "generate": "graphqlgen"
   },
   "keywords": [],
   "author": "",
