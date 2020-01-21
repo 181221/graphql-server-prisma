@@ -45,6 +45,7 @@ type User {
   name: String
   email: String!
   movies: [Movie!]!
+  notification: Boolean
   role: Role
 }
 

@@ -536,6 +536,7 @@ type User {
   name: String
   email: String!
   movies(where: MovieWhereInput, orderBy: MovieOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Movie!]
+  notification: Boolean
   role: Role
 }
 
@@ -550,6 +551,7 @@ input UserCreateInput {
   name: String
   email: String!
   movies: MovieCreateManyWithoutRequestedByInput
+  notification: Boolean
   role: Role
 }
 
@@ -562,6 +564,7 @@ input UserCreateWithoutMoviesInput {
   id: ID
   name: String
   email: String!
+  notification: Boolean
   role: Role
 }
 
@@ -577,6 +580,8 @@ enum UserOrderByInput {
   name_DESC
   email_ASC
   email_DESC
+  notification_ASC
+  notification_DESC
   role_ASC
   role_DESC
 }
@@ -585,6 +590,7 @@ type UserPreviousValues {
   id: ID!
   name: String
   email: String!
+  notification: Boolean
   role: Role
 }
 
@@ -610,12 +616,14 @@ input UserUpdateInput {
   name: String
   email: String
   movies: MovieUpdateManyWithoutRequestedByInput
+  notification: Boolean
   role: Role
 }
 
 input UserUpdateManyMutationInput {
   name: String
   email: String
+  notification: Boolean
   role: Role
 }
 
@@ -631,6 +639,7 @@ input UserUpdateOneWithoutMoviesInput {
 input UserUpdateWithoutMoviesDataInput {
   name: String
   email: String
+  notification: Boolean
   role: Role
 }
 
@@ -685,6 +694,8 @@ input UserWhereInput {
   movies_every: MovieWhereInput
   movies_some: MovieWhereInput
   movies_none: MovieWhereInput
+  notification: Boolean
+  notification_not: Boolean
   role: Role
   role_not: Role
   role_in: [Role!]

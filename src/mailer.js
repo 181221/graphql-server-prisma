@@ -13,11 +13,10 @@ async function mailer(movie) {
     port: 587,
     secure: false, // true for 465, false for other ports
     auth: {
-      user: "", // generated ethereal user
-      pass: "" // generated ethereal password
+      user: process.env.EMAIL, // generated ethereal user
+      pass: process.env.EMAIL_PASSWORD // generated ethereal password
     }
   });
-  console.log("movie", movie);
   // send mail with defined transport object
   let info = await transporter.sendMail({
     from: '"Fred Foo 👻" <foo@example.com>', // sender address

@@ -18,6 +18,7 @@ type User {
   name: String
   email: String! @unique
   movies: [Movie!]! 
+  notification: Boolean  @default(value: false)
   role: Role  @default(value: CUSTOMER)
 } 
 

@@ -171,6 +171,8 @@ export type UserOrderByInput =
   | "name_DESC"
   | "email_ASC"
   | "email_DESC"
+  | "notification_ASC"
+  | "notification_DESC"
   | "role_ASC"
   | "role_DESC";
 
@@ -356,6 +358,8 @@ export interface UserWhereInput {
   movies_every?: Maybe<MovieWhereInput>;
   movies_some?: Maybe<MovieWhereInput>;
   movies_none?: Maybe<MovieWhereInput>;
+  notification?: Maybe<Boolean>;
+  notification_not?: Maybe<Boolean>;
   role?: Maybe<Role>;
   role_not?: Maybe<Role>;
   role_in?: Maybe<Role[] | Role>;
@@ -393,6 +397,7 @@ export interface UserCreateWithoutMoviesInput {
   id?: Maybe<ID_Input>;
   name?: Maybe<String>;
   email: String;
+  notification?: Maybe<Boolean>;
   role?: Maybe<Role>;
 }
 
@@ -425,6 +430,7 @@ export interface UserUpdateOneWithoutMoviesInput {
 export interface UserUpdateWithoutMoviesDataInput {
   name?: Maybe<String>;
   email?: Maybe<String>;
+  notification?: Maybe<Boolean>;
   role?: Maybe<Role>;
 }
 
@@ -454,6 +460,7 @@ export interface UserCreateInput {
   name?: Maybe<String>;
   email: String;
   movies?: Maybe<MovieCreateManyWithoutRequestedByInput>;
+  notification?: Maybe<Boolean>;
   role?: Maybe<Role>;
 }
 
@@ -481,6 +488,7 @@ export interface UserUpdateInput {
   name?: Maybe<String>;
   email?: Maybe<String>;
   movies?: Maybe<MovieUpdateManyWithoutRequestedByInput>;
+  notification?: Maybe<Boolean>;
   role?: Maybe<Role>;
 }
 
@@ -677,6 +685,7 @@ export interface MovieUpdateManyDataInput {
 export interface UserUpdateManyMutationInput {
   name?: Maybe<String>;
   email?: Maybe<String>;
+  notification?: Maybe<Boolean>;
   role?: Maybe<Role>;
 }
 
@@ -773,6 +782,7 @@ export interface User {
   id: ID_Output;
   name?: String;
   email: String;
+  notification?: Boolean;
   role?: Role;
 }
 
@@ -789,6 +799,7 @@ export interface UserPromise extends Promise<User>, Fragmentable {
     first?: Int;
     last?: Int;
   }) => T;
+  notification: () => Promise<Boolean>;
   role: () => Promise<Role>;
 }
 
@@ -807,6 +818,7 @@ export interface UserSubscription
     first?: Int;
     last?: Int;
   }) => T;
+  notification: () => Promise<AsyncIterator<Boolean>>;
   role: () => Promise<AsyncIterator<Role>>;
 }
 
@@ -825,6 +837,7 @@ export interface UserNullablePromise
     first?: Int;
     last?: Int;
   }) => T;
+  notification: () => Promise<Boolean>;
   role: () => Promise<Role>;
 }
 
@@ -1075,6 +1088,7 @@ export interface UserPreviousValues {
   id: ID_Output;
   name?: String;
   email: String;
+  notification?: Boolean;
   role?: Role;
 }
 
@@ -1084,6 +1098,7 @@ export interface UserPreviousValuesPromise
   id: () => Promise<ID_Output>;
   name: () => Promise<String>;
   email: () => Promise<String>;
+  notification: () => Promise<Boolean>;
   role: () => Promise<Role>;
 }
 
@@ -1093,6 +1108,7 @@ export interface UserPreviousValuesSubscription
   id: () => Promise<AsyncIterator<ID_Output>>;
   name: () => Promise<AsyncIterator<String>>;
   email: () => Promise<AsyncIterator<String>>;
+  notification: () => Promise<AsyncIterator<Boolean>>;
   role: () => Promise<AsyncIterator<Role>>;
 }
 

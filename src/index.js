@@ -61,18 +61,20 @@ async function main() {
 
     let result = await movie.next();
     while (!result.done) {
-      let movies = await prisma.movies({
-        where: { requestedById: result.value.requestedById }
-      });
-      let mov = movies.filter(movie => movie.id === result.value.id);
-      console.log(mov);
-      mailer.mailer(mov[0]);
+      let user = await prisma.user({ id: result.value.requestedById });
+      if (user.notification) {
+        let movies = await prisma.movies({
+          where: { requestedById: result.value.requestedById }
+        });
+        let mov = movies.filter(movie => movie.id === result.value.id);
+        if (mov && mov[0]) {
+          if (mov[0].downloaded) mailer.mailer(mov[0]);
+        }
+      }
       result = await movie.next();
     }
   };
   movieUpdatePushRequest();
-  //setInterval(intervalFunc, 5000);
-
   setInterval(() => {
     console.log("scanning for downloaded movies");
     fetch(url_collection)
