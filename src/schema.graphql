@@ -8,6 +8,7 @@ type Movie {
   id: ID!
   title: String!
   requestedBy: User!
+  requestedById: String
   img: String
   tmdb_id: String
   genres: [String]

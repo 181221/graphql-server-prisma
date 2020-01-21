@@ -149,6 +149,8 @@ export type MovieOrderByInput =
   | "createdAt_DESC"
   | "title_ASC"
   | "title_DESC"
+  | "requestedById_ASC"
+  | "requestedById_DESC"
   | "img_ASC"
   | "img_DESC"
   | "tmdb_id_ASC"
@@ -217,6 +219,20 @@ export interface MovieWhereInput {
   title_ends_with?: Maybe<String>;
   title_not_ends_with?: Maybe<String>;
   requestedBy?: Maybe<UserWhereInput>;
+  requestedById?: Maybe<String>;
+  requestedById_not?: Maybe<String>;
+  requestedById_in?: Maybe<String[] | String>;
+  requestedById_not_in?: Maybe<String[] | String>;
+  requestedById_lt?: Maybe<String>;
+  requestedById_lte?: Maybe<String>;
+  requestedById_gt?: Maybe<String>;
+  requestedById_gte?: Maybe<String>;
+  requestedById_contains?: Maybe<String>;
+  requestedById_not_contains?: Maybe<String>;
+  requestedById_starts_with?: Maybe<String>;
+  requestedById_not_starts_with?: Maybe<String>;
+  requestedById_ends_with?: Maybe<String>;
+  requestedById_not_ends_with?: Maybe<String>;
   img?: Maybe<String>;
   img_not?: Maybe<String>;
   img_in?: Maybe<String[] | String>;
@@ -358,6 +374,7 @@ export interface MovieCreateInput {
   id?: Maybe<ID_Input>;
   title: String;
   requestedBy?: Maybe<UserCreateOneWithoutMoviesInput>;
+  requestedById?: Maybe<String>;
   img?: Maybe<String>;
   tmdb_id: String;
   genres?: Maybe<MovieCreategenresInput>;
@@ -386,6 +403,7 @@ export interface MovieCreategenresInput {
 export interface MovieUpdateInput {
   title?: Maybe<String>;
   requestedBy?: Maybe<UserUpdateOneWithoutMoviesInput>;
+  requestedById?: Maybe<String>;
   img?: Maybe<String>;
   tmdb_id?: Maybe<String>;
   genres?: Maybe<MovieUpdategenresInput>;
@@ -421,6 +439,7 @@ export interface MovieUpdategenresInput {
 
 export interface MovieUpdateManyMutationInput {
   title?: Maybe<String>;
+  requestedById?: Maybe<String>;
   img?: Maybe<String>;
   tmdb_id?: Maybe<String>;
   genres?: Maybe<MovieUpdategenresInput>;
@@ -448,6 +467,7 @@ export interface MovieCreateManyWithoutRequestedByInput {
 export interface MovieCreateWithoutRequestedByInput {
   id?: Maybe<ID_Input>;
   title: String;
+  requestedById?: Maybe<String>;
   img?: Maybe<String>;
   tmdb_id: String;
   genres?: Maybe<MovieCreategenresInput>;
@@ -493,6 +513,7 @@ export interface MovieUpdateWithWhereUniqueWithoutRequestedByInput {
 
 export interface MovieUpdateWithoutRequestedByDataInput {
   title?: Maybe<String>;
+  requestedById?: Maybe<String>;
   img?: Maybe<String>;
   tmdb_id?: Maybe<String>;
   genres?: Maybe<MovieUpdategenresInput>;
@@ -545,6 +566,20 @@ export interface MovieScalarWhereInput {
   title_not_starts_with?: Maybe<String>;
   title_ends_with?: Maybe<String>;
   title_not_ends_with?: Maybe<String>;
+  requestedById?: Maybe<String>;
+  requestedById_not?: Maybe<String>;
+  requestedById_in?: Maybe<String[] | String>;
+  requestedById_not_in?: Maybe<String[] | String>;
+  requestedById_lt?: Maybe<String>;
+  requestedById_lte?: Maybe<String>;
+  requestedById_gt?: Maybe<String>;
+  requestedById_gte?: Maybe<String>;
+  requestedById_contains?: Maybe<String>;
+  requestedById_not_contains?: Maybe<String>;
+  requestedById_starts_with?: Maybe<String>;
+  requestedById_not_starts_with?: Maybe<String>;
+  requestedById_ends_with?: Maybe<String>;
+  requestedById_not_ends_with?: Maybe<String>;
   img?: Maybe<String>;
   img_not?: Maybe<String>;
   img_in?: Maybe<String[] | String>;
@@ -629,6 +664,7 @@ export interface MovieUpdateManyWithWhereNestedInput {
 
 export interface MovieUpdateManyDataInput {
   title?: Maybe<String>;
+  requestedById?: Maybe<String>;
   img?: Maybe<String>;
   tmdb_id?: Maybe<String>;
   genres?: Maybe<MovieUpdategenresInput>;
@@ -674,6 +710,7 @@ export interface Movie {
   id: ID_Output;
   createdAt: DateTimeOutput;
   title: String;
+  requestedById?: String;
   img?: String;
   tmdb_id: String;
   genres: String[];
@@ -688,6 +725,7 @@ export interface MoviePromise extends Promise<Movie>, Fragmentable {
   createdAt: () => Promise<DateTimeOutput>;
   title: () => Promise<String>;
   requestedBy: <T = UserPromise>() => T;
+  requestedById: () => Promise<String>;
   img: () => Promise<String>;
   tmdb_id: () => Promise<String>;
   genres: () => Promise<String[]>;
@@ -704,6 +742,7 @@ export interface MovieSubscription
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   title: () => Promise<AsyncIterator<String>>;
   requestedBy: <T = UserSubscription>() => T;
+  requestedById: () => Promise<AsyncIterator<String>>;
   img: () => Promise<AsyncIterator<String>>;
   tmdb_id: () => Promise<AsyncIterator<String>>;
   genres: () => Promise<AsyncIterator<String[]>>;
@@ -720,6 +759,7 @@ export interface MovieNullablePromise
   createdAt: () => Promise<DateTimeOutput>;
   title: () => Promise<String>;
   requestedBy: <T = UserPromise>() => T;
+  requestedById: () => Promise<String>;
   img: () => Promise<String>;
   tmdb_id: () => Promise<String>;
   genres: () => Promise<String[]>;
@@ -964,6 +1004,7 @@ export interface MoviePreviousValues {
   id: ID_Output;
   createdAt: DateTimeOutput;
   title: String;
+  requestedById?: String;
   img?: String;
   tmdb_id: String;
   genres: String[];
@@ -979,6 +1020,7 @@ export interface MoviePreviousValuesPromise
   id: () => Promise<ID_Output>;
   createdAt: () => Promise<DateTimeOutput>;
   title: () => Promise<String>;
+  requestedById: () => Promise<String>;
   img: () => Promise<String>;
   tmdb_id: () => Promise<String>;
   genres: () => Promise<String[]>;
@@ -994,6 +1036,7 @@ export interface MoviePreviousValuesSubscription
   id: () => Promise<AsyncIterator<ID_Output>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   title: () => Promise<AsyncIterator<String>>;
+  requestedById: () => Promise<AsyncIterator<String>>;
   img: () => Promise<AsyncIterator<String>>;
   tmdb_id: () => Promise<AsyncIterator<String>>;
   genres: () => Promise<AsyncIterator<String[]>>;

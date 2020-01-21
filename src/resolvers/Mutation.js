@@ -10,6 +10,7 @@ const createMovie = async (parent, args, context, info) => {
   return await context.prisma.createMovie({
     title: args.title,
     requestedBy: { connect: { id: userId } },
+    requestedById: userId,
     genres: { set: gen },
     img: args.img,
     tmdb_id: args.tmdb_id,

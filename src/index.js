@@ -7,6 +7,7 @@ const Movie = require("./resolvers/Movie");
 const Subscription = require("./resolvers/Subscription");
 const resolvers = { Query, Mutation, User, Movie, Subscription };
 const fetch = require("node-fetch");
+const mailer = require("./mailer");
 
 const dotenv = require("dotenv").config({
   path: ".env.development"
@@ -53,7 +54,26 @@ async function main() {
     });
   };
 
-  setTimeout(() => {
+  const movieUpdatePushRequest = async () => {
+    let movie = await prisma.$subscribe
+      .movie({ mutation_in: ["UPDATED"] })
+      .node();
+
+    let result = await movie.next();
+    while (!result.done) {
+      let movies = await prisma.movies({
+        where: { requestedById: result.value.requestedById }
+      });
+      let mov = movies.filter(movie => movie.id === result.value.id);
+      console.log(mov);
+      mailer.mailer(mov[0]);
+      result = await movie.next();
+    }
+  };
+  movieUpdatePushRequest();
+  //setInterval(intervalFunc, 5000);
+
+  setInterval(() => {
     console.log("scanning for downloaded movies");
     fetch(url_collection)
       .then(res => res.json())
@@ -66,6 +86,6 @@ async function main() {
         });
       })
       .catch(err => console.error(err));
-  }, 300000);
+  }, 600000);
 }
 main().catch(e => console.error(e));

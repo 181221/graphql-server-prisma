@@ -24,6 +24,7 @@ type Movie {
   createdAt: DateTime!
   title: String!
   requestedBy: User
+  requestedById: String
   img: String
   tmdb_id: String!
   genres: [String!]!
@@ -47,6 +48,7 @@ input MovieCreateInput {
   id: ID
   title: String!
   requestedBy: UserCreateOneWithoutMoviesInput
+  requestedById: String
   img: String
   tmdb_id: String!
   genres: MovieCreategenresInput
@@ -64,6 +66,7 @@ input MovieCreateManyWithoutRequestedByInput {
 input MovieCreateWithoutRequestedByInput {
   id: ID
   title: String!
+  requestedById: String
   img: String
   tmdb_id: String!
   genres: MovieCreategenresInput
@@ -85,6 +88,8 @@ enum MovieOrderByInput {
   createdAt_DESC
   title_ASC
   title_DESC
+  requestedById_ASC
+  requestedById_DESC
   img_ASC
   img_DESC
   tmdb_id_ASC
@@ -103,6 +108,7 @@ type MoviePreviousValues {
   id: ID!
   createdAt: DateTime!
   title: String!
+  requestedById: String
   img: String
   tmdb_id: String!
   genres: [String!]!
@@ -149,6 +155,20 @@ input MovieScalarWhereInput {
   title_not_starts_with: String
   title_ends_with: String
   title_not_ends_with: String
+  requestedById: String
+  requestedById_not: String
+  requestedById_in: [String!]
+  requestedById_not_in: [String!]
+  requestedById_lt: String
+  requestedById_lte: String
+  requestedById_gt: String
+  requestedById_gte: String
+  requestedById_contains: String
+  requestedById_not_contains: String
+  requestedById_starts_with: String
+  requestedById_not_starts_with: String
+  requestedById_ends_with: String
+  requestedById_not_ends_with: String
   img: String
   img_not: String
   img_in: [String!]
@@ -251,6 +271,7 @@ input MovieUpdategenresInput {
 input MovieUpdateInput {
   title: String
   requestedBy: UserUpdateOneWithoutMoviesInput
+  requestedById: String
   img: String
   tmdb_id: String
   genres: MovieUpdategenresInput
@@ -262,6 +283,7 @@ input MovieUpdateInput {
 
 input MovieUpdateManyDataInput {
   title: String
+  requestedById: String
   img: String
   tmdb_id: String
   genres: MovieUpdategenresInput
@@ -273,6 +295,7 @@ input MovieUpdateManyDataInput {
 
 input MovieUpdateManyMutationInput {
   title: String
+  requestedById: String
   img: String
   tmdb_id: String
   genres: MovieUpdategenresInput
@@ -301,6 +324,7 @@ input MovieUpdateManyWithWhereNestedInput {
 
 input MovieUpdateWithoutRequestedByDataInput {
   title: String
+  requestedById: String
   img: String
   tmdb_id: String
   genres: MovieUpdategenresInput
@@ -359,6 +383,20 @@ input MovieWhereInput {
   title_ends_with: String
   title_not_ends_with: String
   requestedBy: UserWhereInput
+  requestedById: String
+  requestedById_not: String
+  requestedById_in: [String!]
+  requestedById_not_in: [String!]
+  requestedById_lt: String
+  requestedById_lte: String
+  requestedById_gt: String
+  requestedById_gte: String
+  requestedById_contains: String
+  requestedById_not_contains: String
+  requestedById_starts_with: String
+  requestedById_not_starts_with: String
+  requestedById_ends_with: String
+  requestedById_not_ends_with: String
   img: String
   img_not: String
   img_in: [String!]

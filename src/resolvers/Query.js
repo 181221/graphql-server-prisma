@@ -11,13 +11,13 @@ async function movies(parent, args, context, info) {
 
 async function user(parent, args, context, info) {
   authenticate(context);
-  const user = await context.prisma.user({ email: args.email });
+  const user = await context.prisma.user({ email: args.email }, info);
   return user;
 }
 
 async function users(parent, args, context, info) {
   authenticate(context);
-  const user = await context.prisma.users();
+  const user = await context.prisma.users(null, info);
   return user;
 }
 

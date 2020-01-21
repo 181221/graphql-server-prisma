@@ -3,6 +3,7 @@ type Movie {
   createdAt: DateTime! @createdAt
   title: String!
   requestedBy: User @relation(link: INLINE)
+  requestedById : String 
   img: String
   tmdb_id: String! @unique
   genres: [String]
