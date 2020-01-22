@@ -5,12 +5,6 @@
 ## Install
 
 ```sh
-$ yarn
-```
-
-Then you can start the development server with.
-
-```sh
 $ docker-compose up -d
 ```
 
@@ -41,9 +35,24 @@ also set PRISMA_MANAGEMENT_API_SECRET in Dockerfile-alternative to something oth
 | EMAIL          |        email        |
 | EMAIL_PASSWORD |      password       |
 
-for nodemailer to send notifications.
+Email and password is for nodemailer to send notifications.
 
-### endpoints for server
+2. prisma configurations at prisma/prisma.yml
 
-playground at http://localost:4000
-admin endpoint at http://localhost:4466/_admin
+## Structure
+
+server starts at src/index.ts.
+setInterval function is scanning for movies in radarr to see if they are finished. If they are a user gets a notification via mail iff they have notification set to true.
+
+```sh
+const movieUpdatePushRequest = async ()
+```
+
+is a method that subscribes to a movie update. When server sees that a movie has been downloaded, it will update the movie and movieUpdatePushRequest will run and send push request to the user via mail.
+
+For push request you should set up a mail service
+
+### Endpoints for server
+
+1. Playground at http://localost:4000
+2. Admin endpoint at http://localhost:4466/_admin
