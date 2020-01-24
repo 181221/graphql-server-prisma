@@ -536,6 +536,7 @@ type User {
   email: String!
   movies(where: MovieWhereInput, orderBy: MovieOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Movie!]
   notification: Boolean
+  subscription: String
   role: Role
 }
 
@@ -551,6 +552,7 @@ input UserCreateInput {
   email: String!
   movies: MovieCreateManyWithoutRequestedByInput
   notification: Boolean
+  subscription: String
   role: Role
 }
 
@@ -564,6 +566,7 @@ input UserCreateWithoutMoviesInput {
   name: String
   email: String!
   notification: Boolean
+  subscription: String
   role: Role
 }
 
@@ -581,6 +584,8 @@ enum UserOrderByInput {
   email_DESC
   notification_ASC
   notification_DESC
+  subscription_ASC
+  subscription_DESC
   role_ASC
   role_DESC
 }
@@ -590,6 +595,7 @@ type UserPreviousValues {
   name: String
   email: String!
   notification: Boolean
+  subscription: String
   role: Role
 }
 
@@ -616,6 +622,7 @@ input UserUpdateInput {
   email: String
   movies: MovieUpdateManyWithoutRequestedByInput
   notification: Boolean
+  subscription: String
   role: Role
 }
 
@@ -623,6 +630,7 @@ input UserUpdateManyMutationInput {
   name: String
   email: String
   notification: Boolean
+  subscription: String
   role: Role
 }
 
@@ -639,6 +647,7 @@ input UserUpdateWithoutMoviesDataInput {
   name: String
   email: String
   notification: Boolean
+  subscription: String
   role: Role
 }
 
@@ -695,6 +704,20 @@ input UserWhereInput {
   movies_none: MovieWhereInput
   notification: Boolean
   notification_not: Boolean
+  subscription: String
+  subscription_not: String
+  subscription_in: [String!]
+  subscription_not_in: [String!]
+  subscription_lt: String
+  subscription_lte: String
+  subscription_gt: String
+  subscription_gte: String
+  subscription_contains: String
+  subscription_not_contains: String
+  subscription_starts_with: String
+  subscription_not_starts_with: String
+  subscription_ends_with: String
+  subscription_not_ends_with: String
   role: Role
   role_not: Role
   role_in: [Role!]
@@ -707,5 +730,6 @@ input UserWhereInput {
 input UserWhereUniqueInput {
   id: ID
   email: String
+  subscription: String
 }
 `

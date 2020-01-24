@@ -258,6 +258,23 @@ export namespace UserResolvers {
         ) => boolean | null | Promise<boolean | null>;
       };
 
+  export type SubscriptionResolver =
+    | ((
+        parent: User,
+        args: {},
+        ctx: Context,
+        info: GraphQLResolveInfo
+      ) => string | null | Promise<string | null>)
+    | {
+        fragment: string;
+        resolve: (
+          parent: User,
+          args: {},
+          ctx: Context,
+          info: GraphQLResolveInfo
+        ) => string | null | Promise<string | null>;
+      };
+
   export type RoleResolver =
     | ((
         parent: User,
@@ -359,6 +376,23 @@ export namespace UserResolvers {
             ctx: Context,
             info: GraphQLResolveInfo
           ) => boolean | null | Promise<boolean | null>;
+        };
+
+    subscription:
+      | ((
+          parent: User,
+          args: {},
+          ctx: Context,
+          info: GraphQLResolveInfo
+        ) => string | null | Promise<string | null>)
+      | {
+          fragment: string;
+          resolve: (
+            parent: User,
+            args: {},
+            ctx: Context,
+            info: GraphQLResolveInfo
+          ) => string | null | Promise<string | null>;
         };
 
     role:
@@ -825,6 +859,11 @@ export namespace MutationResolvers {
     email: string;
   }
 
+  export interface ArgsUpdateUser {
+    email: string;
+    subscription: string;
+  }
+
   export interface ArgsCreateMovie {
     title: string;
     img?: string | null;
@@ -876,6 +915,23 @@ export namespace MutationResolvers {
           ctx: Context,
           info: GraphQLResolveInfo
         ) => AuthPayload | null | Promise<AuthPayload | null>;
+      };
+
+  export type UpdateUserResolver =
+    | ((
+        parent: undefined,
+        args: ArgsUpdateUser,
+        ctx: Context,
+        info: GraphQLResolveInfo
+      ) => User | null | Promise<User | null>)
+    | {
+        fragment: string;
+        resolve: (
+          parent: undefined,
+          args: ArgsUpdateUser,
+          ctx: Context,
+          info: GraphQLResolveInfo
+        ) => User | null | Promise<User | null>;
       };
 
   export type CreateMovieResolver =
@@ -962,6 +1018,23 @@ export namespace MutationResolvers {
             ctx: Context,
             info: GraphQLResolveInfo
           ) => AuthPayload | null | Promise<AuthPayload | null>;
+        };
+
+    updateUser:
+      | ((
+          parent: undefined,
+          args: ArgsUpdateUser,
+          ctx: Context,
+          info: GraphQLResolveInfo
+        ) => User | null | Promise<User | null>)
+      | {
+          fragment: string;
+          resolve: (
+            parent: undefined,
+            args: ArgsUpdateUser,
+            ctx: Context,
+            info: GraphQLResolveInfo
+          ) => User | null | Promise<User | null>;
         };
 
     createMovie:

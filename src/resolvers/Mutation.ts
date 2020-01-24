@@ -26,6 +26,15 @@ async function deleteMovie(parent, args, context: Context, info) {
   return await context.prisma.deleteMovie({ id: args.id });
 }
 
+async function updateUser(parant, args, context: Context, info) {
+  const { userId } = authenticate(context);
+  console.log(userId);
+  return await context.prisma.updateUser({
+    data: { subscription: args.subscription },
+    where: { email: args.email }
+  });
+}
+
 async function updateMovie(parent, args, context: Context, info) {
   authenticate(context);
   return await context.prisma.updateMovie({
@@ -70,5 +79,6 @@ module.exports = {
   createToken,
   createMovie,
   deleteMovie,
-  updateMovie
+  updateMovie,
+  updateUser
 };

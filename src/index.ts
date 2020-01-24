@@ -2,6 +2,8 @@ export {};
 import { GraphQLServer } from "graphql-yoga";
 import { Movie, User, prisma } from "./generated/prisma-client";
 import Mailer from "./mailer";
+import sendPushRequest from "./notification";
+
 const fetch = require("isomorphic-fetch");
 const Query = require("./resolvers/Query");
 const Mutation = require("./resolvers/Mutation");
@@ -70,7 +72,13 @@ async function main() {
           .movies({ where: { id: result.value.id } });
 
         if (mov && mov[0]) {
-          if (mov[0].downloaded) Mailer(mov[0]);
+          if (mov[0].downloaded) {
+            //Mailer(mov[0]);
+            let sub = JSON.parse(user.subscription);
+            console.log(sub);
+            const payload = JSON.stringify({ title: "Push Test" });
+            sendPushRequest(sub, payload);
+          }
         }
       }
       result = await movie.next();
