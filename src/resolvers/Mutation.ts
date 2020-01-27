@@ -28,9 +28,21 @@ async function deleteMovie(parent, args, context: Context, info) {
 
 async function updateUser(parant, args, context: Context, info) {
   const { userId } = authenticate(context);
-  console.log(userId);
+  const user = context.prisma.user({ id: userId });
+  console.log("user", user), console.log("not", args.notification);
+  console.log(typeof args.notification);
+  let not =
+    typeof args.notification === "undefined"
+      ? user.notification
+      : args.notification;
+  let data = {
+    subscription: args.subscription || user.subscription,
+    notification: not,
+    role: args.role || user.role,
+    name: args.name || user.name
+  };
   return await context.prisma.updateUser({
-    data: { subscription: args.subscription },
+    data: data,
     where: { email: args.email }
   });
 }

@@ -22,7 +22,13 @@ type Movie {
 type Mutation {
   createToken(email: String!): AuthPayload
   getToken(email: String!): AuthPayload
-  updateUser(email: String!, subscription: String!): User
+  updateUser(
+    email: String!
+    subscription: String
+    name: String
+    notification: Boolean
+    role: Role
+  ): User
   createMovie(
     title: String!
     img: String
