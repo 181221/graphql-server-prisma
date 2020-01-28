@@ -15,6 +15,17 @@ async function user(parent, args, context: Context, info) {
   const user = await context.prisma.user({ email: args.email });
   return user;
 }
+async function configuration(parent, args, context: Context, info) {
+  authenticate(context);
+  const users = await context.prisma.users({ where: { role: "ADMIN" } });
+  if (users && users.length !== 0) {
+    let config = await context.prisma.user({ id: users[0].id }).configuration();
+    if (config) {
+      return config;
+    }
+    throw new Error("no config");
+  }
+}
 
 async function users(parent, args, context, info) {
   authenticate(context);
@@ -25,5 +36,6 @@ async function users(parent, args, context, info) {
 module.exports = {
   users,
   movies,
+  configuration,
   user
 };

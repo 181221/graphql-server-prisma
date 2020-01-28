@@ -24,6 +24,10 @@ export namespace QueryResolvers {
     id?: string | null;
   }
 
+  export interface ArgsConfiguration {
+    id?: string | null;
+  }
+
   export type UsersResolver =
     | ((
         parent: undefined,
@@ -90,6 +94,23 @@ export namespace QueryResolvers {
           ctx: Context,
           info: GraphQLResolveInfo
         ) => Movie | null | Promise<Movie | null>;
+      };
+
+  export type ConfigurationResolver =
+    | ((
+        parent: undefined,
+        args: ArgsConfiguration,
+        ctx: Context,
+        info: GraphQLResolveInfo
+      ) => Configuration | null | Promise<Configuration | null>)
+    | {
+        fragment: string;
+        resolve: (
+          parent: undefined,
+          args: ArgsConfiguration,
+          ctx: Context,
+          info: GraphQLResolveInfo
+        ) => Configuration | null | Promise<Configuration | null>;
       };
 
   export interface Type {
@@ -159,6 +180,23 @@ export namespace QueryResolvers {
             ctx: Context,
             info: GraphQLResolveInfo
           ) => Movie | null | Promise<Movie | null>;
+        };
+
+    configuration:
+      | ((
+          parent: undefined,
+          args: ArgsConfiguration,
+          ctx: Context,
+          info: GraphQLResolveInfo
+        ) => Configuration | null | Promise<Configuration | null>)
+      | {
+          fragment: string;
+          resolve: (
+            parent: undefined,
+            args: ArgsConfiguration,
+            ctx: Context,
+            info: GraphQLResolveInfo
+          ) => Configuration | null | Promise<Configuration | null>;
         };
   }
 }

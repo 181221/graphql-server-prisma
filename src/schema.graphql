@@ -3,6 +3,7 @@ type Query {
   user(email: String!): User
   movies(orderBy: MovieOrderByInput, first: Int): [Movie!]
   movie(id: ID): Movie
+  configuration(id: ID): Configuration
 }
 
 type Movie {
