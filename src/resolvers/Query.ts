@@ -1,4 +1,5 @@
 const { authenticate } = require("../utils");
+const { ApolloError } = require("apollo-server-core");
 
 import { Context } from "./types/Context";
 async function movies(parent, args, context, info) {
@@ -16,16 +17,26 @@ async function user(parent, args, context: Context, info) {
   return user;
 }
 async function configuration(parent, args, context: Context, info) {
-  authenticate(context);
-  const users = await context.prisma.users({ where: { role: "ADMIN" } });
+  let users = await context.prisma.users({ where: { role: "ADMIN" } });
   if (users && users.length !== 0) {
     let config = await context.prisma.user({ id: users[0].id }).configuration();
-    if (config) {
-      return config;
-    }
-    throw new Error("no config");
+    if (config) return config;
+    return config;
   }
+  return null;
 }
+/*
+async function configuration(parent, args, context: Context, info) {
+  let { userId, claims } = authenticate(context);
+  if (claims === "admin") {
+    let config = await context.prisma.user({ id: userId }).configuration();
+    if (!config) {
+      throw new Error("no config");
+    }
+    return config;
+  }
+  throw new ApolloError("Unauthorized", 401);
+}*/
 
 async function users(parent, args, context, info) {
   authenticate(context);

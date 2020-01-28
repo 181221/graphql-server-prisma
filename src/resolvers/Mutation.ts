@@ -125,14 +125,19 @@ async function createToken(parent, args, context: Context, info) {
   throw new ApolloError("user already exists", 404);
 }
 
-async function getToken(parent, args, context, info) {
+async function getToken(parent, args, context: Context, info) {
   const user = await context.prisma.user({ email: args.email });
   if (!user) {
     throw new ApolloError("No such user found", 404);
   }
-  const token = jwt.sign({ userId: user.id, claims: "read-post" }, APP_SECRET, {
-    expiresIn: "1h"
-  });
+  let token;
+  if (user.role === "ADMIN") {
+    token = jwt.sign({ userId: user.id, claims: "admin" }, APP_SECRET);
+  } else {
+    token = jwt.sign({ userId: user.id, claims: "read-post" }, APP_SECRET, {
+      expiresIn: "1h"
+    });
+  }
 
   return {
     token,
