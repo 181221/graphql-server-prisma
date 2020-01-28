@@ -28,14 +28,9 @@ also set PRISMA_MANAGEMENT_API_SECRET in Dockerfile-alternative to something oth
 
 1. touch a .env.development and a .env.production in root dir
 
-| Key                  |        Value         |
-| -------------------- | :------------------: |
-| APP_SECRET           |     very secret      |
-| RADARR_API_KEY       | your radarr api_key  |
-| EMAIL                |        email         |
-| EMAIL_PASSWORD       |       password       |
-| WEB_PUSH_PRIVATE_KEY | private web-push-key |
-| WEB_PUSH_PUBLIC_KEY  | public web-push-key  |
+| Key        |    Value    |
+| ---------- | :---------: |
+| APP_SECRET | very secret |
 
 Email and password is for nodemailer to send notifications.
 
