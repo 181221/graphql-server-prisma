@@ -56,6 +56,54 @@ async function updateMovie(parent, args, context: Context, info) {
     }
   });
 }
+async function createConfiguration(parent, args, context: Context, info) {
+  const { userId } = authenticate(context);
+  let user = await context.prisma.user({ id: userId });
+  if (user.role !== "ADMIN") {
+    throw new ApolloError("Unauthorized", 401);
+  }
+  return await context.prisma.createConfiguration({
+    radarrApiKey: args.radarrApiKey,
+    radarrEndpoint: args.radarrEndpoint,
+    radarrRootFolder: args.radarrRootFolder,
+    pushoverApiKey: args.pushoverApiKey || "",
+    pushoverUserKey: args.pushoverUserKey || "",
+    user: { connect: { id: userId } }
+  });
+}
+async function updateConfiguration(parent, args, context: Context, info) {
+  const { userId } = authenticate(context);
+  let user = await context.prisma.user({ id: userId });
+  if (user.role !== "ADMIN") {
+    throw new ApolloError("Unauthorized", 401);
+  }
+  let config = await context.prisma.user({ id: userId }).configuration();
+  if (!config) {
+    if (!args.radarrApiKey && !args.radarrRootFolder && !args.radarrEndpoint) {
+      throw new ApolloError("provide radarr key, endpoint and root", 500);
+    }
+    return await context.prisma.createConfiguration({
+      radarrApiKey: args.radarrApiKey,
+      radarrEndpoint: args.radarrEndpoint,
+      radarrRootFolder: args.radarrRootFolder,
+      pushoverApiKey: args.pushoverApiKey || "",
+      pushoverUserKey: args.pushoverUserKey || "",
+      user: { connect: { id: userId } }
+    });
+  }
+  return await context.prisma.updateConfiguration({
+    data: {
+      pushoverApiKey: args.pushoverApiKey || config.pushoverApiKey,
+      pushoverUserKey: args.pushoverUserKey || config.pushoverUserKey,
+      radarrApiKey: args.radarrApiKey || config.radarrApiKey,
+      radarrEndpoint: args.radarrEndpoint || config.radarrEndpoint,
+      radarrRootFolder: args.radarrRootFolder || config.radarrRootFolder
+    },
+    where: {
+      id: config.id
+    }
+  });
+}
 
 async function createToken(parent, args, context: Context, info) {
   let user = await context.prisma.user({ email: args.email });
@@ -98,5 +146,7 @@ module.exports = {
   createMovie,
   deleteMovie,
   updateMovie,
+  createConfiguration,
+  updateConfiguration,
   updateUser
 };

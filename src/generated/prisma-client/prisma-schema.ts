@@ -2,7 +2,11 @@
   // Please don't change this file manually but run `prisma generate` to update it.
   // For more information, please read the docs: https://www.prisma.io/docs/prisma-client/
 
-export const typeDefs = /* GraphQL */ `type AggregateMovie {
+export const typeDefs = /* GraphQL */ `type AggregateConfiguration {
+  count: Int!
+}
+
+type AggregateMovie {
   count: Int!
 }
 
@@ -12,6 +16,227 @@ type AggregateUser {
 
 type BatchPayload {
   count: Long!
+}
+
+type Configuration {
+  id: ID!
+  radarrApiKey: String!
+  radarrEndpoint: String!
+  radarrRootFolder: String!
+  pushoverApiKey: String
+  pushoverUserKey: String
+  user: User
+}
+
+type ConfigurationConnection {
+  pageInfo: PageInfo!
+  edges: [ConfigurationEdge]!
+  aggregate: AggregateConfiguration!
+}
+
+input ConfigurationCreateInput {
+  id: ID
+  radarrApiKey: String!
+  radarrEndpoint: String!
+  radarrRootFolder: String!
+  pushoverApiKey: String
+  pushoverUserKey: String
+  user: UserCreateOneWithoutConfigurationInput
+}
+
+input ConfigurationCreateOneWithoutUserInput {
+  create: ConfigurationCreateWithoutUserInput
+  connect: ConfigurationWhereUniqueInput
+}
+
+input ConfigurationCreateWithoutUserInput {
+  id: ID
+  radarrApiKey: String!
+  radarrEndpoint: String!
+  radarrRootFolder: String!
+  pushoverApiKey: String
+  pushoverUserKey: String
+}
+
+type ConfigurationEdge {
+  node: Configuration!
+  cursor: String!
+}
+
+enum ConfigurationOrderByInput {
+  id_ASC
+  id_DESC
+  radarrApiKey_ASC
+  radarrApiKey_DESC
+  radarrEndpoint_ASC
+  radarrEndpoint_DESC
+  radarrRootFolder_ASC
+  radarrRootFolder_DESC
+  pushoverApiKey_ASC
+  pushoverApiKey_DESC
+  pushoverUserKey_ASC
+  pushoverUserKey_DESC
+}
+
+type ConfigurationPreviousValues {
+  id: ID!
+  radarrApiKey: String!
+  radarrEndpoint: String!
+  radarrRootFolder: String!
+  pushoverApiKey: String
+  pushoverUserKey: String
+}
+
+type ConfigurationSubscriptionPayload {
+  mutation: MutationType!
+  node: Configuration
+  updatedFields: [String!]
+  previousValues: ConfigurationPreviousValues
+}
+
+input ConfigurationSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: ConfigurationWhereInput
+  AND: [ConfigurationSubscriptionWhereInput!]
+  OR: [ConfigurationSubscriptionWhereInput!]
+  NOT: [ConfigurationSubscriptionWhereInput!]
+}
+
+input ConfigurationUpdateInput {
+  radarrApiKey: String
+  radarrEndpoint: String
+  radarrRootFolder: String
+  pushoverApiKey: String
+  pushoverUserKey: String
+  user: UserUpdateOneWithoutConfigurationInput
+}
+
+input ConfigurationUpdateManyMutationInput {
+  radarrApiKey: String
+  radarrEndpoint: String
+  radarrRootFolder: String
+  pushoverApiKey: String
+  pushoverUserKey: String
+}
+
+input ConfigurationUpdateOneWithoutUserInput {
+  create: ConfigurationCreateWithoutUserInput
+  update: ConfigurationUpdateWithoutUserDataInput
+  upsert: ConfigurationUpsertWithoutUserInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: ConfigurationWhereUniqueInput
+}
+
+input ConfigurationUpdateWithoutUserDataInput {
+  radarrApiKey: String
+  radarrEndpoint: String
+  radarrRootFolder: String
+  pushoverApiKey: String
+  pushoverUserKey: String
+}
+
+input ConfigurationUpsertWithoutUserInput {
+  update: ConfigurationUpdateWithoutUserDataInput!
+  create: ConfigurationCreateWithoutUserInput!
+}
+
+input ConfigurationWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  radarrApiKey: String
+  radarrApiKey_not: String
+  radarrApiKey_in: [String!]
+  radarrApiKey_not_in: [String!]
+  radarrApiKey_lt: String
+  radarrApiKey_lte: String
+  radarrApiKey_gt: String
+  radarrApiKey_gte: String
+  radarrApiKey_contains: String
+  radarrApiKey_not_contains: String
+  radarrApiKey_starts_with: String
+  radarrApiKey_not_starts_with: String
+  radarrApiKey_ends_with: String
+  radarrApiKey_not_ends_with: String
+  radarrEndpoint: String
+  radarrEndpoint_not: String
+  radarrEndpoint_in: [String!]
+  radarrEndpoint_not_in: [String!]
+  radarrEndpoint_lt: String
+  radarrEndpoint_lte: String
+  radarrEndpoint_gt: String
+  radarrEndpoint_gte: String
+  radarrEndpoint_contains: String
+  radarrEndpoint_not_contains: String
+  radarrEndpoint_starts_with: String
+  radarrEndpoint_not_starts_with: String
+  radarrEndpoint_ends_with: String
+  radarrEndpoint_not_ends_with: String
+  radarrRootFolder: String
+  radarrRootFolder_not: String
+  radarrRootFolder_in: [String!]
+  radarrRootFolder_not_in: [String!]
+  radarrRootFolder_lt: String
+  radarrRootFolder_lte: String
+  radarrRootFolder_gt: String
+  radarrRootFolder_gte: String
+  radarrRootFolder_contains: String
+  radarrRootFolder_not_contains: String
+  radarrRootFolder_starts_with: String
+  radarrRootFolder_not_starts_with: String
+  radarrRootFolder_ends_with: String
+  radarrRootFolder_not_ends_with: String
+  pushoverApiKey: String
+  pushoverApiKey_not: String
+  pushoverApiKey_in: [String!]
+  pushoverApiKey_not_in: [String!]
+  pushoverApiKey_lt: String
+  pushoverApiKey_lte: String
+  pushoverApiKey_gt: String
+  pushoverApiKey_gte: String
+  pushoverApiKey_contains: String
+  pushoverApiKey_not_contains: String
+  pushoverApiKey_starts_with: String
+  pushoverApiKey_not_starts_with: String
+  pushoverApiKey_ends_with: String
+  pushoverApiKey_not_ends_with: String
+  pushoverUserKey: String
+  pushoverUserKey_not: String
+  pushoverUserKey_in: [String!]
+  pushoverUserKey_not_in: [String!]
+  pushoverUserKey_lt: String
+  pushoverUserKey_lte: String
+  pushoverUserKey_gt: String
+  pushoverUserKey_gte: String
+  pushoverUserKey_contains: String
+  pushoverUserKey_not_contains: String
+  pushoverUserKey_starts_with: String
+  pushoverUserKey_not_starts_with: String
+  pushoverUserKey_ends_with: String
+  pushoverUserKey_not_ends_with: String
+  user: UserWhereInput
+  AND: [ConfigurationWhereInput!]
+  OR: [ConfigurationWhereInput!]
+  NOT: [ConfigurationWhereInput!]
+}
+
+input ConfigurationWhereUniqueInput {
+  id: ID
 }
 
 scalar DateTime
@@ -479,6 +704,12 @@ input MovieWhereUniqueInput {
 }
 
 type Mutation {
+  createConfiguration(data: ConfigurationCreateInput!): Configuration!
+  updateConfiguration(data: ConfigurationUpdateInput!, where: ConfigurationWhereUniqueInput!): Configuration
+  updateManyConfigurations(data: ConfigurationUpdateManyMutationInput!, where: ConfigurationWhereInput): BatchPayload!
+  upsertConfiguration(where: ConfigurationWhereUniqueInput!, create: ConfigurationCreateInput!, update: ConfigurationUpdateInput!): Configuration!
+  deleteConfiguration(where: ConfigurationWhereUniqueInput!): Configuration
+  deleteManyConfigurations(where: ConfigurationWhereInput): BatchPayload!
   createMovie(data: MovieCreateInput!): Movie!
   updateMovie(data: MovieUpdateInput!, where: MovieWhereUniqueInput!): Movie
   updateManyMovies(data: MovieUpdateManyMutationInput!, where: MovieWhereInput): BatchPayload!
@@ -511,6 +742,9 @@ type PageInfo {
 }
 
 type Query {
+  configuration(where: ConfigurationWhereUniqueInput!): Configuration
+  configurations(where: ConfigurationWhereInput, orderBy: ConfigurationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Configuration]!
+  configurationsConnection(where: ConfigurationWhereInput, orderBy: ConfigurationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ConfigurationConnection!
   movie(where: MovieWhereUniqueInput!): Movie
   movies(where: MovieWhereInput, orderBy: MovieOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Movie]!
   moviesConnection(where: MovieWhereInput, orderBy: MovieOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): MovieConnection!
@@ -526,6 +760,7 @@ enum Role {
 }
 
 type Subscription {
+  configuration(where: ConfigurationSubscriptionWhereInput): ConfigurationSubscriptionPayload
   movie(where: MovieSubscriptionWhereInput): MovieSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
 }
@@ -538,6 +773,7 @@ type User {
   notification: Boolean
   subscription: String
   role: Role
+  configuration: Configuration
 }
 
 type UserConnection {
@@ -554,11 +790,27 @@ input UserCreateInput {
   notification: Boolean
   subscription: String
   role: Role
+  configuration: ConfigurationCreateOneWithoutUserInput
+}
+
+input UserCreateOneWithoutConfigurationInput {
+  create: UserCreateWithoutConfigurationInput
+  connect: UserWhereUniqueInput
 }
 
 input UserCreateOneWithoutMoviesInput {
   create: UserCreateWithoutMoviesInput
   connect: UserWhereUniqueInput
+}
+
+input UserCreateWithoutConfigurationInput {
+  id: ID
+  name: String
+  email: String!
+  movies: MovieCreateManyWithoutRequestedByInput
+  notification: Boolean
+  subscription: String
+  role: Role
 }
 
 input UserCreateWithoutMoviesInput {
@@ -568,6 +820,7 @@ input UserCreateWithoutMoviesInput {
   notification: Boolean
   subscription: String
   role: Role
+  configuration: ConfigurationCreateOneWithoutUserInput
 }
 
 type UserEdge {
@@ -624,6 +877,7 @@ input UserUpdateInput {
   notification: Boolean
   subscription: String
   role: Role
+  configuration: ConfigurationUpdateOneWithoutUserInput
 }
 
 input UserUpdateManyMutationInput {
@@ -632,6 +886,15 @@ input UserUpdateManyMutationInput {
   notification: Boolean
   subscription: String
   role: Role
+}
+
+input UserUpdateOneWithoutConfigurationInput {
+  create: UserCreateWithoutConfigurationInput
+  update: UserUpdateWithoutConfigurationDataInput
+  upsert: UserUpsertWithoutConfigurationInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: UserWhereUniqueInput
 }
 
 input UserUpdateOneWithoutMoviesInput {
@@ -643,12 +906,27 @@ input UserUpdateOneWithoutMoviesInput {
   connect: UserWhereUniqueInput
 }
 
+input UserUpdateWithoutConfigurationDataInput {
+  name: String
+  email: String
+  movies: MovieUpdateManyWithoutRequestedByInput
+  notification: Boolean
+  subscription: String
+  role: Role
+}
+
 input UserUpdateWithoutMoviesDataInput {
   name: String
   email: String
   notification: Boolean
   subscription: String
   role: Role
+  configuration: ConfigurationUpdateOneWithoutUserInput
+}
+
+input UserUpsertWithoutConfigurationInput {
+  update: UserUpdateWithoutConfigurationDataInput!
+  create: UserCreateWithoutConfigurationInput!
 }
 
 input UserUpsertWithoutMoviesInput {
@@ -722,6 +1000,7 @@ input UserWhereInput {
   role_not: Role
   role_in: [Role!]
   role_not_in: [Role!]
+  configuration: ConfigurationWhereInput
   AND: [UserWhereInput!]
   OR: [UserWhereInput!]
   NOT: [UserWhereInput!]

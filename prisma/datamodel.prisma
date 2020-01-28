@@ -13,6 +13,16 @@ type Movie {
   downloaded: Boolean  @default(value: false)
 }
 
+type Configuration {
+  id: ID! @id
+  radarrApiKey: String!
+  radarrEndpoint: String!
+  radarrRootFolder: String!
+  pushoverApiKey: String
+  pushoverUserKey: String
+  user: User
+}
+
 type User { 
   id: ID! @id
   name: String
@@ -21,6 +31,7 @@ type User {
   notification: Boolean  @default(value: false)
   subscription: String @unique
   role: Role  @default(value: CUSTOMER)
+  configuration: Configuration @relation(link:INLINE)
 } 
 
 enum Role {

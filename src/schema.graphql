@@ -4,6 +4,7 @@ type Query {
   movies(orderBy: MovieOrderByInput, first: Int): [Movie!]
   movie(id: ID): Movie
 }
+
 type Movie {
   id: ID!
   title: String!
@@ -19,29 +20,15 @@ type Movie {
   downloaded: Boolean
 }
 
-type Mutation {
-  createToken(email: String!): AuthPayload
-  getToken(email: String!): AuthPayload
-  updateUser(
-    email: String!
-    subscription: String
-    name: String
-    notification: Boolean
-    role: Role
-  ): User
-  createMovie(
-    title: String!
-    img: String
-    tmdb_id: String!
-    genres: [String]
-    vote_average: String
-    release_date: String
-    overview: String
-  ): Movie
-  updateMovie(tmdb_id: String!, downloaded: Boolean): Movie
-  deleteMovie(id: ID!): Movie
+type Configuration {
+  id: ID!
+  radarrApiKey: String!
+  radarrEndpoint: String!
+  radarrRootFolder: String!
+  pushoverApiKey: String
+  pushoverUserKey: String
+  user: User
 }
-
 type AuthPayload {
   token: String
   user: User
@@ -55,11 +42,55 @@ type User {
   notification: Boolean
   subscription: String
   role: Role
+  configuration: Configuration
 }
 
 enum Role {
   ADMIN
   CUSTOMER
+}
+
+type Mutation {
+  createConfiguration(
+    radarrApiKey: String!
+    radarrEndpoint: String!
+    radarrRootFolder: String!
+    pushoverApiKey: String
+    pushoverUserKey: String
+  ): Configuration
+
+  updateConfiguration(
+    radarrApiKey: String
+    radarrEndpoint: String
+    radarrRootFolder: String
+    pushoverApiKey: String
+    pushoverUserKey: String
+  ): Configuration
+  createToken(email: String!): AuthPayload
+
+  getToken(email: String!): AuthPayload
+
+  updateUser(
+    email: String!
+    subscription: String
+    name: String
+    notification: Boolean
+    role: Role
+  ): User
+
+  createMovie(
+    title: String!
+    img: String
+    tmdb_id: String!
+    genres: [String]
+    vote_average: String
+    release_date: String
+    overview: String
+  ): Movie
+
+  updateMovie(tmdb_id: String!, downloaded: Boolean): Movie
+
+  deleteMovie(id: ID!): Movie
 }
 
 enum MovieOrderByInput {
