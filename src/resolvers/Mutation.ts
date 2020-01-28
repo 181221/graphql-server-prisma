@@ -60,7 +60,15 @@ async function updateMovie(parent, args, context: Context, info) {
 async function createToken(parent, args, context: Context, info) {
   let user = await context.prisma.user({ email: args.email });
   if (!user) {
-    user = await context.prisma.createUser({ email: args.email });
+    let users = await context.prisma.users();
+    if (users.length === 0) {
+      user = await context.prisma.createUser({
+        email: args.email,
+        role: "ADMIN"
+      });
+    } else {
+      user = await context.prisma.createUser({ email: args.email });
+    }
     const token = jwt.sign({ userId: user.id }, APP_SECRET, {
       expiresIn: "1h"
     });
