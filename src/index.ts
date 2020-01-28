@@ -1,6 +1,6 @@
 export {};
 import { GraphQLServer } from "graphql-yoga";
-import { Movie, User, prisma } from "./generated/prisma-client";
+import { Movie, User, prisma, Configuration } from "./generated/prisma-client";
 import Mailer from "./mailer";
 import sendPushRequest from "./notification";
 
@@ -42,9 +42,6 @@ async function main() {
     console.log(`Server is running on http://localhost:${port}`)
   );
 
-  const radarr_url = "http://172.20.0.5:7878/api";
-  const url_collection = `${radarr_url}/movie?apikey=${process.env.RADARR_API_KEY}`;
-
   const getMovie = async tmdb_id => {
     return await prisma.movie({
       tmdb_id: tmdb_id
@@ -84,20 +81,34 @@ async function main() {
       result = await movie.next();
     }
   };
+  const radarrCollectionFetcher = async () => {
+    const user: Array<User> = await prisma.users({ where: { role: "ADMIN" } });
+    if (user && user.length !== 0) {
+      let config: Configuration = await prisma
+        .user({ id: user[0].id })
+        .configuration();
+      if (config) {
+        setInterval(() => {
+          console.log("scanning for downloaded movies");
+          const radarr_url = config.radarrEndpoint;
+          const url_collection = `${radarr_url}/movie?apikey=${config.radarrApiKey}`;
+          fetch(url_collection)
+            .then(res => res.json())
+            .then(json => {
+              json.map(async el => {
+                const movie = await getMovie(el.tmdbId.toString());
+                if (movie && el.downloaded && !movie.downloaded) {
+                  updateMovie(movie.id);
+                }
+              });
+            })
+            .catch(err => console.error(err));
+        }, 600000);
+      }
+    }
+  };
+
   movieUpdatePushRequest();
-  setInterval(() => {
-    console.log("scanning for downloaded movies");
-    fetch(url_collection)
-      .then(res => res.json())
-      .then(json => {
-        json.map(async el => {
-          const movie = await getMovie(el.tmdbId.toString());
-          if (movie && el.downloaded && !movie.downloaded) {
-            updateMovie(movie.id);
-          }
-        });
-      })
-      .catch(err => console.error(err));
-  }, 600000);
+  radarrCollectionFetcher();
 }
 main().catch(e => console.error(e));
