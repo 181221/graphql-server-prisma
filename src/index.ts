@@ -79,6 +79,49 @@ async function main() {
       result = await movie.next();
     }
   };
+
+  const movieCreatedPushbulletRequest = async () => {
+    let movie = await prisma.$subscribe
+      .movie({ mutation_in: ["CREATED"] })
+      .node();
+    let result = await movie.next();
+    while (!result.done) {
+      const user: Array<User> = await prisma.users({
+        where: { role: "ADMIN" }
+      });
+      if (user && user.length !== 0) {
+        let config: Configuration = await prisma
+          .user({ id: user[0].id })
+          .configuration();
+        if (
+          config.pushoverApiKey &&
+          config.pushoverEndpoint &&
+          config.pushoverUserKey
+        ) {
+          const msg = `${user[0].email} \nHas requested the movie:\n${result.value.title}`;
+          const obj = {
+            title: result.value.title,
+            message: msg,
+            token: config.pushoverApiKey,
+            user: config.pushoverUserKey
+          };
+          const options = {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify(obj)
+          };
+          const response = await fetch(config.pushoverEndpoint, options);
+          console.log(
+            `Fetch ${config.pushoverEndpoint} responded with ${response.statusText}`
+          );
+        }
+      }
+      result = await movie.next();
+    }
+  };
+
   const radarrCollectionFetcher = async () => {
     const user: Array<User> = await prisma.users({ where: { role: "ADMIN" } });
     if (user && user.length !== 0) {
@@ -108,5 +151,6 @@ async function main() {
 
   movieUpdatePushRequest();
   radarrCollectionFetcher();
+  movieCreatedPushbulletRequest();
 }
 main().catch(e => console.error(e));

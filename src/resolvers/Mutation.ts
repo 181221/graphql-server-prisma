@@ -6,9 +6,13 @@ import { Context } from "./types/Context";
 
 const createMovie = async (parent, args, context: Context, info) => {
   const { userId } = authenticate(context);
-  let gen = Object.values(args.genres)[0]
-    .split(",")
-    .map(el => el);
+
+  let gen;
+  if (args.genres) {
+    gen = Object.values(args.genres)[0]
+      .split(",")
+      .map(el => el);
+  }
   return await context.prisma.createMovie({
     title: args.title,
     requestedBy: { connect: { id: userId } },
