@@ -4,6 +4,7 @@ type Query {
   movies(orderBy: MovieOrderByInput, first: Int): [Movie!]
   movie(id: ID): Movie
   configuration(id: ID): Configuration
+  configurationPrivate(id: ID): PrivateConfiguration
 }
 
 type Movie {
@@ -23,17 +24,18 @@ type Movie {
 
 type Configuration {
   id: ID!
-  radarrApiKey: String!
-  radarrEndpoint: String!
-  radarrRootFolder: String!
+  radarrApiKey: String
+  radarrEndpoint: String
+  radarrRootFolder: String
   user: User
 }
 
 type PrivateConfiguration {
   id: ID!
-  radarrApiKey: String!
-  radarrEndpoint: String!
-  radarrRootFolder: String!
+  radarrApiKey: String
+  radarrEndpoint: String
+  radarrRootFolder: String
+  pushoverEndpoint: String
   pushoverApiKey: String
   pushoverUserKey: String
   user: User
@@ -66,17 +68,20 @@ type Mutation {
     radarrApiKey: String!
     radarrEndpoint: String!
     radarrRootFolder: String!
+    pushoverEndpoint: String
     pushoverApiKey: String
     pushoverUserKey: String
-  ): Configuration
+  ): PrivateConfiguration
 
   updateConfiguration(
     radarrApiKey: String
     radarrEndpoint: String
     radarrRootFolder: String
+    pushoverEndpoint: String
     pushoverApiKey: String
     pushoverUserKey: String
-  ): Configuration
+  ): PrivateConfiguration
+
   createToken(email: String!): AuthPayload
 
   getToken(email: String!): AuthPayload

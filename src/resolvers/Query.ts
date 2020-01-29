@@ -25,8 +25,8 @@ async function configuration(parent, args, context: Context, info) {
   }
   return null;
 }
-/*
-async function configuration(parent, args, context: Context, info) {
+
+async function configurationPrivate(parent, args, context: Context, info) {
   let { userId, claims } = authenticate(context);
   if (claims === "admin") {
     let config = await context.prisma.user({ id: userId }).configuration();
@@ -36,7 +36,7 @@ async function configuration(parent, args, context: Context, info) {
     return config;
   }
   throw new ApolloError("Unauthorized", 401);
-}*/
+}
 
 async function users(parent, args, context, info) {
   authenticate(context);
@@ -48,5 +48,6 @@ module.exports = {
   users,
   movies,
   configuration,
+  configurationPrivate,
   user
 };

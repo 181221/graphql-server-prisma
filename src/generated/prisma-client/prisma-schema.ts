@@ -20,9 +20,10 @@ type BatchPayload {
 
 type Configuration {
   id: ID!
-  radarrApiKey: String!
-  radarrEndpoint: String!
-  radarrRootFolder: String!
+  radarrApiKey: String
+  radarrEndpoint: String
+  radarrRootFolder: String
+  pushoverEndpoint: String
   pushoverApiKey: String
   pushoverUserKey: String
   user: User
@@ -36,9 +37,10 @@ type ConfigurationConnection {
 
 input ConfigurationCreateInput {
   id: ID
-  radarrApiKey: String!
-  radarrEndpoint: String!
-  radarrRootFolder: String!
+  radarrApiKey: String
+  radarrEndpoint: String
+  radarrRootFolder: String
+  pushoverEndpoint: String
   pushoverApiKey: String
   pushoverUserKey: String
   user: UserCreateOneWithoutConfigurationInput
@@ -51,9 +53,10 @@ input ConfigurationCreateOneWithoutUserInput {
 
 input ConfigurationCreateWithoutUserInput {
   id: ID
-  radarrApiKey: String!
-  radarrEndpoint: String!
-  radarrRootFolder: String!
+  radarrApiKey: String
+  radarrEndpoint: String
+  radarrRootFolder: String
+  pushoverEndpoint: String
   pushoverApiKey: String
   pushoverUserKey: String
 }
@@ -72,6 +75,8 @@ enum ConfigurationOrderByInput {
   radarrEndpoint_DESC
   radarrRootFolder_ASC
   radarrRootFolder_DESC
+  pushoverEndpoint_ASC
+  pushoverEndpoint_DESC
   pushoverApiKey_ASC
   pushoverApiKey_DESC
   pushoverUserKey_ASC
@@ -80,9 +85,10 @@ enum ConfigurationOrderByInput {
 
 type ConfigurationPreviousValues {
   id: ID!
-  radarrApiKey: String!
-  radarrEndpoint: String!
-  radarrRootFolder: String!
+  radarrApiKey: String
+  radarrEndpoint: String
+  radarrRootFolder: String
+  pushoverEndpoint: String
   pushoverApiKey: String
   pushoverUserKey: String
 }
@@ -109,6 +115,7 @@ input ConfigurationUpdateInput {
   radarrApiKey: String
   radarrEndpoint: String
   radarrRootFolder: String
+  pushoverEndpoint: String
   pushoverApiKey: String
   pushoverUserKey: String
   user: UserUpdateOneWithoutConfigurationInput
@@ -118,6 +125,7 @@ input ConfigurationUpdateManyMutationInput {
   radarrApiKey: String
   radarrEndpoint: String
   radarrRootFolder: String
+  pushoverEndpoint: String
   pushoverApiKey: String
   pushoverUserKey: String
 }
@@ -135,6 +143,7 @@ input ConfigurationUpdateWithoutUserDataInput {
   radarrApiKey: String
   radarrEndpoint: String
   radarrRootFolder: String
+  pushoverEndpoint: String
   pushoverApiKey: String
   pushoverUserKey: String
 }
@@ -201,6 +210,20 @@ input ConfigurationWhereInput {
   radarrRootFolder_not_starts_with: String
   radarrRootFolder_ends_with: String
   radarrRootFolder_not_ends_with: String
+  pushoverEndpoint: String
+  pushoverEndpoint_not: String
+  pushoverEndpoint_in: [String!]
+  pushoverEndpoint_not_in: [String!]
+  pushoverEndpoint_lt: String
+  pushoverEndpoint_lte: String
+  pushoverEndpoint_gt: String
+  pushoverEndpoint_gte: String
+  pushoverEndpoint_contains: String
+  pushoverEndpoint_not_contains: String
+  pushoverEndpoint_starts_with: String
+  pushoverEndpoint_not_starts_with: String
+  pushoverEndpoint_ends_with: String
+  pushoverEndpoint_not_ends_with: String
   pushoverApiKey: String
   pushoverApiKey_not: String
   pushoverApiKey_in: [String!]

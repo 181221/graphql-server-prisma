@@ -218,6 +218,8 @@ export type ConfigurationOrderByInput =
   | "radarrEndpoint_DESC"
   | "radarrRootFolder_ASC"
   | "radarrRootFolder_DESC"
+  | "pushoverEndpoint_ASC"
+  | "pushoverEndpoint_DESC"
   | "pushoverApiKey_ASC"
   | "pushoverApiKey_DESC"
   | "pushoverUserKey_ASC"
@@ -501,6 +503,20 @@ export interface ConfigurationWhereInput {
   radarrRootFolder_not_starts_with?: Maybe<String>;
   radarrRootFolder_ends_with?: Maybe<String>;
   radarrRootFolder_not_ends_with?: Maybe<String>;
+  pushoverEndpoint?: Maybe<String>;
+  pushoverEndpoint_not?: Maybe<String>;
+  pushoverEndpoint_in?: Maybe<String[] | String>;
+  pushoverEndpoint_not_in?: Maybe<String[] | String>;
+  pushoverEndpoint_lt?: Maybe<String>;
+  pushoverEndpoint_lte?: Maybe<String>;
+  pushoverEndpoint_gt?: Maybe<String>;
+  pushoverEndpoint_gte?: Maybe<String>;
+  pushoverEndpoint_contains?: Maybe<String>;
+  pushoverEndpoint_not_contains?: Maybe<String>;
+  pushoverEndpoint_starts_with?: Maybe<String>;
+  pushoverEndpoint_not_starts_with?: Maybe<String>;
+  pushoverEndpoint_ends_with?: Maybe<String>;
+  pushoverEndpoint_not_ends_with?: Maybe<String>;
   pushoverApiKey?: Maybe<String>;
   pushoverApiKey_not?: Maybe<String>;
   pushoverApiKey_in?: Maybe<String[] | String>;
@@ -548,9 +564,10 @@ export type UserWhereUniqueInput = AtLeastOne<{
 
 export interface ConfigurationCreateInput {
   id?: Maybe<ID_Input>;
-  radarrApiKey: String;
-  radarrEndpoint: String;
-  radarrRootFolder: String;
+  radarrApiKey?: Maybe<String>;
+  radarrEndpoint?: Maybe<String>;
+  radarrRootFolder?: Maybe<String>;
+  pushoverEndpoint?: Maybe<String>;
   pushoverApiKey?: Maybe<String>;
   pushoverUserKey?: Maybe<String>;
   user?: Maybe<UserCreateOneWithoutConfigurationInput>;
@@ -599,6 +616,7 @@ export interface ConfigurationUpdateInput {
   radarrApiKey?: Maybe<String>;
   radarrEndpoint?: Maybe<String>;
   radarrRootFolder?: Maybe<String>;
+  pushoverEndpoint?: Maybe<String>;
   pushoverApiKey?: Maybe<String>;
   pushoverUserKey?: Maybe<String>;
   user?: Maybe<UserUpdateOneWithoutConfigurationInput>;
@@ -825,6 +843,7 @@ export interface ConfigurationUpdateManyMutationInput {
   radarrApiKey?: Maybe<String>;
   radarrEndpoint?: Maybe<String>;
   radarrRootFolder?: Maybe<String>;
+  pushoverEndpoint?: Maybe<String>;
   pushoverApiKey?: Maybe<String>;
   pushoverUserKey?: Maybe<String>;
 }
@@ -865,9 +884,10 @@ export interface ConfigurationCreateOneWithoutUserInput {
 
 export interface ConfigurationCreateWithoutUserInput {
   id?: Maybe<ID_Input>;
-  radarrApiKey: String;
-  radarrEndpoint: String;
-  radarrRootFolder: String;
+  radarrApiKey?: Maybe<String>;
+  radarrEndpoint?: Maybe<String>;
+  radarrRootFolder?: Maybe<String>;
+  pushoverEndpoint?: Maybe<String>;
   pushoverApiKey?: Maybe<String>;
   pushoverUserKey?: Maybe<String>;
 }
@@ -916,6 +936,7 @@ export interface ConfigurationUpdateWithoutUserDataInput {
   radarrApiKey?: Maybe<String>;
   radarrEndpoint?: Maybe<String>;
   radarrRootFolder?: Maybe<String>;
+  pushoverEndpoint?: Maybe<String>;
   pushoverApiKey?: Maybe<String>;
   pushoverUserKey?: Maybe<String>;
 }
@@ -1016,9 +1037,10 @@ export interface NodeNode {
 
 export interface Configuration {
   id: ID_Output;
-  radarrApiKey: String;
-  radarrEndpoint: String;
-  radarrRootFolder: String;
+  radarrApiKey?: String;
+  radarrEndpoint?: String;
+  radarrRootFolder?: String;
+  pushoverEndpoint?: String;
   pushoverApiKey?: String;
   pushoverUserKey?: String;
 }
@@ -1030,6 +1052,7 @@ export interface ConfigurationPromise
   radarrApiKey: () => Promise<String>;
   radarrEndpoint: () => Promise<String>;
   radarrRootFolder: () => Promise<String>;
+  pushoverEndpoint: () => Promise<String>;
   pushoverApiKey: () => Promise<String>;
   pushoverUserKey: () => Promise<String>;
   user: <T = UserPromise>() => T;
@@ -1042,6 +1065,7 @@ export interface ConfigurationSubscription
   radarrApiKey: () => Promise<AsyncIterator<String>>;
   radarrEndpoint: () => Promise<AsyncIterator<String>>;
   radarrRootFolder: () => Promise<AsyncIterator<String>>;
+  pushoverEndpoint: () => Promise<AsyncIterator<String>>;
   pushoverApiKey: () => Promise<AsyncIterator<String>>;
   pushoverUserKey: () => Promise<AsyncIterator<String>>;
   user: <T = UserSubscription>() => T;
@@ -1054,6 +1078,7 @@ export interface ConfigurationNullablePromise
   radarrApiKey: () => Promise<String>;
   radarrEndpoint: () => Promise<String>;
   radarrRootFolder: () => Promise<String>;
+  pushoverEndpoint: () => Promise<String>;
   pushoverApiKey: () => Promise<String>;
   pushoverUserKey: () => Promise<String>;
   user: <T = UserPromise>() => T;
@@ -1422,9 +1447,10 @@ export interface ConfigurationSubscriptionPayloadSubscription
 
 export interface ConfigurationPreviousValues {
   id: ID_Output;
-  radarrApiKey: String;
-  radarrEndpoint: String;
-  radarrRootFolder: String;
+  radarrApiKey?: String;
+  radarrEndpoint?: String;
+  radarrRootFolder?: String;
+  pushoverEndpoint?: String;
   pushoverApiKey?: String;
   pushoverUserKey?: String;
 }
@@ -1436,6 +1462,7 @@ export interface ConfigurationPreviousValuesPromise
   radarrApiKey: () => Promise<String>;
   radarrEndpoint: () => Promise<String>;
   radarrRootFolder: () => Promise<String>;
+  pushoverEndpoint: () => Promise<String>;
   pushoverApiKey: () => Promise<String>;
   pushoverUserKey: () => Promise<String>;
 }
@@ -1447,6 +1474,7 @@ export interface ConfigurationPreviousValuesSubscription
   radarrApiKey: () => Promise<AsyncIterator<String>>;
   radarrEndpoint: () => Promise<AsyncIterator<String>>;
   radarrRootFolder: () => Promise<AsyncIterator<String>>;
+  pushoverEndpoint: () => Promise<AsyncIterator<String>>;
   pushoverApiKey: () => Promise<AsyncIterator<String>>;
   pushoverUserKey: () => Promise<AsyncIterator<String>>;
 }

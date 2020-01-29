@@ -66,6 +66,7 @@ async function createConfiguration(parent, args, context: Context, info) {
     radarrApiKey: args.radarrApiKey,
     radarrEndpoint: args.radarrEndpoint,
     radarrRootFolder: args.radarrRootFolder,
+    pushoverEndpoint: args.pushoverApiKey || "",
     pushoverApiKey: args.pushoverApiKey || "",
     pushoverUserKey: args.pushoverUserKey || "",
     user: { connect: { id: userId } }
@@ -78,13 +79,11 @@ async function updateConfiguration(parent, args, context: Context, info) {
   }
   let config = await context.prisma.user({ id: userId }).configuration();
   if (!config) {
-    if (!args.radarrApiKey && !args.radarrRootFolder && !args.radarrEndpoint) {
-      throw new ApolloError("provide radarr key, endpoint and root", 500);
-    }
     return await context.prisma.createConfiguration({
-      radarrApiKey: args.radarrApiKey,
-      radarrEndpoint: args.radarrEndpoint,
-      radarrRootFolder: args.radarrRootFolder,
+      radarrApiKey: args.radarrApiKey || "",
+      radarrEndpoint: args.radarrEndpoint || "",
+      radarrRootFolder: args.radarrRootFolder || "",
+      pushoverEndpoint: args.pushoverEndpoint || "",
       pushoverApiKey: args.pushoverApiKey || "",
       pushoverUserKey: args.pushoverUserKey || "",
       user: { connect: { id: userId } }
@@ -92,6 +91,7 @@ async function updateConfiguration(parent, args, context: Context, info) {
   }
   return await context.prisma.updateConfiguration({
     data: {
+      pushoverEndpoint: args.pushoverEndpoint || config.pushoverEndpoint,
       pushoverApiKey: args.pushoverApiKey || config.pushoverApiKey,
       pushoverUserKey: args.pushoverUserKey || config.pushoverUserKey,
       radarrApiKey: args.radarrApiKey || config.radarrApiKey,
