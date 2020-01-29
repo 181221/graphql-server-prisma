@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
 const { APP_SECRET, authenticate } = require("../utils");
 const { ApolloError } = require("apollo-server-core");
+const fetch = require("node-fetch");
 import { Context } from "./types/Context";
 
 const createMovie = async (parent, args, context: Context, info) => {
@@ -109,17 +110,25 @@ async function createToken(parent, args, context: Context, info) {
   let user = await context.prisma.user({ email: args.email });
   if (!user) {
     let users = await context.prisma.users();
+    let sendPush = false;
     if (users.length === 0) {
       user = await context.prisma.createUser({
         email: args.email,
         role: "ADMIN"
       });
+      sendPush = true;
     } else {
       user = await context.prisma.createUser({ email: args.email });
     }
-    const token = jwt.sign({ userId: user.id }, APP_SECRET, {
-      expiresIn: "1h"
-    });
+    let token;
+    if (user.role === "ADMIN") {
+      token = jwt.sign({ userId: user.id, claims: "admin" }, APP_SECRET);
+      sendPush = true;
+    } else {
+      token = jwt.sign({ userId: user.id, claims: "read-post" }, APP_SECRET, {
+        expiresIn: "1h"
+      });
+    }
     return { user, token };
   }
   throw new ApolloError("user already exists", 404);
