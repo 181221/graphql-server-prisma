@@ -12,7 +12,7 @@ function authenticate(context) {
     const { userId, claims } = jwt.verify(token, APP_SECRET);
     return { userId, claims };
   }
-  throw new AuthenticationError("Not authorised");
+  throw new AuthenticationError("Unauthorised");
 }
 
 // Rules

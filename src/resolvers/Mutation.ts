@@ -58,9 +58,8 @@ async function updateMovie(parent, args, context: Context, info) {
   });
 }
 async function createConfiguration(parent, args, context: Context, info) {
-  const { userId } = authenticate(context);
-  let user = await context.prisma.user({ id: userId });
-  if (user.role !== "ADMIN") {
+  const { userId, claims } = authenticate(context);
+  if (claims !== "admin") {
     throw new ApolloError("Unauthorized", 401);
   }
   return await context.prisma.createConfiguration({
@@ -73,9 +72,8 @@ async function createConfiguration(parent, args, context: Context, info) {
   });
 }
 async function updateConfiguration(parent, args, context: Context, info) {
-  const { userId } = authenticate(context);
-  let user = await context.prisma.user({ id: userId });
-  if (user.role !== "ADMIN") {
+  const { userId, claims } = authenticate(context);
+  if (claims !== "admin") {
     throw new ApolloError("Unauthorized", 401);
   }
   let config = await context.prisma.user({ id: userId }).configuration();
@@ -110,26 +108,22 @@ async function createToken(parent, args, context: Context, info) {
   let user = await context.prisma.user({ email: args.email });
   if (!user) {
     let users = await context.prisma.users();
-    let sendPush = false;
+    let token;
+    let adminToken = false;
     if (users.length === 0) {
       user = await context.prisma.createUser({
         email: args.email,
         role: "ADMIN"
       });
-      sendPush = true;
+      token = jwt.sign({ userId: user.id, claims: "admin" }, APP_SECRET);
+      adminToken = true;
     } else {
       user = await context.prisma.createUser({ email: args.email });
-    }
-    let token;
-    if (user.role === "ADMIN") {
-      token = jwt.sign({ userId: user.id, claims: "admin" }, APP_SECRET);
-      sendPush = true;
-    } else {
       token = jwt.sign({ userId: user.id, claims: "read-post" }, APP_SECRET, {
         expiresIn: "1h"
       });
     }
-    return { user, token };
+    return { user, token, adminToken };
   }
   throw new ApolloError("user already exists", 404);
 }

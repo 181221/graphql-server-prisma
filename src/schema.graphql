@@ -26,13 +26,23 @@ type Configuration {
   radarrApiKey: String!
   radarrEndpoint: String!
   radarrRootFolder: String!
+  user: User
+}
+
+type PrivateConfiguration {
+  id: ID!
+  radarrApiKey: String!
+  radarrEndpoint: String!
+  radarrRootFolder: String!
   pushoverApiKey: String
   pushoverUserKey: String
   user: User
 }
+
 type AuthPayload {
   token: String
   user: User
+  adminToken: Boolean
 }
 
 type User {

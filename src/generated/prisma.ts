@@ -2,7 +2,10 @@
 
 import { GraphQLResolveInfo } from "graphql";
 import { User, Movie, Configuration } from "./prisma-client";
-import { AuthPayload } from "../resolvers/types/AuthPayload";
+import {
+  AuthPayload,
+  PrivateConfiguration
+} from "../resolvers/types/AuthPayload";
 import { Context } from "../resolvers/types/Context";
 
 export type Role = "ADMIN" | "CUSTOMER";
@@ -927,11 +930,7 @@ export namespace ConfigurationResolvers {
     id: (parent: Configuration) => parent.id,
     radarrApiKey: (parent: Configuration) => parent.radarrApiKey,
     radarrEndpoint: (parent: Configuration) => parent.radarrEndpoint,
-    radarrRootFolder: (parent: Configuration) => parent.radarrRootFolder,
-    pushoverApiKey: (parent: Configuration) =>
-      parent.pushoverApiKey === undefined ? null : parent.pushoverApiKey,
-    pushoverUserKey: (parent: Configuration) =>
-      parent.pushoverUserKey === undefined ? null : parent.pushoverUserKey
+    radarrRootFolder: (parent: Configuration) => parent.radarrRootFolder
   };
 
   export type IdResolver =
@@ -1000,40 +999,6 @@ export namespace ConfigurationResolvers {
           ctx: Context,
           info: GraphQLResolveInfo
         ) => string | Promise<string>;
-      };
-
-  export type PushoverApiKeyResolver =
-    | ((
-        parent: Configuration,
-        args: {},
-        ctx: Context,
-        info: GraphQLResolveInfo
-      ) => string | null | Promise<string | null>)
-    | {
-        fragment: string;
-        resolve: (
-          parent: Configuration,
-          args: {},
-          ctx: Context,
-          info: GraphQLResolveInfo
-        ) => string | null | Promise<string | null>;
-      };
-
-  export type PushoverUserKeyResolver =
-    | ((
-        parent: Configuration,
-        args: {},
-        ctx: Context,
-        info: GraphQLResolveInfo
-      ) => string | null | Promise<string | null>)
-    | {
-        fragment: string;
-        resolve: (
-          parent: Configuration,
-          args: {},
-          ctx: Context,
-          info: GraphQLResolveInfo
-        ) => string | null | Promise<string | null>;
       };
 
   export type UserResolver =
@@ -1120,40 +1085,6 @@ export namespace ConfigurationResolvers {
             ctx: Context,
             info: GraphQLResolveInfo
           ) => string | Promise<string>;
-        };
-
-    pushoverApiKey:
-      | ((
-          parent: Configuration,
-          args: {},
-          ctx: Context,
-          info: GraphQLResolveInfo
-        ) => string | null | Promise<string | null>)
-      | {
-          fragment: string;
-          resolve: (
-            parent: Configuration,
-            args: {},
-            ctx: Context,
-            info: GraphQLResolveInfo
-          ) => string | null | Promise<string | null>;
-        };
-
-    pushoverUserKey:
-      | ((
-          parent: Configuration,
-          args: {},
-          ctx: Context,
-          info: GraphQLResolveInfo
-        ) => string | null | Promise<string | null>)
-      | {
-          fragment: string;
-          resolve: (
-            parent: Configuration,
-            args: {},
-            ctx: Context,
-            info: GraphQLResolveInfo
-          ) => string | null | Promise<string | null>;
         };
 
     user:
@@ -1544,6 +1475,23 @@ export namespace AuthPayloadResolvers {
         ) => User | null | Promise<User | null>;
       };
 
+  export type AdminTokenResolver =
+    | ((
+        parent: AuthPayload,
+        args: {},
+        ctx: Context,
+        info: GraphQLResolveInfo
+      ) => boolean | null | Promise<boolean | null>)
+    | {
+        fragment: string;
+        resolve: (
+          parent: AuthPayload,
+          args: {},
+          ctx: Context,
+          info: GraphQLResolveInfo
+        ) => boolean | null | Promise<boolean | null>;
+      };
+
   export interface Type {
     token:
       | ((
@@ -1577,6 +1525,23 @@ export namespace AuthPayloadResolvers {
             ctx: Context,
             info: GraphQLResolveInfo
           ) => User | null | Promise<User | null>;
+        };
+
+    adminToken:
+      | ((
+          parent: AuthPayload,
+          args: {},
+          ctx: Context,
+          info: GraphQLResolveInfo
+        ) => boolean | null | Promise<boolean | null>)
+      | {
+          fragment: string;
+          resolve: (
+            parent: AuthPayload,
+            args: {},
+            ctx: Context,
+            info: GraphQLResolveInfo
+          ) => boolean | null | Promise<boolean | null>;
         };
   }
 }
@@ -1617,6 +1582,259 @@ export namespace SubscriptionResolvers {
   }
 }
 
+export namespace PrivateConfigurationResolvers {
+  export const defaultResolvers = {
+    id: (parent: PrivateConfiguration) => parent.id,
+    radarrApiKey: (parent: PrivateConfiguration) => parent.radarrApiKey,
+    radarrEndpoint: (parent: PrivateConfiguration) => parent.radarrEndpoint,
+    radarrRootFolder: (parent: PrivateConfiguration) => parent.radarrRootFolder,
+    pushoverApiKey: (parent: PrivateConfiguration) =>
+      parent.pushoverApiKey === undefined ? null : parent.pushoverApiKey,
+    pushoverUserKey: (parent: PrivateConfiguration) =>
+      parent.pushoverUserKey === undefined ? null : parent.pushoverUserKey
+  };
+
+  export type IdResolver =
+    | ((
+        parent: PrivateConfiguration,
+        args: {},
+        ctx: Context,
+        info: GraphQLResolveInfo
+      ) => string | Promise<string>)
+    | {
+        fragment: string;
+        resolve: (
+          parent: PrivateConfiguration,
+          args: {},
+          ctx: Context,
+          info: GraphQLResolveInfo
+        ) => string | Promise<string>;
+      };
+
+  export type RadarrApiKeyResolver =
+    | ((
+        parent: PrivateConfiguration,
+        args: {},
+        ctx: Context,
+        info: GraphQLResolveInfo
+      ) => string | Promise<string>)
+    | {
+        fragment: string;
+        resolve: (
+          parent: PrivateConfiguration,
+          args: {},
+          ctx: Context,
+          info: GraphQLResolveInfo
+        ) => string | Promise<string>;
+      };
+
+  export type RadarrEndpointResolver =
+    | ((
+        parent: PrivateConfiguration,
+        args: {},
+        ctx: Context,
+        info: GraphQLResolveInfo
+      ) => string | Promise<string>)
+    | {
+        fragment: string;
+        resolve: (
+          parent: PrivateConfiguration,
+          args: {},
+          ctx: Context,
+          info: GraphQLResolveInfo
+        ) => string | Promise<string>;
+      };
+
+  export type RadarrRootFolderResolver =
+    | ((
+        parent: PrivateConfiguration,
+        args: {},
+        ctx: Context,
+        info: GraphQLResolveInfo
+      ) => string | Promise<string>)
+    | {
+        fragment: string;
+        resolve: (
+          parent: PrivateConfiguration,
+          args: {},
+          ctx: Context,
+          info: GraphQLResolveInfo
+        ) => string | Promise<string>;
+      };
+
+  export type PushoverApiKeyResolver =
+    | ((
+        parent: PrivateConfiguration,
+        args: {},
+        ctx: Context,
+        info: GraphQLResolveInfo
+      ) => string | null | Promise<string | null>)
+    | {
+        fragment: string;
+        resolve: (
+          parent: PrivateConfiguration,
+          args: {},
+          ctx: Context,
+          info: GraphQLResolveInfo
+        ) => string | null | Promise<string | null>;
+      };
+
+  export type PushoverUserKeyResolver =
+    | ((
+        parent: PrivateConfiguration,
+        args: {},
+        ctx: Context,
+        info: GraphQLResolveInfo
+      ) => string | null | Promise<string | null>)
+    | {
+        fragment: string;
+        resolve: (
+          parent: PrivateConfiguration,
+          args: {},
+          ctx: Context,
+          info: GraphQLResolveInfo
+        ) => string | null | Promise<string | null>;
+      };
+
+  export type UserResolver =
+    | ((
+        parent: PrivateConfiguration,
+        args: {},
+        ctx: Context,
+        info: GraphQLResolveInfo
+      ) => User | null | Promise<User | null>)
+    | {
+        fragment: string;
+        resolve: (
+          parent: PrivateConfiguration,
+          args: {},
+          ctx: Context,
+          info: GraphQLResolveInfo
+        ) => User | null | Promise<User | null>;
+      };
+
+  export interface Type {
+    id:
+      | ((
+          parent: PrivateConfiguration,
+          args: {},
+          ctx: Context,
+          info: GraphQLResolveInfo
+        ) => string | Promise<string>)
+      | {
+          fragment: string;
+          resolve: (
+            parent: PrivateConfiguration,
+            args: {},
+            ctx: Context,
+            info: GraphQLResolveInfo
+          ) => string | Promise<string>;
+        };
+
+    radarrApiKey:
+      | ((
+          parent: PrivateConfiguration,
+          args: {},
+          ctx: Context,
+          info: GraphQLResolveInfo
+        ) => string | Promise<string>)
+      | {
+          fragment: string;
+          resolve: (
+            parent: PrivateConfiguration,
+            args: {},
+            ctx: Context,
+            info: GraphQLResolveInfo
+          ) => string | Promise<string>;
+        };
+
+    radarrEndpoint:
+      | ((
+          parent: PrivateConfiguration,
+          args: {},
+          ctx: Context,
+          info: GraphQLResolveInfo
+        ) => string | Promise<string>)
+      | {
+          fragment: string;
+          resolve: (
+            parent: PrivateConfiguration,
+            args: {},
+            ctx: Context,
+            info: GraphQLResolveInfo
+          ) => string | Promise<string>;
+        };
+
+    radarrRootFolder:
+      | ((
+          parent: PrivateConfiguration,
+          args: {},
+          ctx: Context,
+          info: GraphQLResolveInfo
+        ) => string | Promise<string>)
+      | {
+          fragment: string;
+          resolve: (
+            parent: PrivateConfiguration,
+            args: {},
+            ctx: Context,
+            info: GraphQLResolveInfo
+          ) => string | Promise<string>;
+        };
+
+    pushoverApiKey:
+      | ((
+          parent: PrivateConfiguration,
+          args: {},
+          ctx: Context,
+          info: GraphQLResolveInfo
+        ) => string | null | Promise<string | null>)
+      | {
+          fragment: string;
+          resolve: (
+            parent: PrivateConfiguration,
+            args: {},
+            ctx: Context,
+            info: GraphQLResolveInfo
+          ) => string | null | Promise<string | null>;
+        };
+
+    pushoverUserKey:
+      | ((
+          parent: PrivateConfiguration,
+          args: {},
+          ctx: Context,
+          info: GraphQLResolveInfo
+        ) => string | null | Promise<string | null>)
+      | {
+          fragment: string;
+          resolve: (
+            parent: PrivateConfiguration,
+            args: {},
+            ctx: Context,
+            info: GraphQLResolveInfo
+          ) => string | null | Promise<string | null>;
+        };
+
+    user:
+      | ((
+          parent: PrivateConfiguration,
+          args: {},
+          ctx: Context,
+          info: GraphQLResolveInfo
+        ) => User | null | Promise<User | null>)
+      | {
+          fragment: string;
+          resolve: (
+            parent: PrivateConfiguration,
+            args: {},
+            ctx: Context,
+            info: GraphQLResolveInfo
+          ) => User | null | Promise<User | null>;
+        };
+  }
+}
+
 export interface Resolvers {
   Query: QueryResolvers.Type;
   User: UserResolvers.Type;
@@ -1625,6 +1843,7 @@ export interface Resolvers {
   Mutation: MutationResolvers.Type;
   AuthPayload: AuthPayloadResolvers.Type;
   Subscription: SubscriptionResolvers.Type;
+  PrivateConfiguration: PrivateConfigurationResolvers.Type;
 }
 
 // @ts-ignore
