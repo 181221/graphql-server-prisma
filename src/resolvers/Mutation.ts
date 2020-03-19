@@ -34,12 +34,20 @@ async function deleteMovie(parent, args, context: Context, info) {
 async function updateUser(parant, args, context: Context, info) {
   const { userId } = authenticate(context);
   const user = context.prisma.user({ id: userId });
+  let sub;
+  if (args.subscription && args.subscription !== "false") {
+    sub = args.subscription;
+  } else if (args.subscription === "false") {
+    sub = "";
+  } else {
+    sub = user.subscription;
+  }
   let not =
     typeof args.notification === "undefined"
       ? user.notification
       : args.notification;
   let data = {
-    subscription: args.subscription || user.subscription,
+    subscription: sub,
     notification: not,
     role: args.role || user.role,
     name: args.name || user.name
