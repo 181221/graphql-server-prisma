@@ -9,9 +9,7 @@ const createMovie = async (parent, args, context: Context, info) => {
 
   let gen;
   if (args.genres) {
-    gen = Object.values(args.genres)[0]
-      .split(",")
-      .map(el => el);
+    gen = (<string>Object.values(args.genres)[0]).split(",").map(el => el);
   }
   return await context.prisma.createMovie({
     title: args.title,
