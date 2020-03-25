@@ -70,9 +70,12 @@ async function main() {
 
         if (mov && mov[0]) {
           if (mov[0].downloaded) {
-            let sub = JSON.parse(user.subscription);
-            const payload = JSON.stringify({ title: mov[0].title });
-            sendPushRequest(sub, payload);
+            let sub = user.subscription;
+            if (sub) {
+              sub = JSON.parse(sub);
+              const payload = JSON.stringify({ title: mov[0].title });
+              sendPushRequest(sub, payload);
+            }
           }
         }
       }
