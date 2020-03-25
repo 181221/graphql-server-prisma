@@ -63,19 +63,17 @@ async function main() {
     let result = await movie.next();
     while (!result.done) {
       let user: User = await prisma.user({ id: result.value.requestedById });
-      if (user.notification) {
+      let sub = user.subscription;
+      if (sub) {
         let mov: Array<Movie> = await prisma
           .user({ id: result.value.requestedById })
           .movies({ where: { id: result.value.id } });
 
         if (mov && mov[0]) {
           if (mov[0].downloaded) {
-            let sub = user.subscription;
-            if (sub) {
-              sub = JSON.parse(sub);
-              const payload = JSON.stringify({ title: mov[0].title });
-              sendPushRequest(sub, payload);
-            }
+            sub = JSON.parse(sub);
+            const payload = JSON.stringify({ title: mov[0].title });
+            sendPushRequest(sub, payload);
           }
         }
       }
