@@ -35,7 +35,8 @@ async function main() {
 
   const options = {
     port: 4000,
-    debug: true
+    debug: true,
+    playground: false
   };
   server.start(options, ({ port }) =>
     console.log(`Server is running on http://localhost:${port}`)
@@ -62,14 +63,15 @@ async function main() {
     let result = await movie.next();
     while (!result.done) {
       let user: User = await prisma.user({ id: result.value.requestedById });
-      if (user.notification) {
+      let sub = user.subscription;
+      if (sub) {
         let mov: Array<Movie> = await prisma
           .user({ id: result.value.requestedById })
           .movies({ where: { id: result.value.id } });
 
         if (mov && mov[0]) {
           if (mov[0].downloaded) {
-            let sub = JSON.parse(user.subscription);
+            sub = JSON.parse(sub);
             const payload = JSON.stringify({ title: mov[0].title });
             sendPushRequest(sub, payload);
           }
@@ -85,37 +87,42 @@ async function main() {
       .node();
     let result = await movie.next();
     while (!result.done) {
-      const user: Array<User> = await prisma.users({
+      const users: Array<User> = await prisma.users({
         where: { role: "ADMIN" }
       });
-      if (user && user.length !== 0) {
-        let config: Configuration = await prisma
-          .user({ id: user[0].id })
-          .configuration();
-        if (
-          config.pushoverApiKey &&
-          config.pushoverEndpoint &&
-          config.pushoverUserKey
-        ) {
-          const msg = `${user[0].email} \nHas requested the movie:\n${result.value.title}`;
-          const obj = {
-            title: result.value.title,
-            message: msg,
-            token: config.pushoverApiKey,
-            user: config.pushoverUserKey
-          };
-          const options = {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json"
-            },
-            body: JSON.stringify(obj)
-          };
-          const response = await fetch(config.pushoverEndpoint, options);
-          console.log(
-            `Fetch ${config.pushoverEndpoint} responded with ${response.statusText}`
-          );
-        }
+      const movieCreated: Movie = result.value;
+      if (users && users.length !== 0) {
+        const requestedByUser: User = await prisma.user({
+          id: movieCreated.requestedById
+        });
+        users.map(async user => {
+          let config = await prisma.user({ id: user.id }).configuration();
+          if (
+            config &&
+            config.pushoverApiKey &&
+            config.pushoverEndpoint &&
+            config.pushoverUserKey
+          ) {
+            const msg = `${requestedByUser.email} \nHas requested the movie:\n${result.value.title}`;
+            const obj = {
+              title: result.value.title,
+              message: msg,
+              token: config.pushoverApiKey,
+              user: config.pushoverUserKey
+            };
+            const options = {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json"
+              },
+              body: JSON.stringify(obj)
+            };
+            const response = await fetch(config.pushoverEndpoint, options);
+            console.log(
+              `Fetch ${config.pushoverEndpoint} responded with ${response.statusText}`
+            );
+          }
+        });
       }
       result = await movie.next();
     }
