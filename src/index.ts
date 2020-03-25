@@ -90,16 +90,20 @@ async function main() {
       const users: Array<User> = await prisma.users({
         where: { role: "ADMIN" }
       });
-      console.log(result);
+      const movieCreated: Movie = result.value;
       if (users && users.length !== 0) {
-        let requestedBy = users.map(async user => {
+        const requestedByUser: User = await prisma.user({
+          id: movieCreated.requestedById
+        });
+        users.map(async user => {
           let config = await prisma.user({ id: user.id }).configuration();
           if (
+            config &&
             config.pushoverApiKey &&
             config.pushoverEndpoint &&
             config.pushoverUserKey
           ) {
-            const msg = `${user.email} \nHas requested the movie:\n${result.value.title}`;
+            const msg = `${requestedByUser.email} \nHas requested the movie:\n${result.value.title}`;
             const obj = {
               title: result.value.title,
               message: msg,
