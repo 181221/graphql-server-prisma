@@ -1,12 +1,15 @@
 const { authenticate } = require("../utils");
 const { ApolloError } = require("apollo-server-core");
+import { Configuration, User } from "../generated/prisma-client";
+
+const fetch = require("isomorphic-fetch");
 
 import { Context } from "./types/Context";
 async function movies(parent, args, context, info) {
   authenticate(context);
   const movies = await context.prisma.movies({
     orderBy: args.orderBy,
-    first: args.first
+    first: args.first,
   });
   return movies;
 }
@@ -16,6 +19,45 @@ async function user(parent, args, context: Context, info) {
   const user = await context.prisma.user({ email: args.email });
   return user;
 }
+
+async function radarrCollection(parent, args, context: Context, info) {
+  authenticate(context);
+  const user: Array<User> = await context.prisma.users({
+    where: { role: "ADMIN" },
+  });
+  if (user && user.length !== 0) {
+    let config: Configuration = await context.prisma
+      .user({ id: user[0].id })
+      .configuration();
+    if (config) {
+      const radarr_url = config.radarrEndpoint;
+      const url_collection = `${radarr_url}/movie?apikey=${config.radarrApiKey}`;
+      const url_queue = `${radarr_url}/queue?apikey=${config.radarrApiKey}`;
+      return fetch(url_collection)
+        .then((res) => {
+          if (res.ok) return res.json();
+          return Promise.reject(res.statusText);
+        })
+        .then(async (json) => {
+          const found = json.find((element) => element.tmdbId === args.tmdbId);
+          if (found) {
+            let response = await fetch(url_queue);
+            let data = await response.json();
+            if (data && data.length > 0) {
+              const queueElement = json.find(
+                (element) => element.movie.tmdbId === found.tmdbId
+              );
+              if (queueElement) return queueElement;
+            }
+            return found;
+          }
+          new ApolloError("not found", "404");
+        })
+        .catch((err) => new ApolloError(err.message, err.statusText));
+    }
+  }
+}
+
 async function configuration(parent, args, context: Context, info) {
   let users = await context.prisma.users({ where: { role: "ADMIN" } });
   if (users && users.length !== 0) {
@@ -49,5 +91,6 @@ module.exports = {
   movies,
   configuration,
   configurationPrivate,
-  user
+  user,
+  radarrCollection,
 };

@@ -5,6 +5,7 @@ type Query {
   movie(id: ID): Movie
   configuration(id: ID): Configuration
   configurationPrivate(id: ID): PrivateConfiguration
+  radarrCollection(tmdbId: Int): Movie
 }
 
 type Movie {
@@ -14,12 +15,16 @@ type Movie {
   requestedById: String
   img: String
   tmdb_id: String
+  tmdbId: Int
+  hasFile: String
   genres: [String]
   release_date: String
   createdAt: String!
   vote_average: String
   overview: String
   downloaded: Boolean
+  status: String
+  timeleft: String
 }
 
 type Configuration {
