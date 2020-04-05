@@ -36,7 +36,6 @@ async function main() {
   const options = {
     port: 4000,
     debug: true,
-    playground: false
   };
   server.start(options, ({ port }) =>
     console.log(`Server is running on http://localhost:${port}`)

@@ -7,7 +7,7 @@ services:
     ports:
       - "4466:4466"
     networks:
-      - web
+      - backend
     environment:
       PRISMA_CONFIG: |
         managementApiSecret: my-secret
@@ -25,7 +25,7 @@ services:
       MONGO_INITDB_ROOT_USERNAME: prisma
       MONGO_INITDB_ROOT_PASSWORD: prisma
     networks:
-      - web
+      - backend
     ports:
       - "27017:27017"
     volumes:
@@ -47,9 +47,33 @@ services:
       - prisma
     networks:
       - web
+      - backend
     ports:
       - 4000:4000
     command: bash -c "yarn prisma deploy && yarn start"
+
+  nginx:
+    image: linuxserver/nginx
+    container_name: nginx
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Oslo
+    volumes:
+      - nginx:/config
+    networks:
+      - web
+    ports:
+      - 80:80
+      - 8080:8080
+    restart: unless-stopped
+
+volumes:
+  nginx:
+    external: true
+
 networks:
   web:
+    external: true
+  backend:
     external: true
