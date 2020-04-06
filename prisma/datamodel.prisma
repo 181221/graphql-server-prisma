@@ -5,7 +5,7 @@ type Movie {
   requestedBy: User @relation(link: INLINE)
   requestedById : String 
   img: String
-  tmdb_id: Int! @unique
+  tmdbId: Int! @unique
   genres: [Int]
   release_date: String
   vote_average: Float

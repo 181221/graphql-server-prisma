@@ -3,10 +3,18 @@ type Query {
   user(email: String!): User
   movies(orderBy: MovieOrderByInput, first: Int): [Movie!]
   movie(id: ID): Movie
+  checkConfiguration(id: ID): Boolean
   configuration(id: ID): Configuration
-  configurationPrivate(id: ID): PrivateConfiguration
-  radarrCollection(tmdbId: Int): Movie
+  radarrCollection(tmdbId: Int): RadarrStatus
   similarMovies(tmdbId: Int): [Movie]
+}
+type RadarrStatus {
+  isRequested: Boolean
+  hasFile: Boolean
+  downloaded: Boolean
+  status: String
+  timeleft: String
+  title: String
 }
 
 type Movie {
@@ -15,31 +23,21 @@ type Movie {
   requestedBy: User!
   requestedById: String
   img: String
-  tmdb_id: Int
   tmdbId: Int
   hasFile: Boolean
   genres: [Int]
-  genre_ids: [Int]
   release_date: String
   createdAt: String!
   vote_average: Float
   overview: String
-  poster_path: String
-  backdrop_path: String
   downloaded: Boolean
   status: String
   timeleft: String
+  poster_path: String
+  backdrop_path: String
 }
 
 type Configuration {
-  id: ID!
-  radarrApiKey: String
-  radarrEndpoint: String
-  radarrRootFolder: String
-  user: User
-}
-
-type PrivateConfiguration {
   id: ID!
   radarrApiKey: String
   radarrEndpoint: String
@@ -80,7 +78,7 @@ type Mutation {
     pushoverEndpoint: String
     pushoverApiKey: String
     pushoverUserKey: String
-  ): PrivateConfiguration
+  ): Configuration
 
   updateConfiguration(
     radarrApiKey: String
@@ -89,7 +87,7 @@ type Mutation {
     pushoverEndpoint: String
     pushoverApiKey: String
     pushoverUserKey: String
-  ): PrivateConfiguration
+  ): Configuration
 
   createToken(email: String!): AuthPayload
 
@@ -106,14 +104,14 @@ type Mutation {
   createMovie(
     title: String!
     img: String
-    tmdb_id: Int
+    tmdbId: Int
     genres: [Int]
     vote_average: Float
     release_date: String
     overview: String
   ): Movie
 
-  updateMovie(tmdb_id: String!, downloaded: Boolean): Movie
+  updateMovie(tmdbId: Int!, downloaded: Boolean): Movie
 
   deleteMovie(id: ID!): Movie
 }

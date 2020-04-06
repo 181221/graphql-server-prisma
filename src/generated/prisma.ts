@@ -2,10 +2,7 @@
 
 import { GraphQLResolveInfo } from "graphql";
 import { User, Movie, Configuration } from "./prisma-client";
-import {
-  PrivateConfiguration,
-  AuthPayload
-} from "../resolvers/types/AuthPayload";
+import { AuthPayload } from "../resolvers/types/AuthPayload";
 import { Context } from "../resolvers/types/Context";
 
 export type Role = "ADMIN" | "CUSTOMER";
@@ -27,20 +24,20 @@ export namespace QueryResolvers {
     id?: string | null;
   }
 
+  export interface ArgsCheckConfiguration {
+    id?: string | null;
+  }
+
   export interface ArgsConfiguration {
     id?: string | null;
   }
 
-  export interface ArgsConfigurationPrivate {
-    id?: string | null;
-  }
-
   export interface ArgsRadarrCollection {
-    tmdbId?: number | null;
+    tmdb_id?: number | null;
   }
 
   export interface ArgsSimilarMovies {
-    tmdbId?: number | null;
+    tmdb_id?: number | null;
   }
 
   export type UsersResolver =
@@ -111,6 +108,23 @@ export namespace QueryResolvers {
         ) => Movie | null | Promise<Movie | null>;
       };
 
+  export type CheckConfigurationResolver =
+    | ((
+        parent: undefined,
+        args: ArgsCheckConfiguration,
+        ctx: Context,
+        info: GraphQLResolveInfo
+      ) => boolean | null | Promise<boolean | null>)
+    | {
+        fragment: string;
+        resolve: (
+          parent: undefined,
+          args: ArgsCheckConfiguration,
+          ctx: Context,
+          info: GraphQLResolveInfo
+        ) => boolean | null | Promise<boolean | null>;
+      };
+
   export type ConfigurationResolver =
     | ((
         parent: undefined,
@@ -126,23 +140,6 @@ export namespace QueryResolvers {
           ctx: Context,
           info: GraphQLResolveInfo
         ) => Configuration | null | Promise<Configuration | null>;
-      };
-
-  export type ConfigurationPrivateResolver =
-    | ((
-        parent: undefined,
-        args: ArgsConfigurationPrivate,
-        ctx: Context,
-        info: GraphQLResolveInfo
-      ) => PrivateConfiguration | null | Promise<PrivateConfiguration | null>)
-    | {
-        fragment: string;
-        resolve: (
-          parent: undefined,
-          args: ArgsConfigurationPrivate,
-          ctx: Context,
-          info: GraphQLResolveInfo
-        ) => PrivateConfiguration | null | Promise<PrivateConfiguration | null>;
       };
 
   export type RadarrCollectionResolver =
@@ -248,6 +245,23 @@ export namespace QueryResolvers {
           ) => Movie | null | Promise<Movie | null>;
         };
 
+    checkConfiguration:
+      | ((
+          parent: undefined,
+          args: ArgsCheckConfiguration,
+          ctx: Context,
+          info: GraphQLResolveInfo
+        ) => boolean | null | Promise<boolean | null>)
+      | {
+          fragment: string;
+          resolve: (
+            parent: undefined,
+            args: ArgsCheckConfiguration,
+            ctx: Context,
+            info: GraphQLResolveInfo
+          ) => boolean | null | Promise<boolean | null>;
+        };
+
     configuration:
       | ((
           parent: undefined,
@@ -263,26 +277,6 @@ export namespace QueryResolvers {
             ctx: Context,
             info: GraphQLResolveInfo
           ) => Configuration | null | Promise<Configuration | null>;
-        };
-
-    configurationPrivate:
-      | ((
-          parent: undefined,
-          args: ArgsConfigurationPrivate,
-          ctx: Context,
-          info: GraphQLResolveInfo
-        ) => PrivateConfiguration | null | Promise<PrivateConfiguration | null>)
-      | {
-          fragment: string;
-          resolve: (
-            parent: undefined,
-            args: ArgsConfigurationPrivate,
-            ctx: Context,
-            info: GraphQLResolveInfo
-          ) =>
-            | PrivateConfiguration
-            | null
-            | Promise<PrivateConfiguration | null>;
         };
 
     radarrCollection:
@@ -730,23 +724,6 @@ export namespace MovieResolvers {
         ) => number | null | Promise<number | null>;
       };
 
-  export type TmdbIdResolver =
-    | ((
-        parent: Movie,
-        args: {},
-        ctx: Context,
-        info: GraphQLResolveInfo
-      ) => number | null | Promise<number | null>)
-    | {
-        fragment: string;
-        resolve: (
-          parent: Movie,
-          args: {},
-          ctx: Context,
-          info: GraphQLResolveInfo
-        ) => number | null | Promise<number | null>;
-      };
-
   export type HasFileResolver =
     | ((
         parent: Movie,
@@ -765,23 +742,6 @@ export namespace MovieResolvers {
       };
 
   export type GenresResolver =
-    | ((
-        parent: Movie,
-        args: {},
-        ctx: Context,
-        info: GraphQLResolveInfo
-      ) => Array<number | null> | null | Promise<Array<number | null> | null>)
-    | {
-        fragment: string;
-        resolve: (
-          parent: Movie,
-          args: {},
-          ctx: Context,
-          info: GraphQLResolveInfo
-        ) => Array<number | null> | null | Promise<Array<number | null> | null>;
-      };
-
-  export type Genre_idsResolver =
     | ((
         parent: Movie,
         args: {},
@@ -850,40 +810,6 @@ export namespace MovieResolvers {
       };
 
   export type OverviewResolver =
-    | ((
-        parent: Movie,
-        args: {},
-        ctx: Context,
-        info: GraphQLResolveInfo
-      ) => string | null | Promise<string | null>)
-    | {
-        fragment: string;
-        resolve: (
-          parent: Movie,
-          args: {},
-          ctx: Context,
-          info: GraphQLResolveInfo
-        ) => string | null | Promise<string | null>;
-      };
-
-  export type Poster_pathResolver =
-    | ((
-        parent: Movie,
-        args: {},
-        ctx: Context,
-        info: GraphQLResolveInfo
-      ) => string | null | Promise<string | null>)
-    | {
-        fragment: string;
-        resolve: (
-          parent: Movie,
-          args: {},
-          ctx: Context,
-          info: GraphQLResolveInfo
-        ) => string | null | Promise<string | null>;
-      };
-
-  export type Backdrop_pathResolver =
     | ((
         parent: Movie,
         args: {},
@@ -1054,23 +980,6 @@ export namespace MovieResolvers {
           ) => number | null | Promise<number | null>;
         };
 
-    tmdbId:
-      | ((
-          parent: Movie,
-          args: {},
-          ctx: Context,
-          info: GraphQLResolveInfo
-        ) => number | null | Promise<number | null>)
-      | {
-          fragment: string;
-          resolve: (
-            parent: Movie,
-            args: {},
-            ctx: Context,
-            info: GraphQLResolveInfo
-          ) => number | null | Promise<number | null>;
-        };
-
     hasFile:
       | ((
           parent: Movie,
@@ -1089,26 +998,6 @@ export namespace MovieResolvers {
         };
 
     genres:
-      | ((
-          parent: Movie,
-          args: {},
-          ctx: Context,
-          info: GraphQLResolveInfo
-        ) => Array<number | null> | null | Promise<Array<number | null> | null>)
-      | {
-          fragment: string;
-          resolve: (
-            parent: Movie,
-            args: {},
-            ctx: Context,
-            info: GraphQLResolveInfo
-          ) =>
-            | Array<number | null>
-            | null
-            | Promise<Array<number | null> | null>;
-        };
-
-    genre_ids:
       | ((
           parent: Movie,
           args: {},
@@ -1196,40 +1085,6 @@ export namespace MovieResolvers {
           ) => string | null | Promise<string | null>;
         };
 
-    poster_path:
-      | ((
-          parent: Movie,
-          args: {},
-          ctx: Context,
-          info: GraphQLResolveInfo
-        ) => string | null | Promise<string | null>)
-      | {
-          fragment: string;
-          resolve: (
-            parent: Movie,
-            args: {},
-            ctx: Context,
-            info: GraphQLResolveInfo
-          ) => string | null | Promise<string | null>;
-        };
-
-    backdrop_path:
-      | ((
-          parent: Movie,
-          args: {},
-          ctx: Context,
-          info: GraphQLResolveInfo
-        ) => string | null | Promise<string | null>)
-      | {
-          fragment: string;
-          resolve: (
-            parent: Movie,
-            args: {},
-            ctx: Context,
-            info: GraphQLResolveInfo
-          ) => string | null | Promise<string | null>;
-        };
-
     downloaded:
       | ((
           parent: Movie,
@@ -1291,197 +1146,18 @@ export namespace ConfigurationResolvers {
     radarrEndpoint: (parent: Configuration) =>
       parent.radarrEndpoint === undefined ? null : parent.radarrEndpoint,
     radarrRootFolder: (parent: Configuration) =>
-      parent.radarrRootFolder === undefined ? null : parent.radarrRootFolder
-  };
-
-  export type IdResolver =
-    | ((
-        parent: Configuration,
-        args: {},
-        ctx: Context,
-        info: GraphQLResolveInfo
-      ) => string | Promise<string>)
-    | {
-        fragment: string;
-        resolve: (
-          parent: Configuration,
-          args: {},
-          ctx: Context,
-          info: GraphQLResolveInfo
-        ) => string | Promise<string>;
-      };
-
-  export type RadarrApiKeyResolver =
-    | ((
-        parent: Configuration,
-        args: {},
-        ctx: Context,
-        info: GraphQLResolveInfo
-      ) => string | null | Promise<string | null>)
-    | {
-        fragment: string;
-        resolve: (
-          parent: Configuration,
-          args: {},
-          ctx: Context,
-          info: GraphQLResolveInfo
-        ) => string | null | Promise<string | null>;
-      };
-
-  export type RadarrEndpointResolver =
-    | ((
-        parent: Configuration,
-        args: {},
-        ctx: Context,
-        info: GraphQLResolveInfo
-      ) => string | null | Promise<string | null>)
-    | {
-        fragment: string;
-        resolve: (
-          parent: Configuration,
-          args: {},
-          ctx: Context,
-          info: GraphQLResolveInfo
-        ) => string | null | Promise<string | null>;
-      };
-
-  export type RadarrRootFolderResolver =
-    | ((
-        parent: Configuration,
-        args: {},
-        ctx: Context,
-        info: GraphQLResolveInfo
-      ) => string | null | Promise<string | null>)
-    | {
-        fragment: string;
-        resolve: (
-          parent: Configuration,
-          args: {},
-          ctx: Context,
-          info: GraphQLResolveInfo
-        ) => string | null | Promise<string | null>;
-      };
-
-  export type UserResolver =
-    | ((
-        parent: Configuration,
-        args: {},
-        ctx: Context,
-        info: GraphQLResolveInfo
-      ) => User | null | Promise<User | null>)
-    | {
-        fragment: string;
-        resolve: (
-          parent: Configuration,
-          args: {},
-          ctx: Context,
-          info: GraphQLResolveInfo
-        ) => User | null | Promise<User | null>;
-      };
-
-  export interface Type {
-    id:
-      | ((
-          parent: Configuration,
-          args: {},
-          ctx: Context,
-          info: GraphQLResolveInfo
-        ) => string | Promise<string>)
-      | {
-          fragment: string;
-          resolve: (
-            parent: Configuration,
-            args: {},
-            ctx: Context,
-            info: GraphQLResolveInfo
-          ) => string | Promise<string>;
-        };
-
-    radarrApiKey:
-      | ((
-          parent: Configuration,
-          args: {},
-          ctx: Context,
-          info: GraphQLResolveInfo
-        ) => string | null | Promise<string | null>)
-      | {
-          fragment: string;
-          resolve: (
-            parent: Configuration,
-            args: {},
-            ctx: Context,
-            info: GraphQLResolveInfo
-          ) => string | null | Promise<string | null>;
-        };
-
-    radarrEndpoint:
-      | ((
-          parent: Configuration,
-          args: {},
-          ctx: Context,
-          info: GraphQLResolveInfo
-        ) => string | null | Promise<string | null>)
-      | {
-          fragment: string;
-          resolve: (
-            parent: Configuration,
-            args: {},
-            ctx: Context,
-            info: GraphQLResolveInfo
-          ) => string | null | Promise<string | null>;
-        };
-
-    radarrRootFolder:
-      | ((
-          parent: Configuration,
-          args: {},
-          ctx: Context,
-          info: GraphQLResolveInfo
-        ) => string | null | Promise<string | null>)
-      | {
-          fragment: string;
-          resolve: (
-            parent: Configuration,
-            args: {},
-            ctx: Context,
-            info: GraphQLResolveInfo
-          ) => string | null | Promise<string | null>;
-        };
-
-    user:
-      | ((
-          parent: Configuration,
-          args: {},
-          ctx: Context,
-          info: GraphQLResolveInfo
-        ) => User | null | Promise<User | null>)
-      | {
-          fragment: string;
-          resolve: (
-            parent: Configuration,
-            args: {},
-            ctx: Context,
-            info: GraphQLResolveInfo
-          ) => User | null | Promise<User | null>;
-        };
-  }
-}
-
-export namespace PrivateConfigurationResolvers {
-  export const defaultResolvers = {
-    id: (parent: PrivateConfiguration) => parent.id,
-    radarrApiKey: (parent: PrivateConfiguration) => parent.radarrApiKey,
-    radarrEndpoint: (parent: PrivateConfiguration) => parent.radarrEndpoint,
-    radarrRootFolder: (parent: PrivateConfiguration) => parent.radarrRootFolder,
-    pushoverApiKey: (parent: PrivateConfiguration) =>
+      parent.radarrRootFolder === undefined ? null : parent.radarrRootFolder,
+    pushoverEndpoint: (parent: Configuration) =>
+      parent.pushoverEndpoint === undefined ? null : parent.pushoverEndpoint,
+    pushoverApiKey: (parent: Configuration) =>
       parent.pushoverApiKey === undefined ? null : parent.pushoverApiKey,
-    pushoverUserKey: (parent: PrivateConfiguration) =>
+    pushoverUserKey: (parent: Configuration) =>
       parent.pushoverUserKey === undefined ? null : parent.pushoverUserKey
   };
 
   export type IdResolver =
     | ((
-        parent: PrivateConfiguration,
+        parent: Configuration,
         args: {},
         ctx: Context,
         info: GraphQLResolveInfo
@@ -1489,7 +1165,7 @@ export namespace PrivateConfigurationResolvers {
     | {
         fragment: string;
         resolve: (
-          parent: PrivateConfiguration,
+          parent: Configuration,
           args: {},
           ctx: Context,
           info: GraphQLResolveInfo
@@ -1498,7 +1174,7 @@ export namespace PrivateConfigurationResolvers {
 
   export type RadarrApiKeyResolver =
     | ((
-        parent: PrivateConfiguration,
+        parent: Configuration,
         args: {},
         ctx: Context,
         info: GraphQLResolveInfo
@@ -1506,7 +1182,7 @@ export namespace PrivateConfigurationResolvers {
     | {
         fragment: string;
         resolve: (
-          parent: PrivateConfiguration,
+          parent: Configuration,
           args: {},
           ctx: Context,
           info: GraphQLResolveInfo
@@ -1515,7 +1191,7 @@ export namespace PrivateConfigurationResolvers {
 
   export type RadarrEndpointResolver =
     | ((
-        parent: PrivateConfiguration,
+        parent: Configuration,
         args: {},
         ctx: Context,
         info: GraphQLResolveInfo
@@ -1523,7 +1199,7 @@ export namespace PrivateConfigurationResolvers {
     | {
         fragment: string;
         resolve: (
-          parent: PrivateConfiguration,
+          parent: Configuration,
           args: {},
           ctx: Context,
           info: GraphQLResolveInfo
@@ -1532,7 +1208,7 @@ export namespace PrivateConfigurationResolvers {
 
   export type RadarrRootFolderResolver =
     | ((
-        parent: PrivateConfiguration,
+        parent: Configuration,
         args: {},
         ctx: Context,
         info: GraphQLResolveInfo
@@ -1540,7 +1216,7 @@ export namespace PrivateConfigurationResolvers {
     | {
         fragment: string;
         resolve: (
-          parent: PrivateConfiguration,
+          parent: Configuration,
           args: {},
           ctx: Context,
           info: GraphQLResolveInfo
@@ -1549,7 +1225,7 @@ export namespace PrivateConfigurationResolvers {
 
   export type PushoverEndpointResolver =
     | ((
-        parent: PrivateConfiguration,
+        parent: Configuration,
         args: {},
         ctx: Context,
         info: GraphQLResolveInfo
@@ -1557,7 +1233,7 @@ export namespace PrivateConfigurationResolvers {
     | {
         fragment: string;
         resolve: (
-          parent: PrivateConfiguration,
+          parent: Configuration,
           args: {},
           ctx: Context,
           info: GraphQLResolveInfo
@@ -1566,7 +1242,7 @@ export namespace PrivateConfigurationResolvers {
 
   export type PushoverApiKeyResolver =
     | ((
-        parent: PrivateConfiguration,
+        parent: Configuration,
         args: {},
         ctx: Context,
         info: GraphQLResolveInfo
@@ -1574,7 +1250,7 @@ export namespace PrivateConfigurationResolvers {
     | {
         fragment: string;
         resolve: (
-          parent: PrivateConfiguration,
+          parent: Configuration,
           args: {},
           ctx: Context,
           info: GraphQLResolveInfo
@@ -1583,7 +1259,7 @@ export namespace PrivateConfigurationResolvers {
 
   export type PushoverUserKeyResolver =
     | ((
-        parent: PrivateConfiguration,
+        parent: Configuration,
         args: {},
         ctx: Context,
         info: GraphQLResolveInfo
@@ -1591,7 +1267,7 @@ export namespace PrivateConfigurationResolvers {
     | {
         fragment: string;
         resolve: (
-          parent: PrivateConfiguration,
+          parent: Configuration,
           args: {},
           ctx: Context,
           info: GraphQLResolveInfo
@@ -1600,7 +1276,7 @@ export namespace PrivateConfigurationResolvers {
 
   export type UserResolver =
     | ((
-        parent: PrivateConfiguration,
+        parent: Configuration,
         args: {},
         ctx: Context,
         info: GraphQLResolveInfo
@@ -1608,7 +1284,7 @@ export namespace PrivateConfigurationResolvers {
     | {
         fragment: string;
         resolve: (
-          parent: PrivateConfiguration,
+          parent: Configuration,
           args: {},
           ctx: Context,
           info: GraphQLResolveInfo
@@ -1618,7 +1294,7 @@ export namespace PrivateConfigurationResolvers {
   export interface Type {
     id:
       | ((
-          parent: PrivateConfiguration,
+          parent: Configuration,
           args: {},
           ctx: Context,
           info: GraphQLResolveInfo
@@ -1626,7 +1302,7 @@ export namespace PrivateConfigurationResolvers {
       | {
           fragment: string;
           resolve: (
-            parent: PrivateConfiguration,
+            parent: Configuration,
             args: {},
             ctx: Context,
             info: GraphQLResolveInfo
@@ -1635,7 +1311,7 @@ export namespace PrivateConfigurationResolvers {
 
     radarrApiKey:
       | ((
-          parent: PrivateConfiguration,
+          parent: Configuration,
           args: {},
           ctx: Context,
           info: GraphQLResolveInfo
@@ -1643,7 +1319,7 @@ export namespace PrivateConfigurationResolvers {
       | {
           fragment: string;
           resolve: (
-            parent: PrivateConfiguration,
+            parent: Configuration,
             args: {},
             ctx: Context,
             info: GraphQLResolveInfo
@@ -1652,7 +1328,7 @@ export namespace PrivateConfigurationResolvers {
 
     radarrEndpoint:
       | ((
-          parent: PrivateConfiguration,
+          parent: Configuration,
           args: {},
           ctx: Context,
           info: GraphQLResolveInfo
@@ -1660,7 +1336,7 @@ export namespace PrivateConfigurationResolvers {
       | {
           fragment: string;
           resolve: (
-            parent: PrivateConfiguration,
+            parent: Configuration,
             args: {},
             ctx: Context,
             info: GraphQLResolveInfo
@@ -1669,7 +1345,7 @@ export namespace PrivateConfigurationResolvers {
 
     radarrRootFolder:
       | ((
-          parent: PrivateConfiguration,
+          parent: Configuration,
           args: {},
           ctx: Context,
           info: GraphQLResolveInfo
@@ -1677,7 +1353,7 @@ export namespace PrivateConfigurationResolvers {
       | {
           fragment: string;
           resolve: (
-            parent: PrivateConfiguration,
+            parent: Configuration,
             args: {},
             ctx: Context,
             info: GraphQLResolveInfo
@@ -1686,7 +1362,7 @@ export namespace PrivateConfigurationResolvers {
 
     pushoverEndpoint:
       | ((
-          parent: PrivateConfiguration,
+          parent: Configuration,
           args: {},
           ctx: Context,
           info: GraphQLResolveInfo
@@ -1694,7 +1370,7 @@ export namespace PrivateConfigurationResolvers {
       | {
           fragment: string;
           resolve: (
-            parent: PrivateConfiguration,
+            parent: Configuration,
             args: {},
             ctx: Context,
             info: GraphQLResolveInfo
@@ -1703,7 +1379,7 @@ export namespace PrivateConfigurationResolvers {
 
     pushoverApiKey:
       | ((
-          parent: PrivateConfiguration,
+          parent: Configuration,
           args: {},
           ctx: Context,
           info: GraphQLResolveInfo
@@ -1711,7 +1387,7 @@ export namespace PrivateConfigurationResolvers {
       | {
           fragment: string;
           resolve: (
-            parent: PrivateConfiguration,
+            parent: Configuration,
             args: {},
             ctx: Context,
             info: GraphQLResolveInfo
@@ -1720,7 +1396,7 @@ export namespace PrivateConfigurationResolvers {
 
     pushoverUserKey:
       | ((
-          parent: PrivateConfiguration,
+          parent: Configuration,
           args: {},
           ctx: Context,
           info: GraphQLResolveInfo
@@ -1728,7 +1404,7 @@ export namespace PrivateConfigurationResolvers {
       | {
           fragment: string;
           resolve: (
-            parent: PrivateConfiguration,
+            parent: Configuration,
             args: {},
             ctx: Context,
             info: GraphQLResolveInfo
@@ -1737,7 +1413,7 @@ export namespace PrivateConfigurationResolvers {
 
     user:
       | ((
-          parent: PrivateConfiguration,
+          parent: Configuration,
           args: {},
           ctx: Context,
           info: GraphQLResolveInfo
@@ -1745,7 +1421,7 @@ export namespace PrivateConfigurationResolvers {
       | {
           fragment: string;
           resolve: (
-            parent: PrivateConfiguration,
+            parent: Configuration,
             args: {},
             ctx: Context,
             info: GraphQLResolveInfo
@@ -1816,7 +1492,7 @@ export namespace MutationResolvers {
         args: ArgsCreateConfiguration,
         ctx: Context,
         info: GraphQLResolveInfo
-      ) => PrivateConfiguration | null | Promise<PrivateConfiguration | null>)
+      ) => Configuration | null | Promise<Configuration | null>)
     | {
         fragment: string;
         resolve: (
@@ -1824,7 +1500,7 @@ export namespace MutationResolvers {
           args: ArgsCreateConfiguration,
           ctx: Context,
           info: GraphQLResolveInfo
-        ) => PrivateConfiguration | null | Promise<PrivateConfiguration | null>;
+        ) => Configuration | null | Promise<Configuration | null>;
       };
 
   export type UpdateConfigurationResolver =
@@ -1833,7 +1509,7 @@ export namespace MutationResolvers {
         args: ArgsUpdateConfiguration,
         ctx: Context,
         info: GraphQLResolveInfo
-      ) => PrivateConfiguration | null | Promise<PrivateConfiguration | null>)
+      ) => Configuration | null | Promise<Configuration | null>)
     | {
         fragment: string;
         resolve: (
@@ -1841,7 +1517,7 @@ export namespace MutationResolvers {
           args: ArgsUpdateConfiguration,
           ctx: Context,
           info: GraphQLResolveInfo
-        ) => PrivateConfiguration | null | Promise<PrivateConfiguration | null>;
+        ) => Configuration | null | Promise<Configuration | null>;
       };
 
   export type CreateTokenResolver =
@@ -1953,7 +1629,7 @@ export namespace MutationResolvers {
           args: ArgsCreateConfiguration,
           ctx: Context,
           info: GraphQLResolveInfo
-        ) => PrivateConfiguration | null | Promise<PrivateConfiguration | null>)
+        ) => Configuration | null | Promise<Configuration | null>)
       | {
           fragment: string;
           resolve: (
@@ -1961,10 +1637,7 @@ export namespace MutationResolvers {
             args: ArgsCreateConfiguration,
             ctx: Context,
             info: GraphQLResolveInfo
-          ) =>
-            | PrivateConfiguration
-            | null
-            | Promise<PrivateConfiguration | null>;
+          ) => Configuration | null | Promise<Configuration | null>;
         };
 
     updateConfiguration:
@@ -1973,7 +1646,7 @@ export namespace MutationResolvers {
           args: ArgsUpdateConfiguration,
           ctx: Context,
           info: GraphQLResolveInfo
-        ) => PrivateConfiguration | null | Promise<PrivateConfiguration | null>)
+        ) => Configuration | null | Promise<Configuration | null>)
       | {
           fragment: string;
           resolve: (
@@ -1981,10 +1654,7 @@ export namespace MutationResolvers {
             args: ArgsUpdateConfiguration,
             ctx: Context,
             info: GraphQLResolveInfo
-          ) =>
-            | PrivateConfiguration
-            | null
-            | Promise<PrivateConfiguration | null>;
+          ) => Configuration | null | Promise<Configuration | null>;
         };
 
     createToken:
@@ -2243,7 +1913,6 @@ export interface Resolvers {
   User: UserResolvers.Type;
   Movie: MovieResolvers.Type;
   Configuration: ConfigurationResolvers.Type;
-  PrivateConfiguration: PrivateConfigurationResolvers.Type;
   Mutation: MutationResolvers.Type;
   AuthPayload: AuthPayloadResolvers.Type;
   Subscription: SubscriptionResolvers.Type;

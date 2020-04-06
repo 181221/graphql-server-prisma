@@ -198,8 +198,8 @@ export type MovieOrderByInput =
   | "requestedById_DESC"
   | "img_ASC"
   | "img_DESC"
-  | "tmdb_id_ASC"
-  | "tmdb_id_DESC"
+  | "tmdbId_ASC"
+  | "tmdbId_DESC"
   | "release_date_ASC"
   | "release_date_DESC"
   | "vote_average_ASC"
@@ -311,14 +311,14 @@ export interface MovieWhereInput {
   img_not_starts_with?: Maybe<String>;
   img_ends_with?: Maybe<String>;
   img_not_ends_with?: Maybe<String>;
-  tmdb_id?: Maybe<Int>;
-  tmdb_id_not?: Maybe<Int>;
-  tmdb_id_in?: Maybe<Int[] | Int>;
-  tmdb_id_not_in?: Maybe<Int[] | Int>;
-  tmdb_id_lt?: Maybe<Int>;
-  tmdb_id_lte?: Maybe<Int>;
-  tmdb_id_gt?: Maybe<Int>;
-  tmdb_id_gte?: Maybe<Int>;
+  tmdbId?: Maybe<Int>;
+  tmdbId_not?: Maybe<Int>;
+  tmdbId_in?: Maybe<Int[] | Int>;
+  tmdbId_not_in?: Maybe<Int[] | Int>;
+  tmdbId_lt?: Maybe<Int>;
+  tmdbId_lte?: Maybe<Int>;
+  tmdbId_gt?: Maybe<Int>;
+  tmdbId_gte?: Maybe<Int>;
   release_date?: Maybe<String>;
   release_date_not?: Maybe<String>;
   release_date_in?: Maybe<String[] | String>;
@@ -541,7 +541,7 @@ export interface ConfigurationWhereInput {
 
 export type MovieWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
-  tmdb_id?: Maybe<Int>;
+  tmdbId?: Maybe<Int>;
 }>;
 
 export type UserWhereUniqueInput = AtLeastOne<{
@@ -588,7 +588,7 @@ export interface MovieCreateWithoutRequestedByInput {
   title: String;
   requestedById?: Maybe<String>;
   img?: Maybe<String>;
-  tmdb_id: Int;
+  tmdbId: Int;
   genres?: Maybe<MovieCreategenresInput>;
   release_date?: Maybe<String>;
   vote_average?: Maybe<Float>;
@@ -659,7 +659,7 @@ export interface MovieUpdateWithoutRequestedByDataInput {
   title?: Maybe<String>;
   requestedById?: Maybe<String>;
   img?: Maybe<String>;
-  tmdb_id?: Maybe<Int>;
+  tmdbId?: Maybe<Int>;
   genres?: Maybe<MovieUpdategenresInput>;
   release_date?: Maybe<String>;
   vote_average?: Maybe<Float>;
@@ -742,14 +742,14 @@ export interface MovieScalarWhereInput {
   img_not_starts_with?: Maybe<String>;
   img_ends_with?: Maybe<String>;
   img_not_ends_with?: Maybe<String>;
-  tmdb_id?: Maybe<Int>;
-  tmdb_id_not?: Maybe<Int>;
-  tmdb_id_in?: Maybe<Int[] | Int>;
-  tmdb_id_not_in?: Maybe<Int[] | Int>;
-  tmdb_id_lt?: Maybe<Int>;
-  tmdb_id_lte?: Maybe<Int>;
-  tmdb_id_gt?: Maybe<Int>;
-  tmdb_id_gte?: Maybe<Int>;
+  tmdbId?: Maybe<Int>;
+  tmdbId_not?: Maybe<Int>;
+  tmdbId_in?: Maybe<Int[] | Int>;
+  tmdbId_not_in?: Maybe<Int[] | Int>;
+  tmdbId_lt?: Maybe<Int>;
+  tmdbId_lte?: Maybe<Int>;
+  tmdbId_gt?: Maybe<Int>;
+  tmdbId_gte?: Maybe<Int>;
   release_date?: Maybe<String>;
   release_date_not?: Maybe<String>;
   release_date_in?: Maybe<String[] | String>;
@@ -802,7 +802,7 @@ export interface MovieUpdateManyDataInput {
   title?: Maybe<String>;
   requestedById?: Maybe<String>;
   img?: Maybe<String>;
-  tmdb_id?: Maybe<Int>;
+  tmdbId?: Maybe<Int>;
   genres?: Maybe<MovieUpdategenresInput>;
   release_date?: Maybe<String>;
   vote_average?: Maybe<Float>;
@@ -830,7 +830,7 @@ export interface MovieCreateInput {
   requestedBy?: Maybe<UserCreateOneWithoutMoviesInput>;
   requestedById?: Maybe<String>;
   img?: Maybe<String>;
-  tmdb_id: Int;
+  tmdbId: Int;
   genres?: Maybe<MovieCreategenresInput>;
   release_date?: Maybe<String>;
   vote_average?: Maybe<Float>;
@@ -873,7 +873,7 @@ export interface MovieUpdateInput {
   requestedBy?: Maybe<UserUpdateOneWithoutMoviesInput>;
   requestedById?: Maybe<String>;
   img?: Maybe<String>;
-  tmdb_id?: Maybe<Int>;
+  tmdbId?: Maybe<Int>;
   genres?: Maybe<MovieUpdategenresInput>;
   release_date?: Maybe<String>;
   vote_average?: Maybe<Float>;
@@ -931,7 +931,7 @@ export interface MovieUpdateManyMutationInput {
   title?: Maybe<String>;
   requestedById?: Maybe<String>;
   img?: Maybe<String>;
-  tmdb_id?: Maybe<Int>;
+  tmdbId?: Maybe<Int>;
   genres?: Maybe<MovieUpdategenresInput>;
   release_date?: Maybe<String>;
   vote_average?: Maybe<Float>;
@@ -1136,7 +1136,7 @@ export interface Movie {
   title: String;
   requestedById?: String;
   img?: String;
-  tmdb_id: Int;
+  tmdbId: Int;
   genres: Int[];
   release_date?: String;
   vote_average?: Float;
@@ -1151,7 +1151,7 @@ export interface MoviePromise extends Promise<Movie>, Fragmentable {
   requestedBy: <T = UserPromise>() => T;
   requestedById: () => Promise<String>;
   img: () => Promise<String>;
-  tmdb_id: () => Promise<Int>;
+  tmdbId: () => Promise<Int>;
   genres: () => Promise<Int[]>;
   release_date: () => Promise<String>;
   vote_average: () => Promise<Float>;
@@ -1168,7 +1168,7 @@ export interface MovieSubscription
   requestedBy: <T = UserSubscription>() => T;
   requestedById: () => Promise<AsyncIterator<String>>;
   img: () => Promise<AsyncIterator<String>>;
-  tmdb_id: () => Promise<AsyncIterator<Int>>;
+  tmdbId: () => Promise<AsyncIterator<Int>>;
   genres: () => Promise<AsyncIterator<Int[]>>;
   release_date: () => Promise<AsyncIterator<String>>;
   vote_average: () => Promise<AsyncIterator<Float>>;
@@ -1185,7 +1185,7 @@ export interface MovieNullablePromise
   requestedBy: <T = UserPromise>() => T;
   requestedById: () => Promise<String>;
   img: () => Promise<String>;
-  tmdb_id: () => Promise<Int>;
+  tmdbId: () => Promise<Int>;
   genres: () => Promise<Int[]>;
   release_date: () => Promise<String>;
   vote_average: () => Promise<Float>;
@@ -1486,7 +1486,7 @@ export interface MoviePreviousValues {
   title: String;
   requestedById?: String;
   img?: String;
-  tmdb_id: Int;
+  tmdbId: Int;
   genres: Int[];
   release_date?: String;
   vote_average?: Float;
@@ -1502,7 +1502,7 @@ export interface MoviePreviousValuesPromise
   title: () => Promise<String>;
   requestedById: () => Promise<String>;
   img: () => Promise<String>;
-  tmdb_id: () => Promise<Int>;
+  tmdbId: () => Promise<Int>;
   genres: () => Promise<Int[]>;
   release_date: () => Promise<String>;
   vote_average: () => Promise<Float>;
@@ -1518,7 +1518,7 @@ export interface MoviePreviousValuesSubscription
   title: () => Promise<AsyncIterator<String>>;
   requestedById: () => Promise<AsyncIterator<String>>;
   img: () => Promise<AsyncIterator<String>>;
-  tmdb_id: () => Promise<AsyncIterator<Int>>;
+  tmdbId: () => Promise<AsyncIterator<Int>>;
   genres: () => Promise<AsyncIterator<Int[]>>;
   release_date: () => Promise<AsyncIterator<String>>;
   vote_average: () => Promise<AsyncIterator<Float>>;

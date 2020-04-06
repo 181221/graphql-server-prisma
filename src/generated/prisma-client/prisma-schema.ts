@@ -273,7 +273,7 @@ type Movie {
   requestedBy: User
   requestedById: String
   img: String
-  tmdb_id: Int!
+  tmdbId: Int!
   genres: [Int!]!
   release_date: String
   vote_average: Float
@@ -297,7 +297,7 @@ input MovieCreateInput {
   requestedBy: UserCreateOneWithoutMoviesInput
   requestedById: String
   img: String
-  tmdb_id: Int!
+  tmdbId: Int!
   genres: MovieCreategenresInput
   release_date: String
   vote_average: Float
@@ -315,7 +315,7 @@ input MovieCreateWithoutRequestedByInput {
   title: String!
   requestedById: String
   img: String
-  tmdb_id: Int!
+  tmdbId: Int!
   genres: MovieCreategenresInput
   release_date: String
   vote_average: Float
@@ -339,8 +339,8 @@ enum MovieOrderByInput {
   requestedById_DESC
   img_ASC
   img_DESC
-  tmdb_id_ASC
-  tmdb_id_DESC
+  tmdbId_ASC
+  tmdbId_DESC
   release_date_ASC
   release_date_DESC
   vote_average_ASC
@@ -357,7 +357,7 @@ type MoviePreviousValues {
   title: String!
   requestedById: String
   img: String
-  tmdb_id: Int!
+  tmdbId: Int!
   genres: [Int!]!
   release_date: String
   vote_average: Float
@@ -430,14 +430,14 @@ input MovieScalarWhereInput {
   img_not_starts_with: String
   img_ends_with: String
   img_not_ends_with: String
-  tmdb_id: Int
-  tmdb_id_not: Int
-  tmdb_id_in: [Int!]
-  tmdb_id_not_in: [Int!]
-  tmdb_id_lt: Int
-  tmdb_id_lte: Int
-  tmdb_id_gt: Int
-  tmdb_id_gte: Int
+  tmdbId: Int
+  tmdbId_not: Int
+  tmdbId_in: [Int!]
+  tmdbId_not_in: [Int!]
+  tmdbId_lt: Int
+  tmdbId_lte: Int
+  tmdbId_gt: Int
+  tmdbId_gte: Int
   release_date: String
   release_date_not: String
   release_date_in: [String!]
@@ -508,7 +508,7 @@ input MovieUpdateInput {
   requestedBy: UserUpdateOneWithoutMoviesInput
   requestedById: String
   img: String
-  tmdb_id: Int
+  tmdbId: Int
   genres: MovieUpdategenresInput
   release_date: String
   vote_average: Float
@@ -520,7 +520,7 @@ input MovieUpdateManyDataInput {
   title: String
   requestedById: String
   img: String
-  tmdb_id: Int
+  tmdbId: Int
   genres: MovieUpdategenresInput
   release_date: String
   vote_average: Float
@@ -532,7 +532,7 @@ input MovieUpdateManyMutationInput {
   title: String
   requestedById: String
   img: String
-  tmdb_id: Int
+  tmdbId: Int
   genres: MovieUpdategenresInput
   release_date: String
   vote_average: Float
@@ -561,7 +561,7 @@ input MovieUpdateWithoutRequestedByDataInput {
   title: String
   requestedById: String
   img: String
-  tmdb_id: Int
+  tmdbId: Int
   genres: MovieUpdategenresInput
   release_date: String
   vote_average: Float
@@ -646,14 +646,14 @@ input MovieWhereInput {
   img_not_starts_with: String
   img_ends_with: String
   img_not_ends_with: String
-  tmdb_id: Int
-  tmdb_id_not: Int
-  tmdb_id_in: [Int!]
-  tmdb_id_not_in: [Int!]
-  tmdb_id_lt: Int
-  tmdb_id_lte: Int
-  tmdb_id_gt: Int
-  tmdb_id_gte: Int
+  tmdbId: Int
+  tmdbId_not: Int
+  tmdbId_in: [Int!]
+  tmdbId_not_in: [Int!]
+  tmdbId_lt: Int
+  tmdbId_lte: Int
+  tmdbId_gt: Int
+  tmdbId_gte: Int
   release_date: String
   release_date_not: String
   release_date_in: [String!]
@@ -699,7 +699,7 @@ input MovieWhereInput {
 
 input MovieWhereUniqueInput {
   id: ID
-  tmdb_id: Int
+  tmdbId: Int
 }
 
 type Mutation {

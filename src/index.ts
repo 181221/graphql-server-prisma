@@ -41,19 +41,6 @@ async function main() {
     console.log(`Server is running on http://localhost:${port}`)
   );
 
-  const getMovie = async (tmdb_id) => {
-    return await prisma.movie({
-      tmdb_id: tmdb_id,
-    });
-  };
-
-  const updateMovie = async (id) => {
-    return await prisma.updateMovie({
-      data: { downloaded: true },
-      where: { id: id },
-    });
-  };
-
   const movieUpdatePushRequest = async () => {
     let movie = await prisma.$subscribe
       .movie({ mutation_in: ["UPDATED"] })
@@ -142,9 +129,12 @@ async function main() {
             .then((res) => res.json())
             .then((json) => {
               json.map(async (el) => {
-                const movie = await getMovie(el.tmdbId.toString());
+                const movie = await prisma.movie({ tmdbId: el.tmdbId });
                 if (movie && el.downloaded && !movie.downloaded) {
-                  updateMovie(movie.id);
+                  return await prisma.updateMovie({
+                    data: { downloaded: true },
+                    where: { id: movie.id },
+                  });
                 }
               });
             })

@@ -3,25 +3,20 @@ const { APP_SECRET, authenticate } = require("../utils");
 const { ApolloError } = require("apollo-server-core");
 const fetch = require("node-fetch");
 import { Context } from "./types/Context";
-import { Configuration } from "../generated/prisma-client";
+import { Configuration, Movie } from "../generated/prisma-client";
 
-const createMovie = async (parent, args, context: Context, info) => {
-  const { userId } = authenticate(context);
-  const configs = await context.prisma.configurations();
-  let config: Configuration = configs[0];
-
-  console.log("args.genres", args.genres);
+const addMovieToRadarrCollection = async (args, config) => {
   const obj = {
     title: args.title,
     qualityProfileId: 3,
-    titleSlug: `${args.title.replace(" ", "-").toLowerCase()}-${args.tmdb_id}`,
+    titleSlug: `${args.title.replace(" ", "-").toLowerCase()}-${args.tmdbId}`,
     images: [
       {
         coverType: "poster",
         url: args.img,
       },
     ],
-    tmdbId: args.tmdb_id,
+    tmdbId: args.tmdbId,
     year: Number(new Date(args.release_date).getFullYear()),
     rootFolderPath: config.radarrRootFolder,
   };
@@ -35,7 +30,19 @@ const createMovie = async (parent, args, context: Context, info) => {
   let url = `${config.radarrEndpoint}/movie?apikey=${config.radarrApiKey}`;
   const res = await fetch(url, options);
   if (!res.ok) {
-    throw new Error(res.statusText);
+    throw new ApolloError(res.statusText, res.statusCode);
+  }
+};
+
+const createMovie = async (parent, args: Movie, context: Context, info) => {
+  const { userId } = authenticate(context);
+  const configs = await context.prisma.configurations();
+
+  if (configs && configs.length > 0) {
+    let config: Configuration = configs[0];
+    addMovieToRadarrCollection(args, config);
+  } else {
+    throw new ApolloError("No config", 400);
   }
   return await context.prisma.createMovie({
     title: args.title,
@@ -43,7 +50,7 @@ const createMovie = async (parent, args, context: Context, info) => {
     requestedById: userId,
     genres: { set: args.genres },
     img: args.img,
-    tmdb_id: args.tmdb_id,
+    tmdbId: args.tmdbId,
     vote_average: args.vote_average,
     release_date: args.release_date,
     overview: args.overview,
@@ -89,7 +96,7 @@ async function updateMovie(parent, args, context: Context, info) {
       downloaded: args.downloaded,
     },
     where: {
-      tmdb_id: args.tmdb_id,
+      tmdbId: args.tmdbId,
     },
   });
 }
