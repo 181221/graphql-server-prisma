@@ -9,7 +9,7 @@ const createMovie = async (parent, args, context: Context, info) => {
 
   let gen;
   if (args.genres) {
-    gen = (<string>Object.values(args.genres)[0]).split(",").map(el => el);
+    gen = (<string>Object.values(args.genres)[0]).split(",").map((el) => el);
   }
   return await context.prisma.createMovie({
     title: args.title,
@@ -20,7 +20,7 @@ const createMovie = async (parent, args, context: Context, info) => {
     tmdb_id: args.tmdb_id,
     vote_average: args.vote_average,
     release_date: args.release_date,
-    overview: args.overview
+    overview: args.overview,
   });
 };
 
@@ -48,11 +48,11 @@ async function updateUser(parant, args, context: Context, info) {
     subscription: sub,
     notification: not,
     role: args.role || user.role,
-    name: args.name || user.name
+    name: args.name || user.name,
   };
   return await context.prisma.updateUser({
     data: data,
-    where: { email: args.email }
+    where: { email: args.email },
   });
 }
 
@@ -60,11 +60,11 @@ async function updateMovie(parent, args, context: Context, info) {
   authenticate(context);
   return await context.prisma.updateMovie({
     data: {
-      downloaded: args.downloaded
+      downloaded: args.downloaded,
     },
     where: {
-      tmdb_id: args.tmdb_id
-    }
+      tmdb_id: args.tmdb_id,
+    },
   });
 }
 async function createConfiguration(parent, args, context: Context, info) {
@@ -79,7 +79,7 @@ async function createConfiguration(parent, args, context: Context, info) {
     pushoverEndpoint: args.pushoverApiKey || "",
     pushoverApiKey: args.pushoverApiKey || "",
     pushoverUserKey: args.pushoverUserKey || "",
-    user: { connect: { id: userId } }
+    user: { connect: { id: userId } },
   });
 }
 async function updateConfiguration(parent, args, context: Context, info) {
@@ -96,7 +96,7 @@ async function updateConfiguration(parent, args, context: Context, info) {
       pushoverEndpoint: args.pushoverEndpoint || "",
       pushoverApiKey: args.pushoverApiKey || "",
       pushoverUserKey: args.pushoverUserKey || "",
-      user: { connect: { id: userId } }
+      user: { connect: { id: userId } },
     });
   }
   return await context.prisma.updateConfiguration({
@@ -106,11 +106,11 @@ async function updateConfiguration(parent, args, context: Context, info) {
       pushoverUserKey: args.pushoverUserKey || config.pushoverUserKey,
       radarrApiKey: args.radarrApiKey || config.radarrApiKey,
       radarrEndpoint: args.radarrEndpoint || config.radarrEndpoint,
-      radarrRootFolder: args.radarrRootFolder || config.radarrRootFolder
+      radarrRootFolder: args.radarrRootFolder || config.radarrRootFolder,
     },
     where: {
-      id: config.id
-    }
+      id: config.id,
+    },
   });
 }
 
@@ -123,14 +123,14 @@ async function createToken(parent, args, context: Context, info) {
     if (users.length === 0) {
       user = await context.prisma.createUser({
         email: args.email,
-        role: "ADMIN"
+        role: "ADMIN",
       });
       token = jwt.sign({ userId: user.id, claims: "admin" }, APP_SECRET);
       adminToken = true;
     } else {
       user = await context.prisma.createUser({ email: args.email });
       token = jwt.sign({ userId: user.id, claims: "read-post" }, APP_SECRET, {
-        expiresIn: "1h"
+        expiresIn: "1h",
       });
     }
     return { user, token, adminToken };
@@ -148,13 +148,13 @@ async function getToken(parent, args, context: Context, info) {
     token = jwt.sign({ userId: user.id, claims: "admin" }, APP_SECRET);
   } else {
     token = jwt.sign({ userId: user.id, claims: "read-post" }, APP_SECRET, {
-      expiresIn: "1h"
+      expiresIn: "1h",
     });
   }
 
   return {
     token,
-    user
+    user,
   };
 }
 
@@ -166,5 +166,5 @@ module.exports = {
   updateMovie,
   createConfiguration,
   updateConfiguration,
-  updateUser
+  updateUser,
 };

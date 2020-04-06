@@ -29,7 +29,7 @@ services:
     ports:
       - "27017:27017"
     volumes:
-      - /home/peder/development/prisma/mongo:/var/lib/mongo
+      - ${HOME}/dev/data:/var/lib/mongo
 
   graphql-server:
     build:
@@ -37,12 +37,12 @@ services:
       dockerfile: Dockerfile-alternative
       args:
         buildno: 1
-    image: test/test:tag
+    image: requester-backend/requester-backend:1.0
     container_name: graphql
     restart: unless-stopped
     volumes:
-      - /home/peder/development/radarr/gatsby-auth/graphql-server/api/prisma:/usr/src/prisma/prisma
-      - /home/peder/development/radarr/gatsby-auth/graphql-server/api/src:/usr/src/prisma/src
+      - ${HOME}/dev/requesterr/graphql-server-prisma/prisma:/usr/src/prisma/prisma
+      - ${HOME}/dev/requesterr/graphql-server-prisma/src:/usr/src/prisma/src
     depends_on:
       - prisma
     networks:
