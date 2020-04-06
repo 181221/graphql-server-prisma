@@ -3,19 +3,45 @@ const { APP_SECRET, authenticate } = require("../utils");
 const { ApolloError } = require("apollo-server-core");
 const fetch = require("node-fetch");
 import { Context } from "./types/Context";
+import { Configuration } from "../generated/prisma-client";
 
 const createMovie = async (parent, args, context: Context, info) => {
   const { userId } = authenticate(context);
+  const configs = await context.prisma.configurations();
+  let config: Configuration = configs[0];
 
-  let gen;
-  if (args.genres) {
-    gen = (<string>Object.values(args.genres)[0]).split(",").map((el) => el);
+  console.log("args.genres", args.genres);
+  const obj = {
+    title: args.title,
+    qualityProfileId: 3,
+    titleSlug: `${args.title.replace(" ", "-").toLowerCase()}-${args.tmdb_id}`,
+    images: [
+      {
+        coverType: "poster",
+        url: args.img,
+      },
+    ],
+    tmdbId: args.tmdb_id,
+    year: Number(new Date(args.release_date).getFullYear()),
+    rootFolderPath: config.radarrRootFolder,
+  };
+  const options = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(obj),
+    method: "POST",
+  };
+  let url = `${config.radarrEndpoint}/movie?apikey=${config.radarrApiKey}`;
+  const res = await fetch(url, options);
+  if (!res.ok) {
+    throw new Error(res.statusText);
   }
   return await context.prisma.createMovie({
     title: args.title,
     requestedBy: { connect: { id: userId } },
     requestedById: userId,
-    genres: { set: gen },
+    genres: { set: args.genres },
     img: args.img,
     tmdb_id: args.tmdb_id,
     vote_average: args.vote_average,

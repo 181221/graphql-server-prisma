@@ -311,20 +311,14 @@ export interface MovieWhereInput {
   img_not_starts_with?: Maybe<String>;
   img_ends_with?: Maybe<String>;
   img_not_ends_with?: Maybe<String>;
-  tmdb_id?: Maybe<String>;
-  tmdb_id_not?: Maybe<String>;
-  tmdb_id_in?: Maybe<String[] | String>;
-  tmdb_id_not_in?: Maybe<String[] | String>;
-  tmdb_id_lt?: Maybe<String>;
-  tmdb_id_lte?: Maybe<String>;
-  tmdb_id_gt?: Maybe<String>;
-  tmdb_id_gte?: Maybe<String>;
-  tmdb_id_contains?: Maybe<String>;
-  tmdb_id_not_contains?: Maybe<String>;
-  tmdb_id_starts_with?: Maybe<String>;
-  tmdb_id_not_starts_with?: Maybe<String>;
-  tmdb_id_ends_with?: Maybe<String>;
-  tmdb_id_not_ends_with?: Maybe<String>;
+  tmdb_id?: Maybe<Int>;
+  tmdb_id_not?: Maybe<Int>;
+  tmdb_id_in?: Maybe<Int[] | Int>;
+  tmdb_id_not_in?: Maybe<Int[] | Int>;
+  tmdb_id_lt?: Maybe<Int>;
+  tmdb_id_lte?: Maybe<Int>;
+  tmdb_id_gt?: Maybe<Int>;
+  tmdb_id_gte?: Maybe<Int>;
   release_date?: Maybe<String>;
   release_date_not?: Maybe<String>;
   release_date_in?: Maybe<String[] | String>;
@@ -339,20 +333,14 @@ export interface MovieWhereInput {
   release_date_not_starts_with?: Maybe<String>;
   release_date_ends_with?: Maybe<String>;
   release_date_not_ends_with?: Maybe<String>;
-  vote_average?: Maybe<String>;
-  vote_average_not?: Maybe<String>;
-  vote_average_in?: Maybe<String[] | String>;
-  vote_average_not_in?: Maybe<String[] | String>;
-  vote_average_lt?: Maybe<String>;
-  vote_average_lte?: Maybe<String>;
-  vote_average_gt?: Maybe<String>;
-  vote_average_gte?: Maybe<String>;
-  vote_average_contains?: Maybe<String>;
-  vote_average_not_contains?: Maybe<String>;
-  vote_average_starts_with?: Maybe<String>;
-  vote_average_not_starts_with?: Maybe<String>;
-  vote_average_ends_with?: Maybe<String>;
-  vote_average_not_ends_with?: Maybe<String>;
+  vote_average?: Maybe<Float>;
+  vote_average_not?: Maybe<Float>;
+  vote_average_in?: Maybe<Float[] | Float>;
+  vote_average_not_in?: Maybe<Float[] | Float>;
+  vote_average_lt?: Maybe<Float>;
+  vote_average_lte?: Maybe<Float>;
+  vote_average_gt?: Maybe<Float>;
+  vote_average_gte?: Maybe<Float>;
   overview?: Maybe<String>;
   overview_not?: Maybe<String>;
   overview_in?: Maybe<String[] | String>;
@@ -553,7 +541,7 @@ export interface ConfigurationWhereInput {
 
 export type MovieWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
-  tmdb_id?: Maybe<String>;
+  tmdb_id?: Maybe<Int>;
 }>;
 
 export type UserWhereUniqueInput = AtLeastOne<{
@@ -600,16 +588,16 @@ export interface MovieCreateWithoutRequestedByInput {
   title: String;
   requestedById?: Maybe<String>;
   img?: Maybe<String>;
-  tmdb_id: String;
+  tmdb_id: Int;
   genres?: Maybe<MovieCreategenresInput>;
   release_date?: Maybe<String>;
-  vote_average?: Maybe<String>;
+  vote_average?: Maybe<Float>;
   overview?: Maybe<String>;
   downloaded?: Maybe<Boolean>;
 }
 
 export interface MovieCreategenresInput {
-  set?: Maybe<String[] | String>;
+  set?: Maybe<Int[] | Int>;
 }
 
 export interface ConfigurationUpdateInput {
@@ -671,16 +659,16 @@ export interface MovieUpdateWithoutRequestedByDataInput {
   title?: Maybe<String>;
   requestedById?: Maybe<String>;
   img?: Maybe<String>;
-  tmdb_id?: Maybe<String>;
+  tmdb_id?: Maybe<Int>;
   genres?: Maybe<MovieUpdategenresInput>;
   release_date?: Maybe<String>;
-  vote_average?: Maybe<String>;
+  vote_average?: Maybe<Float>;
   overview?: Maybe<String>;
   downloaded?: Maybe<Boolean>;
 }
 
 export interface MovieUpdategenresInput {
-  set?: Maybe<String[] | String>;
+  set?: Maybe<Int[] | Int>;
 }
 
 export interface MovieUpsertWithWhereUniqueWithoutRequestedByInput {
@@ -754,20 +742,14 @@ export interface MovieScalarWhereInput {
   img_not_starts_with?: Maybe<String>;
   img_ends_with?: Maybe<String>;
   img_not_ends_with?: Maybe<String>;
-  tmdb_id?: Maybe<String>;
-  tmdb_id_not?: Maybe<String>;
-  tmdb_id_in?: Maybe<String[] | String>;
-  tmdb_id_not_in?: Maybe<String[] | String>;
-  tmdb_id_lt?: Maybe<String>;
-  tmdb_id_lte?: Maybe<String>;
-  tmdb_id_gt?: Maybe<String>;
-  tmdb_id_gte?: Maybe<String>;
-  tmdb_id_contains?: Maybe<String>;
-  tmdb_id_not_contains?: Maybe<String>;
-  tmdb_id_starts_with?: Maybe<String>;
-  tmdb_id_not_starts_with?: Maybe<String>;
-  tmdb_id_ends_with?: Maybe<String>;
-  tmdb_id_not_ends_with?: Maybe<String>;
+  tmdb_id?: Maybe<Int>;
+  tmdb_id_not?: Maybe<Int>;
+  tmdb_id_in?: Maybe<Int[] | Int>;
+  tmdb_id_not_in?: Maybe<Int[] | Int>;
+  tmdb_id_lt?: Maybe<Int>;
+  tmdb_id_lte?: Maybe<Int>;
+  tmdb_id_gt?: Maybe<Int>;
+  tmdb_id_gte?: Maybe<Int>;
   release_date?: Maybe<String>;
   release_date_not?: Maybe<String>;
   release_date_in?: Maybe<String[] | String>;
@@ -782,20 +764,14 @@ export interface MovieScalarWhereInput {
   release_date_not_starts_with?: Maybe<String>;
   release_date_ends_with?: Maybe<String>;
   release_date_not_ends_with?: Maybe<String>;
-  vote_average?: Maybe<String>;
-  vote_average_not?: Maybe<String>;
-  vote_average_in?: Maybe<String[] | String>;
-  vote_average_not_in?: Maybe<String[] | String>;
-  vote_average_lt?: Maybe<String>;
-  vote_average_lte?: Maybe<String>;
-  vote_average_gt?: Maybe<String>;
-  vote_average_gte?: Maybe<String>;
-  vote_average_contains?: Maybe<String>;
-  vote_average_not_contains?: Maybe<String>;
-  vote_average_starts_with?: Maybe<String>;
-  vote_average_not_starts_with?: Maybe<String>;
-  vote_average_ends_with?: Maybe<String>;
-  vote_average_not_ends_with?: Maybe<String>;
+  vote_average?: Maybe<Float>;
+  vote_average_not?: Maybe<Float>;
+  vote_average_in?: Maybe<Float[] | Float>;
+  vote_average_not_in?: Maybe<Float[] | Float>;
+  vote_average_lt?: Maybe<Float>;
+  vote_average_lte?: Maybe<Float>;
+  vote_average_gt?: Maybe<Float>;
+  vote_average_gte?: Maybe<Float>;
   overview?: Maybe<String>;
   overview_not?: Maybe<String>;
   overview_in?: Maybe<String[] | String>;
@@ -826,10 +802,10 @@ export interface MovieUpdateManyDataInput {
   title?: Maybe<String>;
   requestedById?: Maybe<String>;
   img?: Maybe<String>;
-  tmdb_id?: Maybe<String>;
+  tmdb_id?: Maybe<Int>;
   genres?: Maybe<MovieUpdategenresInput>;
   release_date?: Maybe<String>;
-  vote_average?: Maybe<String>;
+  vote_average?: Maybe<Float>;
   overview?: Maybe<String>;
   downloaded?: Maybe<Boolean>;
 }
@@ -854,10 +830,10 @@ export interface MovieCreateInput {
   requestedBy?: Maybe<UserCreateOneWithoutMoviesInput>;
   requestedById?: Maybe<String>;
   img?: Maybe<String>;
-  tmdb_id: String;
+  tmdb_id: Int;
   genres?: Maybe<MovieCreategenresInput>;
   release_date?: Maybe<String>;
-  vote_average?: Maybe<String>;
+  vote_average?: Maybe<Float>;
   overview?: Maybe<String>;
   downloaded?: Maybe<Boolean>;
 }
@@ -897,10 +873,10 @@ export interface MovieUpdateInput {
   requestedBy?: Maybe<UserUpdateOneWithoutMoviesInput>;
   requestedById?: Maybe<String>;
   img?: Maybe<String>;
-  tmdb_id?: Maybe<String>;
+  tmdb_id?: Maybe<Int>;
   genres?: Maybe<MovieUpdategenresInput>;
   release_date?: Maybe<String>;
-  vote_average?: Maybe<String>;
+  vote_average?: Maybe<Float>;
   overview?: Maybe<String>;
   downloaded?: Maybe<Boolean>;
 }
@@ -955,10 +931,10 @@ export interface MovieUpdateManyMutationInput {
   title?: Maybe<String>;
   requestedById?: Maybe<String>;
   img?: Maybe<String>;
-  tmdb_id?: Maybe<String>;
+  tmdb_id?: Maybe<Int>;
   genres?: Maybe<MovieUpdategenresInput>;
   release_date?: Maybe<String>;
-  vote_average?: Maybe<String>;
+  vote_average?: Maybe<Float>;
   overview?: Maybe<String>;
   downloaded?: Maybe<Boolean>;
 }
@@ -1160,10 +1136,10 @@ export interface Movie {
   title: String;
   requestedById?: String;
   img?: String;
-  tmdb_id: String;
-  genres: String[];
+  tmdb_id: Int;
+  genres: Int[];
   release_date?: String;
-  vote_average?: String;
+  vote_average?: Float;
   overview?: String;
   downloaded?: Boolean;
 }
@@ -1175,10 +1151,10 @@ export interface MoviePromise extends Promise<Movie>, Fragmentable {
   requestedBy: <T = UserPromise>() => T;
   requestedById: () => Promise<String>;
   img: () => Promise<String>;
-  tmdb_id: () => Promise<String>;
-  genres: () => Promise<String[]>;
+  tmdb_id: () => Promise<Int>;
+  genres: () => Promise<Int[]>;
   release_date: () => Promise<String>;
-  vote_average: () => Promise<String>;
+  vote_average: () => Promise<Float>;
   overview: () => Promise<String>;
   downloaded: () => Promise<Boolean>;
 }
@@ -1192,10 +1168,10 @@ export interface MovieSubscription
   requestedBy: <T = UserSubscription>() => T;
   requestedById: () => Promise<AsyncIterator<String>>;
   img: () => Promise<AsyncIterator<String>>;
-  tmdb_id: () => Promise<AsyncIterator<String>>;
-  genres: () => Promise<AsyncIterator<String[]>>;
+  tmdb_id: () => Promise<AsyncIterator<Int>>;
+  genres: () => Promise<AsyncIterator<Int[]>>;
   release_date: () => Promise<AsyncIterator<String>>;
-  vote_average: () => Promise<AsyncIterator<String>>;
+  vote_average: () => Promise<AsyncIterator<Float>>;
   overview: () => Promise<AsyncIterator<String>>;
   downloaded: () => Promise<AsyncIterator<Boolean>>;
 }
@@ -1209,10 +1185,10 @@ export interface MovieNullablePromise
   requestedBy: <T = UserPromise>() => T;
   requestedById: () => Promise<String>;
   img: () => Promise<String>;
-  tmdb_id: () => Promise<String>;
-  genres: () => Promise<String[]>;
+  tmdb_id: () => Promise<Int>;
+  genres: () => Promise<Int[]>;
   release_date: () => Promise<String>;
-  vote_average: () => Promise<String>;
+  vote_average: () => Promise<Float>;
   overview: () => Promise<String>;
   downloaded: () => Promise<Boolean>;
 }
@@ -1510,10 +1486,10 @@ export interface MoviePreviousValues {
   title: String;
   requestedById?: String;
   img?: String;
-  tmdb_id: String;
-  genres: String[];
+  tmdb_id: Int;
+  genres: Int[];
   release_date?: String;
-  vote_average?: String;
+  vote_average?: Float;
   overview?: String;
   downloaded?: Boolean;
 }
@@ -1526,10 +1502,10 @@ export interface MoviePreviousValuesPromise
   title: () => Promise<String>;
   requestedById: () => Promise<String>;
   img: () => Promise<String>;
-  tmdb_id: () => Promise<String>;
-  genres: () => Promise<String[]>;
+  tmdb_id: () => Promise<Int>;
+  genres: () => Promise<Int[]>;
   release_date: () => Promise<String>;
-  vote_average: () => Promise<String>;
+  vote_average: () => Promise<Float>;
   overview: () => Promise<String>;
   downloaded: () => Promise<Boolean>;
 }
@@ -1542,10 +1518,10 @@ export interface MoviePreviousValuesSubscription
   title: () => Promise<AsyncIterator<String>>;
   requestedById: () => Promise<AsyncIterator<String>>;
   img: () => Promise<AsyncIterator<String>>;
-  tmdb_id: () => Promise<AsyncIterator<String>>;
-  genres: () => Promise<AsyncIterator<String[]>>;
+  tmdb_id: () => Promise<AsyncIterator<Int>>;
+  genres: () => Promise<AsyncIterator<Int[]>>;
   release_date: () => Promise<AsyncIterator<String>>;
-  vote_average: () => Promise<AsyncIterator<String>>;
+  vote_average: () => Promise<AsyncIterator<Float>>;
   overview: () => Promise<AsyncIterator<String>>;
   downloaded: () => Promise<AsyncIterator<Boolean>>;
 }
@@ -1636,6 +1612,11 @@ export type Boolean = boolean;
 The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.
 */
 export type Int = number;
+
+/*
+The `Float` scalar type represents signed double-precision fractional values as specified by [IEEE 754](https://en.wikipedia.org/wiki/IEEE_floating_point).
+*/
+export type Float = number;
 
 export type Long = string;
 

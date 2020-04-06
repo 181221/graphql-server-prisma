@@ -6,6 +6,7 @@ type Query {
   configuration(id: ID): Configuration
   configurationPrivate(id: ID): PrivateConfiguration
   radarrCollection(tmdbId: Int): Movie
+  similarMovies(tmdbId: Int): [Movie]
 }
 
 type Movie {
@@ -14,14 +15,17 @@ type Movie {
   requestedBy: User!
   requestedById: String
   img: String
-  tmdb_id: String
+  tmdb_id: Int
   tmdbId: Int
-  hasFile: String
-  genres: [String]
+  hasFile: Boolean
+  genres: [Int]
+  genre_ids: [Int]
   release_date: String
   createdAt: String!
-  vote_average: String
+  vote_average: Float
   overview: String
+  poster_path: String
+  backdrop_path: String
   downloaded: Boolean
   status: String
   timeleft: String
@@ -102,9 +106,9 @@ type Mutation {
   createMovie(
     title: String!
     img: String
-    tmdb_id: String!
-    genres: [String]
-    vote_average: String
+    tmdb_id: Int
+    genres: [Int]
+    vote_average: Float
     release_date: String
     overview: String
   ): Movie

@@ -273,10 +273,10 @@ type Movie {
   requestedBy: User
   requestedById: String
   img: String
-  tmdb_id: String!
-  genres: [String!]!
+  tmdb_id: Int!
+  genres: [Int!]!
   release_date: String
-  vote_average: String
+  vote_average: Float
   overview: String
   downloaded: Boolean
 }
@@ -288,7 +288,7 @@ type MovieConnection {
 }
 
 input MovieCreategenresInput {
-  set: [String!]
+  set: [Int!]
 }
 
 input MovieCreateInput {
@@ -297,10 +297,10 @@ input MovieCreateInput {
   requestedBy: UserCreateOneWithoutMoviesInput
   requestedById: String
   img: String
-  tmdb_id: String!
+  tmdb_id: Int!
   genres: MovieCreategenresInput
   release_date: String
-  vote_average: String
+  vote_average: Float
   overview: String
   downloaded: Boolean
 }
@@ -315,10 +315,10 @@ input MovieCreateWithoutRequestedByInput {
   title: String!
   requestedById: String
   img: String
-  tmdb_id: String!
+  tmdb_id: Int!
   genres: MovieCreategenresInput
   release_date: String
-  vote_average: String
+  vote_average: Float
   overview: String
   downloaded: Boolean
 }
@@ -357,10 +357,10 @@ type MoviePreviousValues {
   title: String!
   requestedById: String
   img: String
-  tmdb_id: String!
-  genres: [String!]!
+  tmdb_id: Int!
+  genres: [Int!]!
   release_date: String
-  vote_average: String
+  vote_average: Float
   overview: String
   downloaded: Boolean
 }
@@ -430,20 +430,14 @@ input MovieScalarWhereInput {
   img_not_starts_with: String
   img_ends_with: String
   img_not_ends_with: String
-  tmdb_id: String
-  tmdb_id_not: String
-  tmdb_id_in: [String!]
-  tmdb_id_not_in: [String!]
-  tmdb_id_lt: String
-  tmdb_id_lte: String
-  tmdb_id_gt: String
-  tmdb_id_gte: String
-  tmdb_id_contains: String
-  tmdb_id_not_contains: String
-  tmdb_id_starts_with: String
-  tmdb_id_not_starts_with: String
-  tmdb_id_ends_with: String
-  tmdb_id_not_ends_with: String
+  tmdb_id: Int
+  tmdb_id_not: Int
+  tmdb_id_in: [Int!]
+  tmdb_id_not_in: [Int!]
+  tmdb_id_lt: Int
+  tmdb_id_lte: Int
+  tmdb_id_gt: Int
+  tmdb_id_gte: Int
   release_date: String
   release_date_not: String
   release_date_in: [String!]
@@ -458,20 +452,14 @@ input MovieScalarWhereInput {
   release_date_not_starts_with: String
   release_date_ends_with: String
   release_date_not_ends_with: String
-  vote_average: String
-  vote_average_not: String
-  vote_average_in: [String!]
-  vote_average_not_in: [String!]
-  vote_average_lt: String
-  vote_average_lte: String
-  vote_average_gt: String
-  vote_average_gte: String
-  vote_average_contains: String
-  vote_average_not_contains: String
-  vote_average_starts_with: String
-  vote_average_not_starts_with: String
-  vote_average_ends_with: String
-  vote_average_not_ends_with: String
+  vote_average: Float
+  vote_average_not: Float
+  vote_average_in: [Float!]
+  vote_average_not_in: [Float!]
+  vote_average_lt: Float
+  vote_average_lte: Float
+  vote_average_gt: Float
+  vote_average_gte: Float
   overview: String
   overview_not: String
   overview_in: [String!]
@@ -512,7 +500,7 @@ input MovieSubscriptionWhereInput {
 }
 
 input MovieUpdategenresInput {
-  set: [String!]
+  set: [Int!]
 }
 
 input MovieUpdateInput {
@@ -520,10 +508,10 @@ input MovieUpdateInput {
   requestedBy: UserUpdateOneWithoutMoviesInput
   requestedById: String
   img: String
-  tmdb_id: String
+  tmdb_id: Int
   genres: MovieUpdategenresInput
   release_date: String
-  vote_average: String
+  vote_average: Float
   overview: String
   downloaded: Boolean
 }
@@ -532,10 +520,10 @@ input MovieUpdateManyDataInput {
   title: String
   requestedById: String
   img: String
-  tmdb_id: String
+  tmdb_id: Int
   genres: MovieUpdategenresInput
   release_date: String
-  vote_average: String
+  vote_average: Float
   overview: String
   downloaded: Boolean
 }
@@ -544,10 +532,10 @@ input MovieUpdateManyMutationInput {
   title: String
   requestedById: String
   img: String
-  tmdb_id: String
+  tmdb_id: Int
   genres: MovieUpdategenresInput
   release_date: String
-  vote_average: String
+  vote_average: Float
   overview: String
   downloaded: Boolean
 }
@@ -573,10 +561,10 @@ input MovieUpdateWithoutRequestedByDataInput {
   title: String
   requestedById: String
   img: String
-  tmdb_id: String
+  tmdb_id: Int
   genres: MovieUpdategenresInput
   release_date: String
-  vote_average: String
+  vote_average: Float
   overview: String
   downloaded: Boolean
 }
@@ -658,20 +646,14 @@ input MovieWhereInput {
   img_not_starts_with: String
   img_ends_with: String
   img_not_ends_with: String
-  tmdb_id: String
-  tmdb_id_not: String
-  tmdb_id_in: [String!]
-  tmdb_id_not_in: [String!]
-  tmdb_id_lt: String
-  tmdb_id_lte: String
-  tmdb_id_gt: String
-  tmdb_id_gte: String
-  tmdb_id_contains: String
-  tmdb_id_not_contains: String
-  tmdb_id_starts_with: String
-  tmdb_id_not_starts_with: String
-  tmdb_id_ends_with: String
-  tmdb_id_not_ends_with: String
+  tmdb_id: Int
+  tmdb_id_not: Int
+  tmdb_id_in: [Int!]
+  tmdb_id_not_in: [Int!]
+  tmdb_id_lt: Int
+  tmdb_id_lte: Int
+  tmdb_id_gt: Int
+  tmdb_id_gte: Int
   release_date: String
   release_date_not: String
   release_date_in: [String!]
@@ -686,20 +668,14 @@ input MovieWhereInput {
   release_date_not_starts_with: String
   release_date_ends_with: String
   release_date_not_ends_with: String
-  vote_average: String
-  vote_average_not: String
-  vote_average_in: [String!]
-  vote_average_not_in: [String!]
-  vote_average_lt: String
-  vote_average_lte: String
-  vote_average_gt: String
-  vote_average_gte: String
-  vote_average_contains: String
-  vote_average_not_contains: String
-  vote_average_starts_with: String
-  vote_average_not_starts_with: String
-  vote_average_ends_with: String
-  vote_average_not_ends_with: String
+  vote_average: Float
+  vote_average_not: Float
+  vote_average_in: [Float!]
+  vote_average_not_in: [Float!]
+  vote_average_lt: Float
+  vote_average_lte: Float
+  vote_average_gt: Float
+  vote_average_gte: Float
   overview: String
   overview_not: String
   overview_in: [String!]
@@ -723,7 +699,7 @@ input MovieWhereInput {
 
 input MovieWhereUniqueInput {
   id: ID
-  tmdb_id: String
+  tmdb_id: Int
 }
 
 type Mutation {
