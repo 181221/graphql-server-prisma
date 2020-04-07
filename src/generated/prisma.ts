@@ -2,8 +2,8 @@
 
 import { GraphQLResolveInfo } from "graphql";
 import { User, Movie, Configuration } from "./prisma-client";
-import { RadarrStatus, AuthPayload } from "../resolvers/types/AuthPayload";
-import { Context } from "../resolvers/types/Context";
+import { RadarrStatus, TmdbMovieResponse, AuthPayload } from "../resolvers/types";
+import { Context } from "../resolvers/Context";
 
 export type Role = "ADMIN" | "CUSTOMER";
 export type MovieOrderByInput = "createdAt_ASC" | "createdAt_DESC";
@@ -165,7 +165,7 @@ export namespace QueryResolvers {
         args: ArgsSimilarMovies,
         ctx: Context,
         info: GraphQLResolveInfo,
-      ) => Array<Movie | null> | null | Promise<Array<Movie | null> | null>)
+      ) => Array<TmdbMovieResponse | null> | null | Promise<Array<TmdbMovieResponse | null> | null>)
     | {
         fragment: string;
         resolve: (
@@ -173,7 +173,10 @@ export namespace QueryResolvers {
           args: ArgsSimilarMovies,
           ctx: Context,
           info: GraphQLResolveInfo,
-        ) => Array<Movie | null> | null | Promise<Array<Movie | null> | null>;
+        ) =>
+          | Array<TmdbMovieResponse | null>
+          | null
+          | Promise<Array<TmdbMovieResponse | null> | null>;
       };
 
   export interface Type {
@@ -302,7 +305,11 @@ export namespace QueryResolvers {
           args: ArgsSimilarMovies,
           ctx: Context,
           info: GraphQLResolveInfo,
-        ) => Array<Movie | null> | null | Promise<Array<Movie | null> | null>)
+        ) =>
+          | Array<TmdbMovieResponse | null>
+          | null
+          | Promise<Array<TmdbMovieResponse | null> | null>
+        )
       | {
           fragment: string;
           resolve: (
@@ -310,7 +317,10 @@ export namespace QueryResolvers {
             args: ArgsSimilarMovies,
             ctx: Context,
             info: GraphQLResolveInfo,
-          ) => Array<Movie | null> | null | Promise<Array<Movie | null> | null>;
+          ) =>
+            | Array<TmdbMovieResponse | null>
+            | null
+            | Promise<Array<TmdbMovieResponse | null> | null>;
         };
   }
 }
@@ -1692,6 +1702,513 @@ export namespace RadarrStatusResolvers {
   }
 }
 
+export namespace TmdbMovieResponseResolvers {
+  export const defaultResolvers = {
+    adult: (parent: TmdbMovieResponse) => (parent.adult === undefined ? null : parent.adult),
+    backdrop_path: (parent: TmdbMovieResponse) =>
+      parent.backdrop_path === undefined ? null : parent.backdrop_path,
+    genre_ids: (parent: TmdbMovieResponse) =>
+      parent.genre_ids === undefined ? null : parent.genre_ids,
+    id: (parent: TmdbMovieResponse) => (parent.id === undefined ? null : parent.id),
+    original_language: (parent: TmdbMovieResponse) =>
+      parent.original_language === undefined ? null : parent.original_language,
+    original_title: (parent: TmdbMovieResponse) =>
+      parent.original_title === undefined ? null : parent.original_title,
+    overview: (parent: TmdbMovieResponse) =>
+      parent.overview === undefined ? null : parent.overview,
+    poster_path: (parent: TmdbMovieResponse) =>
+      parent.poster_path === undefined ? null : parent.poster_path,
+    release_date: (parent: TmdbMovieResponse) =>
+      parent.release_date === undefined ? null : parent.release_date,
+    title: (parent: TmdbMovieResponse) => (parent.title === undefined ? null : parent.title),
+    video: (parent: TmdbMovieResponse) => (parent.video === undefined ? null : parent.video),
+    vote_average: (parent: TmdbMovieResponse) =>
+      parent.vote_average === undefined ? null : parent.vote_average,
+    vote_count: (parent: TmdbMovieResponse) =>
+      parent.vote_count === undefined ? null : parent.vote_count,
+    popularity: (parent: TmdbMovieResponse) =>
+      parent.popularity === undefined ? null : parent.popularity,
+  };
+
+  export type AdultResolver =
+    | ((
+        parent: TmdbMovieResponse,
+        args: {},
+        ctx: Context,
+        info: GraphQLResolveInfo,
+      ) => boolean | null | Promise<boolean | null>)
+    | {
+        fragment: string;
+        resolve: (
+          parent: TmdbMovieResponse,
+          args: {},
+          ctx: Context,
+          info: GraphQLResolveInfo,
+        ) => boolean | null | Promise<boolean | null>;
+      };
+
+  export type Backdrop_pathResolver =
+    | ((
+        parent: TmdbMovieResponse,
+        args: {},
+        ctx: Context,
+        info: GraphQLResolveInfo,
+      ) => string | null | Promise<string | null>)
+    | {
+        fragment: string;
+        resolve: (
+          parent: TmdbMovieResponse,
+          args: {},
+          ctx: Context,
+          info: GraphQLResolveInfo,
+        ) => string | null | Promise<string | null>;
+      };
+
+  export type Genre_idsResolver =
+    | ((
+        parent: TmdbMovieResponse,
+        args: {},
+        ctx: Context,
+        info: GraphQLResolveInfo,
+      ) => Array<number | null> | null | Promise<Array<number | null> | null>)
+    | {
+        fragment: string;
+        resolve: (
+          parent: TmdbMovieResponse,
+          args: {},
+          ctx: Context,
+          info: GraphQLResolveInfo,
+        ) => Array<number | null> | null | Promise<Array<number | null> | null>;
+      };
+
+  export type IdResolver =
+    | ((
+        parent: TmdbMovieResponse,
+        args: {},
+        ctx: Context,
+        info: GraphQLResolveInfo,
+      ) => number | null | Promise<number | null>)
+    | {
+        fragment: string;
+        resolve: (
+          parent: TmdbMovieResponse,
+          args: {},
+          ctx: Context,
+          info: GraphQLResolveInfo,
+        ) => number | null | Promise<number | null>;
+      };
+
+  export type Original_languageResolver =
+    | ((
+        parent: TmdbMovieResponse,
+        args: {},
+        ctx: Context,
+        info: GraphQLResolveInfo,
+      ) => string | null | Promise<string | null>)
+    | {
+        fragment: string;
+        resolve: (
+          parent: TmdbMovieResponse,
+          args: {},
+          ctx: Context,
+          info: GraphQLResolveInfo,
+        ) => string | null | Promise<string | null>;
+      };
+
+  export type Original_titleResolver =
+    | ((
+        parent: TmdbMovieResponse,
+        args: {},
+        ctx: Context,
+        info: GraphQLResolveInfo,
+      ) => string | null | Promise<string | null>)
+    | {
+        fragment: string;
+        resolve: (
+          parent: TmdbMovieResponse,
+          args: {},
+          ctx: Context,
+          info: GraphQLResolveInfo,
+        ) => string | null | Promise<string | null>;
+      };
+
+  export type OverviewResolver =
+    | ((
+        parent: TmdbMovieResponse,
+        args: {},
+        ctx: Context,
+        info: GraphQLResolveInfo,
+      ) => string | null | Promise<string | null>)
+    | {
+        fragment: string;
+        resolve: (
+          parent: TmdbMovieResponse,
+          args: {},
+          ctx: Context,
+          info: GraphQLResolveInfo,
+        ) => string | null | Promise<string | null>;
+      };
+
+  export type Poster_pathResolver =
+    | ((
+        parent: TmdbMovieResponse,
+        args: {},
+        ctx: Context,
+        info: GraphQLResolveInfo,
+      ) => string | null | Promise<string | null>)
+    | {
+        fragment: string;
+        resolve: (
+          parent: TmdbMovieResponse,
+          args: {},
+          ctx: Context,
+          info: GraphQLResolveInfo,
+        ) => string | null | Promise<string | null>;
+      };
+
+  export type Release_dateResolver =
+    | ((
+        parent: TmdbMovieResponse,
+        args: {},
+        ctx: Context,
+        info: GraphQLResolveInfo,
+      ) => string | null | Promise<string | null>)
+    | {
+        fragment: string;
+        resolve: (
+          parent: TmdbMovieResponse,
+          args: {},
+          ctx: Context,
+          info: GraphQLResolveInfo,
+        ) => string | null | Promise<string | null>;
+      };
+
+  export type TitleResolver =
+    | ((
+        parent: TmdbMovieResponse,
+        args: {},
+        ctx: Context,
+        info: GraphQLResolveInfo,
+      ) => string | null | Promise<string | null>)
+    | {
+        fragment: string;
+        resolve: (
+          parent: TmdbMovieResponse,
+          args: {},
+          ctx: Context,
+          info: GraphQLResolveInfo,
+        ) => string | null | Promise<string | null>;
+      };
+
+  export type VideoResolver =
+    | ((
+        parent: TmdbMovieResponse,
+        args: {},
+        ctx: Context,
+        info: GraphQLResolveInfo,
+      ) => boolean | null | Promise<boolean | null>)
+    | {
+        fragment: string;
+        resolve: (
+          parent: TmdbMovieResponse,
+          args: {},
+          ctx: Context,
+          info: GraphQLResolveInfo,
+        ) => boolean | null | Promise<boolean | null>;
+      };
+
+  export type Vote_averageResolver =
+    | ((
+        parent: TmdbMovieResponse,
+        args: {},
+        ctx: Context,
+        info: GraphQLResolveInfo,
+      ) => number | null | Promise<number | null>)
+    | {
+        fragment: string;
+        resolve: (
+          parent: TmdbMovieResponse,
+          args: {},
+          ctx: Context,
+          info: GraphQLResolveInfo,
+        ) => number | null | Promise<number | null>;
+      };
+
+  export type Vote_countResolver =
+    | ((
+        parent: TmdbMovieResponse,
+        args: {},
+        ctx: Context,
+        info: GraphQLResolveInfo,
+      ) => number | null | Promise<number | null>)
+    | {
+        fragment: string;
+        resolve: (
+          parent: TmdbMovieResponse,
+          args: {},
+          ctx: Context,
+          info: GraphQLResolveInfo,
+        ) => number | null | Promise<number | null>;
+      };
+
+  export type PopularityResolver =
+    | ((
+        parent: TmdbMovieResponse,
+        args: {},
+        ctx: Context,
+        info: GraphQLResolveInfo,
+      ) => number | null | Promise<number | null>)
+    | {
+        fragment: string;
+        resolve: (
+          parent: TmdbMovieResponse,
+          args: {},
+          ctx: Context,
+          info: GraphQLResolveInfo,
+        ) => number | null | Promise<number | null>;
+      };
+
+  export interface Type {
+    adult:
+      | ((
+          parent: TmdbMovieResponse,
+          args: {},
+          ctx: Context,
+          info: GraphQLResolveInfo,
+        ) => boolean | null | Promise<boolean | null>)
+      | {
+          fragment: string;
+          resolve: (
+            parent: TmdbMovieResponse,
+            args: {},
+            ctx: Context,
+            info: GraphQLResolveInfo,
+          ) => boolean | null | Promise<boolean | null>;
+        };
+
+    backdrop_path:
+      | ((
+          parent: TmdbMovieResponse,
+          args: {},
+          ctx: Context,
+          info: GraphQLResolveInfo,
+        ) => string | null | Promise<string | null>)
+      | {
+          fragment: string;
+          resolve: (
+            parent: TmdbMovieResponse,
+            args: {},
+            ctx: Context,
+            info: GraphQLResolveInfo,
+          ) => string | null | Promise<string | null>;
+        };
+
+    genre_ids:
+      | ((
+          parent: TmdbMovieResponse,
+          args: {},
+          ctx: Context,
+          info: GraphQLResolveInfo,
+        ) => Array<number | null> | null | Promise<Array<number | null> | null>)
+      | {
+          fragment: string;
+          resolve: (
+            parent: TmdbMovieResponse,
+            args: {},
+            ctx: Context,
+            info: GraphQLResolveInfo,
+          ) => Array<number | null> | null | Promise<Array<number | null> | null>;
+        };
+
+    id:
+      | ((
+          parent: TmdbMovieResponse,
+          args: {},
+          ctx: Context,
+          info: GraphQLResolveInfo,
+        ) => number | null | Promise<number | null>)
+      | {
+          fragment: string;
+          resolve: (
+            parent: TmdbMovieResponse,
+            args: {},
+            ctx: Context,
+            info: GraphQLResolveInfo,
+          ) => number | null | Promise<number | null>;
+        };
+
+    original_language:
+      | ((
+          parent: TmdbMovieResponse,
+          args: {},
+          ctx: Context,
+          info: GraphQLResolveInfo,
+        ) => string | null | Promise<string | null>)
+      | {
+          fragment: string;
+          resolve: (
+            parent: TmdbMovieResponse,
+            args: {},
+            ctx: Context,
+            info: GraphQLResolveInfo,
+          ) => string | null | Promise<string | null>;
+        };
+
+    original_title:
+      | ((
+          parent: TmdbMovieResponse,
+          args: {},
+          ctx: Context,
+          info: GraphQLResolveInfo,
+        ) => string | null | Promise<string | null>)
+      | {
+          fragment: string;
+          resolve: (
+            parent: TmdbMovieResponse,
+            args: {},
+            ctx: Context,
+            info: GraphQLResolveInfo,
+          ) => string | null | Promise<string | null>;
+        };
+
+    overview:
+      | ((
+          parent: TmdbMovieResponse,
+          args: {},
+          ctx: Context,
+          info: GraphQLResolveInfo,
+        ) => string | null | Promise<string | null>)
+      | {
+          fragment: string;
+          resolve: (
+            parent: TmdbMovieResponse,
+            args: {},
+            ctx: Context,
+            info: GraphQLResolveInfo,
+          ) => string | null | Promise<string | null>;
+        };
+
+    poster_path:
+      | ((
+          parent: TmdbMovieResponse,
+          args: {},
+          ctx: Context,
+          info: GraphQLResolveInfo,
+        ) => string | null | Promise<string | null>)
+      | {
+          fragment: string;
+          resolve: (
+            parent: TmdbMovieResponse,
+            args: {},
+            ctx: Context,
+            info: GraphQLResolveInfo,
+          ) => string | null | Promise<string | null>;
+        };
+
+    release_date:
+      | ((
+          parent: TmdbMovieResponse,
+          args: {},
+          ctx: Context,
+          info: GraphQLResolveInfo,
+        ) => string | null | Promise<string | null>)
+      | {
+          fragment: string;
+          resolve: (
+            parent: TmdbMovieResponse,
+            args: {},
+            ctx: Context,
+            info: GraphQLResolveInfo,
+          ) => string | null | Promise<string | null>;
+        };
+
+    title:
+      | ((
+          parent: TmdbMovieResponse,
+          args: {},
+          ctx: Context,
+          info: GraphQLResolveInfo,
+        ) => string | null | Promise<string | null>)
+      | {
+          fragment: string;
+          resolve: (
+            parent: TmdbMovieResponse,
+            args: {},
+            ctx: Context,
+            info: GraphQLResolveInfo,
+          ) => string | null | Promise<string | null>;
+        };
+
+    video:
+      | ((
+          parent: TmdbMovieResponse,
+          args: {},
+          ctx: Context,
+          info: GraphQLResolveInfo,
+        ) => boolean | null | Promise<boolean | null>)
+      | {
+          fragment: string;
+          resolve: (
+            parent: TmdbMovieResponse,
+            args: {},
+            ctx: Context,
+            info: GraphQLResolveInfo,
+          ) => boolean | null | Promise<boolean | null>;
+        };
+
+    vote_average:
+      | ((
+          parent: TmdbMovieResponse,
+          args: {},
+          ctx: Context,
+          info: GraphQLResolveInfo,
+        ) => number | null | Promise<number | null>)
+      | {
+          fragment: string;
+          resolve: (
+            parent: TmdbMovieResponse,
+            args: {},
+            ctx: Context,
+            info: GraphQLResolveInfo,
+          ) => number | null | Promise<number | null>;
+        };
+
+    vote_count:
+      | ((
+          parent: TmdbMovieResponse,
+          args: {},
+          ctx: Context,
+          info: GraphQLResolveInfo,
+        ) => number | null | Promise<number | null>)
+      | {
+          fragment: string;
+          resolve: (
+            parent: TmdbMovieResponse,
+            args: {},
+            ctx: Context,
+            info: GraphQLResolveInfo,
+          ) => number | null | Promise<number | null>;
+        };
+
+    popularity:
+      | ((
+          parent: TmdbMovieResponse,
+          args: {},
+          ctx: Context,
+          info: GraphQLResolveInfo,
+        ) => number | null | Promise<number | null>)
+      | {
+          fragment: string;
+          resolve: (
+            parent: TmdbMovieResponse,
+            args: {},
+            ctx: Context,
+            info: GraphQLResolveInfo,
+          ) => number | null | Promise<number | null>;
+        };
+  }
+}
+
 export namespace MutationResolvers {
   export const defaultResolvers = {};
 
@@ -2045,40 +2562,6 @@ export namespace AuthPayloadResolvers {
         ) => string | null | Promise<string | null>;
       };
 
-  export type UserResolver =
-    | ((
-        parent: AuthPayload,
-        args: {},
-        ctx: Context,
-        info: GraphQLResolveInfo,
-      ) => User | null | Promise<User | null>)
-    | {
-        fragment: string;
-        resolve: (
-          parent: AuthPayload,
-          args: {},
-          ctx: Context,
-          info: GraphQLResolveInfo,
-        ) => User | null | Promise<User | null>;
-      };
-
-  export type AdminTokenResolver =
-    | ((
-        parent: AuthPayload,
-        args: {},
-        ctx: Context,
-        info: GraphQLResolveInfo,
-      ) => boolean | null | Promise<boolean | null>)
-    | {
-        fragment: string;
-        resolve: (
-          parent: AuthPayload,
-          args: {},
-          ctx: Context,
-          info: GraphQLResolveInfo,
-        ) => boolean | null | Promise<boolean | null>;
-      };
-
   export interface Type {
     token:
       | ((
@@ -2095,40 +2578,6 @@ export namespace AuthPayloadResolvers {
             ctx: Context,
             info: GraphQLResolveInfo,
           ) => string | null | Promise<string | null>;
-        };
-
-    user:
-      | ((
-          parent: AuthPayload,
-          args: {},
-          ctx: Context,
-          info: GraphQLResolveInfo,
-        ) => User | null | Promise<User | null>)
-      | {
-          fragment: string;
-          resolve: (
-            parent: AuthPayload,
-            args: {},
-            ctx: Context,
-            info: GraphQLResolveInfo,
-          ) => User | null | Promise<User | null>;
-        };
-
-    adminToken:
-      | ((
-          parent: AuthPayload,
-          args: {},
-          ctx: Context,
-          info: GraphQLResolveInfo,
-        ) => boolean | null | Promise<boolean | null>)
-      | {
-          fragment: string;
-          resolve: (
-            parent: AuthPayload,
-            args: {},
-            ctx: Context,
-            info: GraphQLResolveInfo,
-          ) => boolean | null | Promise<boolean | null>;
         };
   }
 }
@@ -2175,6 +2624,7 @@ export interface Resolvers {
   Movie: MovieResolvers.Type;
   Configuration: ConfigurationResolvers.Type;
   RadarrStatus: RadarrStatusResolvers.Type;
+  TmdbMovieResponse: TmdbMovieResponseResolvers.Type;
   Mutation: MutationResolvers.Type;
   AuthPayload: AuthPayloadResolvers.Type;
   Subscription: SubscriptionResolvers.Type;

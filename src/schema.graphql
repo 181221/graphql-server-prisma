@@ -6,7 +6,7 @@ type Query {
   checkConfiguration(id: ID): Boolean
   configuration(id: ID): Configuration
   radarrCollection(tmdbId: Int): RadarrStatus
-  similarMovies(tmdbId: Int): [Movie]
+  similarMovies(tmdbId: Int): [TmdbMovieResponse]
 }
 type RadarrStatus {
   isRequested: Boolean
@@ -37,6 +37,23 @@ type Movie {
   backdrop_path: String
 }
 
+type TmdbMovieResponse {
+  adult: Boolean
+  backdrop_path: String
+  genre_ids: [Int]
+  id: Int
+  original_language: String
+  original_title: String
+  overview: String
+  poster_path: String
+  release_date: String
+  title: String
+  video: Boolean
+  vote_average: Float
+  vote_count: Int
+  popularity: Float
+}
+
 type Configuration {
   id: ID!
   radarrApiKey: String
@@ -50,8 +67,6 @@ type Configuration {
 
 type AuthPayload {
   token: String
-  user: User
-  adminToken: Boolean
 }
 
 type User {

@@ -1,9 +1,8 @@
-import jwt from "jsonwebtoken";
 import { ApolloError } from "apollo-server-core";
 import { GraphQLResolveInfo } from "graphql";
 import fetch from "node-fetch";
-import { APP_SECRET, authenticate } from "../utils";
-import { Context } from "./types/Context";
+import { authenticate, signKey } from "../utils";
+import { Context } from "./Context";
 import { Configuration, Movie } from "../generated/prisma-client";
 import { MutationResolvers } from "../generated/prisma";
 
@@ -175,20 +174,19 @@ export const Mutation: MutationResolvers.Type = {
       const users = await context.prisma.users();
       let token;
       let adminToken = false;
+
       if (users.length === 0) {
         user = await context.prisma.createUser({
           email: args.email,
           role: "ADMIN",
         });
-        token = jwt.sign({ userId: user.id, claims: "admin" }, APP_SECRET);
+        token = signKey(user, "admin", "24h");
         adminToken = true;
       } else {
         user = await context.prisma.createUser({ email: args.email });
-        token = jwt.sign({ userId: user.id, claims: "read-post" }, APP_SECRET, {
-          expiresIn: "1h",
-        });
+        token = signKey(user, "read-post");
       }
-      return { user, token, adminToken };
+      return token;
     }
     throw new ApolloError("user already exists", "404");
   },
@@ -200,21 +198,14 @@ export const Mutation: MutationResolvers.Type = {
     info: GraphQLResolveInfo,
   ) => {
     const user = await context.prisma.user({ email: args.email });
+
     if (!user) {
       throw new ApolloError("No such user found", "404");
     }
-    let token;
-    if (user.role === "ADMIN") {
-      token = jwt.sign({ userId: user.id, claims: "admin" }, APP_SECRET);
-    } else {
-      token = jwt.sign({ userId: user.id, claims: "read-post" }, APP_SECRET, {
-        expiresIn: "1h",
-      });
-    }
-
+    const token =
+      user.role === "ADMIN" ? signKey(user, "admin", "24h") : signKey(user, "read-post");
     return {
       token,
-      user,
     };
   },
 };

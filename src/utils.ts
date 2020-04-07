@@ -1,6 +1,6 @@
-import { verify } from "jsonwebtoken";
+import { verify, sign } from "jsonwebtoken";
 import { AuthenticationError } from "apollo-server-core";
-import { Context } from "./resolvers/types/Context";
+import { Context } from "./resolvers/Context";
 import { APP_SECRET } from "./index";
 
 export const authenticate = (context: Context) => {
@@ -11,4 +11,8 @@ export const authenticate = (context: Context) => {
     return { userId, claims };
   }
   throw new AuthenticationError("Unauthorized");
+};
+
+export const signKey = ({ id }, claims, expiresIn = "3h") => {
+  return sign({ userId: id, claims }, APP_SECRET, { expiresIn });
 };

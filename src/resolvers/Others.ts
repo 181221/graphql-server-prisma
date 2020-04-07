@@ -3,8 +3,9 @@ import {
   RadarrStatusResolvers,
   AuthPayloadResolvers,
 } from "../generated/prisma";
-import { Context } from "./types/Context";
+import { Context } from "./Context";
 import { Role } from "../generated/prisma-client";
+import { AuthPayload as Auth } from "./types/types";
 
 export const Configuration: ConfigurationResolvers.Type = {
   ...ConfigurationResolvers.defaultResolvers,
@@ -18,11 +19,4 @@ export const RadarrStatus: RadarrStatusResolvers.Type = {
 };
 export const AuthPayload: AuthPayloadResolvers.Type = {
   ...AuthPayloadResolvers.defaultResolvers,
-  user: ({ token }, args, context: Context) => {
-    return context.prisma.user({ id: token });
-  },
-  adminToken: async (parent, args, context: Context) => {
-    const role: Role = await context.prisma.user({ id: parent.token }).role();
-    return role === "ADMIN";
-  },
 };

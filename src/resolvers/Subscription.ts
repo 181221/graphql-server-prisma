@@ -1,5 +1,5 @@
 import { SubscriptionResolvers } from "../generated/prisma";
-import { Context } from "./types/Context";
+import { Context } from "./Context";
 
 export const Subscription: SubscriptionResolvers.Type = {
   ...SubscriptionResolvers.defaultResolvers,

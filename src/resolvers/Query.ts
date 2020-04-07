@@ -5,7 +5,7 @@ import { Configuration, User } from "../generated/prisma-client";
 import { tmdbEndpoint } from "../constants";
 import { QueryResolvers } from "../generated/prisma";
 import { authenticate } from "../utils";
-import { Context } from "./types/Context";
+import { Context } from "./Context";
 
 export const Query: QueryResolvers.Type = {
   ...QueryResolvers.defaultResolvers,

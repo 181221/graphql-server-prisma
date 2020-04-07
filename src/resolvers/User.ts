@@ -1,5 +1,5 @@
 import { UserResolvers } from "../generated/prisma";
-import { Context } from "./types/Context";
+import { Context } from "./Context";
 export const User: UserResolvers.Type = {
   ...UserResolvers.defaultResolvers,
   movies: (parent, args, context: Context) => {
