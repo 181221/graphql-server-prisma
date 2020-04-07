@@ -1,128 +1,179 @@
-const { authenticate } = require("../utils");
-const { ApolloError } = require("apollo-server-core");
-import { Configuration, User, Movie } from "../generated/prisma-client";
+import { ApolloError } from "apollo-server-core";
+import { GraphQLResolveInfo } from "graphql";
+import fetch, { Response } from "node-fetch";
+import { Configuration, User } from "../generated/prisma-client";
 import { tmdb_endpoint } from "../constants";
-
-const fetch = require("isomorphic-fetch");
-
+import { QueryResolvers } from "../generated/prisma";
+import { authenticate } from "../utils";
 import { Context } from "./types/Context";
-async function movies(parent, args, context, info) {
-  authenticate(context);
-  const movies = await context.prisma.movies({
-    orderBy: args.orderBy,
-    first: args.first,
-  });
-  return movies;
-}
 
-async function user(parent, args, context: Context, info) {
-  authenticate(context);
-  const user = await context.prisma.user({ email: args.email });
-  return user;
-}
+export const Query: QueryResolvers.Type = {
+  ...QueryResolvers.defaultResolvers,
 
-async function similarMovies(parent, args, context: Context, info) {
-  authenticate(context);
-  const url = `${tmdb_endpoint}/movie/${args.tmdbId}/similar?api_key=${process.env.TMDB_API_KEY}`;
-  if (args && args.tmdbId) {
-    return fetch(url)
-      .then((res) => {
-        if (res.ok) return res.json();
-        return Promise.reject(res.statusText);
-      })
-      .then((json) => {
-        return json.results;
-      })
-      .catch((err) => new ApolloError(err.message, err.statusText));
-  }
-}
+  movie: async (
+    parent,
+    args: QueryResolvers.ArgsMovie,
+    context: Context,
+    info: GraphQLResolveInfo
+  ) => {
+    authenticate(context);
+    return context.prisma.movie({ id: args.id });
+  },
 
-async function radarrCollection(parent, args, context: Context, info) {
-  authenticate(context);
-  if (args && args.tmdbId) {
-    const configs = await context.prisma.configurations();
-    if (configs && configs.length > 0) {
-      let config: Configuration = configs[0];
-      const radarr_url = config.radarrEndpoint;
-      const url_collection = `${radarr_url}/movie?apikey=${config.radarrApiKey}`;
-      const url_queue = `${radarr_url}/queue?apikey=${config.radarrApiKey}`;
-      return fetch(url_collection)
+  movies: async (
+    parent,
+    args: QueryResolvers.ArgsMovies,
+    context: Context,
+    info: GraphQLResolveInfo
+  ) => {
+    authenticate(context);
+    const movies = await context.prisma.movies({
+      orderBy: args.orderBy,
+      first: args.first,
+    });
+    return movies;
+  },
+
+  user: async (
+    parent,
+    args: QueryResolvers.ArgsUser,
+    context: Context,
+    info: GraphQLResolveInfo
+  ) => {
+    authenticate(context);
+    const user = await context.prisma.user({ email: args.email });
+    return user;
+  },
+
+  similarMovies: async (
+    parent,
+    args: QueryResolvers.ArgsSimilarMovies,
+    context: Context,
+    info: GraphQLResolveInfo
+  ) => {
+    authenticate(context);
+    const url = `${tmdb_endpoint}/movie/${args.tmdbId}/similar?api_key=${
+      process.env.TMDB_API_KEY
+    }`;
+    if (args && args.tmdbId) {
+      return fetch(url)
         .then((res) => {
           if (res.ok) return res.json();
           return Promise.reject(res.statusText);
         })
-        .then(async (json) => {
-          const found = json.find((element) => element.tmdbId === args.tmdbId);
-          if (found) {
-            let response = await fetch(url_queue);
-            let data = await response.json();
-            if (data && data.length > 0) {
-              const queueElement = json.find(
-                (element) => element.movie.tmdbId === found.tmdbId
-              );
-              if (queueElement) {
-                queueElement.isRequested = true;
-                return queueElement;
-              }
-            }
-            found.isRequested = true;
-            return found;
-          }
-          return {
-            isRequested: false,
-            hasFile: false,
-            downloaded: false,
-            status: "",
-            timeleft: "",
-            title: "",
-          };
+        .then((json) => {
+          return json.results;
         })
         .catch((err) => new ApolloError(err.message, err.statusText));
     }
-  }
-}
+  },
 
-async function checkConfiguration(parent, args, context: Context, info) {
-  let users = await context.prisma.users({ where: { role: "ADMIN" } });
-  if (users && users.length !== 0) {
-    let config: Configuration = await context.prisma
-      .user({ id: users[0].id })
-      .configuration();
-    if (config) {
-      const radarr_url = config.radarrEndpoint;
-      let url = `${radarr_url}/movie?apikey=${config.radarrApiKey}`;
-      let res = await fetch(url, { method: "HEAD" });
-      if (!res.ok) throw new ApolloError(res.statusText, res.statusCode);
-      return true;
+  radarrCollection: async (
+    parent,
+    args: QueryResolvers.ArgsRadarrCollection,
+    context: Context,
+    info: GraphQLResolveInfo
+  ) => {
+    authenticate(context);
+    if (args && args.tmdbId) {
+      const configs = await context.prisma.configurations();
+      if (configs && configs.length > 0) {
+        let config: Configuration = configs[0];
+        const radarr_url = config.radarrEndpoint;
+        const url_collection = `${radarr_url}/movie?apikey=${
+          config.radarrApiKey
+        }`;
+        const url_queue = `${radarr_url}/queue?apikey=${config.radarrApiKey}`;
+        return fetch(url_collection)
+          .then((res) => {
+            if (res.ok) return res.json();
+            return Promise.reject(res.statusText);
+          })
+          .then(async (json) => {
+            const found = json.find(
+              (element) => element.tmdbId === args.tmdbId
+            );
+            if (found) {
+              let response: Response = await fetch(url_queue);
+              let data = await response.json();
+              if (data && data.length > 0) {
+                const queueElement = json.find(
+                  (element) => element.movie.tmdbId === found.tmdbId
+                );
+                if (queueElement) {
+                  queueElement.isRequested = true;
+                  return queueElement;
+                }
+              }
+              found.isRequested = true;
+              return found;
+            }
+            return {
+              isRequested: false,
+              hasFile: false,
+              downloaded: false,
+              status: "",
+              timeleft: "",
+              title: "",
+            };
+          })
+          .catch((err) => new ApolloError(err.message, err.statusText));
+      }
     }
-  }
-  return false;
-}
+  },
 
-async function configuration(parent, args, context: Context, info) {
-  let { userId, claims } = authenticate(context);
-  if (claims === "admin") {
-    let config = await context.prisma.user({ id: userId }).configuration();
-    if (!config) {
-      throw new Error("no config");
+  checkConfiguration: async (
+    parent,
+    args: QueryResolvers.ArgsCheckConfiguration,
+    context: Context,
+    info: GraphQLResolveInfo
+  ) => {
+    let users: Array<User> = await context.prisma.users({
+      where: { role: "ADMIN" },
+    });
+    if (users && users.length !== 0) {
+      let config: Configuration = await context.prisma
+        .user({ id: users[0].id })
+        .configuration();
+      if (config) {
+        const radarr_url = config.radarrEndpoint;
+        let url = `${radarr_url}/movie?apikey=${config.radarrApiKey}`;
+        let res: Response = await fetch(url, { method: "HEAD" });
+        if (!res.ok)
+          throw new ApolloError(res.statusText, res.status.toString());
+        return true;
+      }
     }
-    return config;
-  }
-  throw new ApolloError("Unauthorized", 401);
-}
+    return false;
+  },
 
-async function users(parent, args, context, info) {
-  authenticate(context);
-  const user = await context.prisma.users(null, info);
-  return user;
-}
+  configuration: async (
+    parent,
+    args: QueryResolvers.ArgsConfiguration,
+    context: Context,
+    info: GraphQLResolveInfo
+  ) => {
+    let { userId, claims } = authenticate(context);
+    if (claims === "admin") {
+      let config: Configuration = await context.prisma
+        .user({ id: userId })
+        .configuration();
+      if (!config) {
+        throw new Error("no config");
+      }
+      return config;
+    }
+    throw new ApolloError("Unauthorized", "401");
+  },
 
-module.exports = {
-  users,
-  movies,
-  configuration,
-  checkConfiguration,
-  user,
-  radarrCollection,
-  similarMovies,
+  users: async (
+    parent,
+    args: QueryResolvers.ArgsUser,
+    context: Context,
+    info: GraphQLResolveInfo
+  ) => {
+    authenticate(context);
+    const user: Array<User> = await context.prisma.users();
+    return user;
+  },
 };

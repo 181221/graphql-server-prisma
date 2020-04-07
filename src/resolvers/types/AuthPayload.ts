@@ -10,3 +10,12 @@ export interface PrivateConfiguration {
   pushoverApiKey: string | null;
   pushoverUserKey: string | null;
 }
+
+export interface RadarrStatus {
+  isRequested: boolean | null;
+  hasFile: boolean | null;
+  downloaded: boolean | null;
+  status: string | null;
+  timeleft: string | null;
+  title: string | null;
+}

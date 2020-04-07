@@ -1,15 +1,8 @@
-export {};
 import { GraphQLServer } from "graphql-yoga";
+import fetch from "node-fetch";
 import { Movie, User, prisma, Configuration } from "./generated/prisma-client";
 import sendPushRequest from "./notification";
-
-const fetch = require("isomorphic-fetch");
-const Query = require("./resolvers/Query");
-const Mutation = require("./resolvers/Mutation");
-const User = require("./resolvers/User");
-const Movie = require("./resolvers/Movie");
-const Subscription = require("./resolvers/Subscription");
-const resolvers = { Query, Mutation, User, Movie, Subscription };
+import { resolvers } from "./resolvers";
 
 require("es6-promise").polyfill();
 
@@ -24,7 +17,7 @@ console.log(dotenv.parsed);
 async function main() {
   const server = new GraphQLServer({
     typeDefs: "./src/schema.graphql",
-    resolvers: resolvers,
+    resolvers,
     context: (request) => {
       return {
         ...request,
@@ -89,7 +82,9 @@ async function main() {
             config.pushoverEndpoint &&
             config.pushoverUserKey
           ) {
-            const msg = `${requestedByUser.email} \nHas requested the movie:\n${result.value.title}`;
+            const msg = `${requestedByUser.email} \nHas requested the movie:\n${
+              result.value.title
+            }`;
             const obj = {
               title: result.value.title,
               message: msg,
@@ -105,7 +100,9 @@ async function main() {
             };
             const response = await fetch(config.pushoverEndpoint, options);
             console.log(
-              `Fetch ${config.pushoverEndpoint} responded with ${response.statusText}`
+              `Fetch ${config.pushoverEndpoint} responded with ${
+                response.statusText
+              }`
             );
           }
         });
@@ -124,7 +121,9 @@ async function main() {
         setInterval(() => {
           console.log("scanning for downloaded movies");
           const radarr_url = config.radarrEndpoint;
-          const url_collection = `${radarr_url}/movie?apikey=${config.radarrApiKey}`;
+          const url_collection = `${radarr_url}/movie?apikey=${
+            config.radarrApiKey
+          }`;
           fetch(url_collection)
             .then((res) => res.json())
             .then((json) => {

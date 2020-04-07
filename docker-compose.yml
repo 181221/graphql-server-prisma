@@ -49,7 +49,7 @@ services:
       - web
     ports:
       - 4000:4000
-    command: bash -c "yarn prisma deploy && yarn dev"
+    command: bash -c "yarn generate && yarn prisma generate && yarn prisma deploy && yarn dev"
 networks:
   web:
     external: true
