@@ -14,7 +14,7 @@ export const Query: QueryResolvers.Type = {
     parent,
     args: QueryResolvers.ArgsMovie,
     context: Context,
-    info: GraphQLResolveInfo
+    info: GraphQLResolveInfo,
   ) => {
     authenticate(context);
     return context.prisma.movie({ id: args.id });
@@ -24,7 +24,7 @@ export const Query: QueryResolvers.Type = {
     parent,
     args: QueryResolvers.ArgsMovies,
     context: Context,
-    info: GraphQLResolveInfo
+    info: GraphQLResolveInfo,
   ) => {
     authenticate(context);
     const movies = await context.prisma.movies({
@@ -38,7 +38,7 @@ export const Query: QueryResolvers.Type = {
     parent,
     args: QueryResolvers.ArgsUser,
     context: Context,
-    info: GraphQLResolveInfo
+    info: GraphQLResolveInfo,
   ) => {
     authenticate(context);
     const user = await context.prisma.user({ email: args.email });
@@ -49,7 +49,7 @@ export const Query: QueryResolvers.Type = {
     parent,
     args: QueryResolvers.ArgsSimilarMovies,
     context: Context,
-    info: GraphQLResolveInfo
+    info: GraphQLResolveInfo,
   ) => {
     authenticate(context);
     const url = `${tmdbEndpoint}/movie/${args.tmdbId}/similar?api_key=${process.env.TMDB_API_KEY}`;
@@ -70,7 +70,7 @@ export const Query: QueryResolvers.Type = {
     parent,
     args: QueryResolvers.ArgsRadarrCollection,
     context: Context,
-    info: GraphQLResolveInfo
+    info: GraphQLResolveInfo,
   ) => {
     authenticate(context);
     if (args && args.tmdbId) {
@@ -86,16 +86,12 @@ export const Query: QueryResolvers.Type = {
             return Promise.reject(res.statusText);
           })
           .then(async (json) => {
-            const found = json.find(
-              (element) => element.tmdbId === args.tmdbId
-            );
+            const found = json.find((element) => element.tmdbId === args.tmdbId);
             if (found) {
               const response: Response = await fetch(urlQueue);
               const data = await response.json();
               if (data && data.length > 0) {
-                const queueElement = json.find(
-                  (element) => element.movie.tmdbId === found.tmdbId
-                );
+                const queueElement = json.find((element) => element.movie.tmdbId === found.tmdbId);
                 if (queueElement) {
                   queueElement.isRequested = true;
                   return queueElement;
@@ -122,21 +118,18 @@ export const Query: QueryResolvers.Type = {
     parent,
     args: QueryResolvers.ArgsCheckConfiguration,
     context: Context,
-    info: GraphQLResolveInfo
+    info: GraphQLResolveInfo,
   ) => {
     const users: User[] = await context.prisma.users({
       where: { role: "ADMIN" },
     });
     if (users && users.length !== 0) {
-      const config: Configuration = await context.prisma
-        .user({ id: users[0].id })
-        .configuration();
+      const config: Configuration = await context.prisma.user({ id: users[0].id }).configuration();
       if (config) {
         const radarrUrl = config.radarrEndpoint;
         const url = `${radarrUrl}/movie?apikey=${config.radarrApiKey}`;
         const res: Response = await fetch(url, { method: "HEAD" });
-        if (!res.ok)
-          throw new ApolloError(res.statusText, res.status.toString());
+        if (!res.ok) throw new ApolloError(res.statusText, res.status.toString());
         return true;
       }
     }
@@ -147,13 +140,11 @@ export const Query: QueryResolvers.Type = {
     parent,
     args: QueryResolvers.ArgsConfiguration,
     context: Context,
-    info: GraphQLResolveInfo
+    info: GraphQLResolveInfo,
   ) => {
     const { userId, claims } = authenticate(context);
     if (claims === "admin") {
-      const config: Configuration = await context.prisma
-        .user({ id: userId })
-        .configuration();
+      const config: Configuration = await context.prisma.user({ id: userId }).configuration();
       if (!config) {
         throw new Error("no config");
       }
@@ -166,7 +157,7 @@ export const Query: QueryResolvers.Type = {
     parent,
     args: QueryResolvers.ArgsUser,
     context: Context,
-    info: GraphQLResolveInfo
+    info: GraphQLResolveInfo,
   ) => {
     authenticate(context);
     const user: User[] = await context.prisma.users();

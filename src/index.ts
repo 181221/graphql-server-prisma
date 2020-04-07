@@ -9,15 +9,14 @@ import { config as DotEnvConfig } from "dotenv";
 polyfill();
 
 const dotenv = DotEnvConfig({
-  path:
-    process.env.NODE_ENV === "development"
-      ? ".env.development"
-      : ".env.development",
+  path: process.env.NODE_ENV === "development" ? ".env.development" : ".env.development",
 });
 
 if (dotenv.error) {
   throw dotenv.error;
 }
+export const APP_SECRET = process.env.APP_SECRET;
+
 console.log(dotenv.parsed);
 async function main() {
   const server = new GraphQLServer({
@@ -36,13 +35,11 @@ async function main() {
     debug: true,
   };
   server.start(serverOptions, ({ port }) =>
-    console.log(`Server is running on http://localhost:${port}`)
+    console.log(`Server is running on http://localhost:${port}`),
   );
 
   const movieUpdatePushRequest = async () => {
-    const movie = await prisma.$subscribe
-      .movie({ mutation_in: ["UPDATED"] })
-      .node();
+    const movie = await prisma.$subscribe.movie({ mutation_in: ["UPDATED"] }).node();
 
     let result = await movie.next();
     while (!result.done) {
@@ -66,9 +63,7 @@ async function main() {
   };
 
   const movieCreatedPushbulletRequest = async () => {
-    const movie = await prisma.$subscribe
-      .movie({ mutation_in: ["CREATED"] })
-      .node();
+    const movie = await prisma.$subscribe.movie({ mutation_in: ["CREATED"] }).node();
     let result = await movie.next();
     while (!result.done) {
       const users: User[] = await prisma.users({
@@ -102,9 +97,7 @@ async function main() {
               body: JSON.stringify(obj),
             };
             const response = await fetch(config.pushoverEndpoint, options);
-            console.log(
-              `Fetch ${config.pushoverEndpoint} responded with ${response.statusText}`
-            );
+            console.log(`Fetch ${config.pushoverEndpoint} responded with ${response.statusText}`);
           }
         });
       }
@@ -115,9 +108,7 @@ async function main() {
   const radarrCollectionFetcher = async () => {
     const user: User[] = await prisma.users({ where: { role: "ADMIN" } });
     if (user && user.length !== 0) {
-      const config: Configuration = await prisma
-        .user({ id: user[0].id })
-        .configuration();
+      const config: Configuration = await prisma.user({ id: user[0].id }).configuration();
       if (config) {
         setInterval(() => {
           const radarrUrl = config.radarrEndpoint;

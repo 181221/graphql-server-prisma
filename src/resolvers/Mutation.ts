@@ -43,7 +43,7 @@ export const Mutation: MutationResolvers.Type = {
     parent,
     args: MutationResolvers.ArgsCreateMovie,
     context: Context,
-    info: GraphQLResolveInfo
+    info: GraphQLResolveInfo,
   ) => {
     const { userId } = authenticate(context);
     const configs = await context.prisma.configurations();
@@ -70,7 +70,7 @@ export const Mutation: MutationResolvers.Type = {
     parent,
     args: MutationResolvers.ArgsDeleteMovie,
     context: Context,
-    info: GraphQLResolveInfo
+    info: GraphQLResolveInfo,
   ) => {
     authenticate(context);
     return await context.prisma.deleteMovie({ id: args.id });
@@ -80,7 +80,7 @@ export const Mutation: MutationResolvers.Type = {
     parent,
     args: MutationResolvers.ArgsUpdateMovie,
     context: Context,
-    info: GraphQLResolveInfo
+    info: GraphQLResolveInfo,
   ) => {
     authenticate(context);
     return await context.prisma.updateMovie({
@@ -97,7 +97,7 @@ export const Mutation: MutationResolvers.Type = {
     parent,
     args: MutationResolvers.ArgsUpdateUser,
     context: Context,
-    info: GraphQLResolveInfo
+    info: GraphQLResolveInfo,
   ) => {
     const { userId } = authenticate(context);
     return await context.prisma.updateUser({
@@ -110,7 +110,7 @@ export const Mutation: MutationResolvers.Type = {
     parent,
     args: MutationResolvers.ArgsCreateConfiguration,
     context: Context,
-    info: GraphQLResolveInfo
+    info: GraphQLResolveInfo,
   ) => {
     const { userId, claims } = authenticate(context);
     if (claims !== "admin") {
@@ -131,7 +131,7 @@ export const Mutation: MutationResolvers.Type = {
     parent,
     args: MutationResolvers.ArgsUpdateConfiguration,
     context: Context,
-    info: GraphQLResolveInfo
+    info: GraphQLResolveInfo,
   ) => {
     const { userId, claims } = authenticate(context);
     if (claims !== "admin") {
@@ -168,7 +168,7 @@ export const Mutation: MutationResolvers.Type = {
     parent,
     args: MutationResolvers.ArgsCreateToken,
     context: Context,
-    info: GraphQLResolveInfo
+    info: GraphQLResolveInfo,
   ) => {
     let user = await context.prisma.user({ email: args.email });
     if (!user) {
@@ -197,7 +197,7 @@ export const Mutation: MutationResolvers.Type = {
     parent,
     args: MutationResolvers.ArgsGetToken,
     context: Context,
-    info: GraphQLResolveInfo
+    info: GraphQLResolveInfo,
   ) => {
     const user = await context.prisma.user({ email: args.email });
     if (!user) {

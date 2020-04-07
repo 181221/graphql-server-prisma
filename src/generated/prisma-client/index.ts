@@ -3,15 +3,10 @@
 // For more information, please read the docs: https://www.prisma.io/docs/prisma-client/
 
 import { DocumentNode } from "graphql";
-import {
-  makePrismaClientClass,
-  BaseClientOptions,
-  Model,
-} from "prisma-client-lib";
+import { makePrismaClientClass, BaseClientOptions, Model } from "prisma-client-lib";
 import { typeDefs } from "./prisma-schema";
 
-export type AtLeastOne<T, U = { [K in keyof T]: Pick<T, K> }> = Partial<T> &
-  U[keyof U];
+export type AtLeastOne<T, U = { [K in keyof T]: Pick<T, K> }> = Partial<T> & U[keyof U];
 
 export type Maybe<T> = T | undefined | null;
 
@@ -31,18 +26,13 @@ export interface Fragmentable {
 
 export interface Prisma {
   $exists: Exists;
-  $graphql: <T = any>(
-    query: string,
-    variables?: { [key: string]: any }
-  ) => Promise<T>;
+  $graphql: <T = any>(query: string, variables?: { [key: string]: any }) => Promise<T>;
 
   /**
    * Queries
    */
 
-  configuration: (
-    where: ConfigurationWhereUniqueInput
-  ) => ConfigurationNullablePromise;
+  configuration: (where: ConfigurationWhereUniqueInput) => ConfigurationNullablePromise;
   configurations: (args?: {
     where?: ConfigurationWhereInput;
     orderBy?: ConfigurationOrderByInput;
@@ -119,17 +109,10 @@ export interface Prisma {
     create: ConfigurationCreateInput;
     update: ConfigurationUpdateInput;
   }) => ConfigurationPromise;
-  deleteConfiguration: (
-    where: ConfigurationWhereUniqueInput
-  ) => ConfigurationPromise;
-  deleteManyConfigurations: (
-    where?: ConfigurationWhereInput
-  ) => BatchPayloadPromise;
+  deleteConfiguration: (where: ConfigurationWhereUniqueInput) => ConfigurationPromise;
+  deleteManyConfigurations: (where?: ConfigurationWhereInput) => BatchPayloadPromise;
   createMovie: (data: MovieCreateInput) => MoviePromise;
-  updateMovie: (args: {
-    data: MovieUpdateInput;
-    where: MovieWhereUniqueInput;
-  }) => MoviePromise;
+  updateMovie: (args: { data: MovieUpdateInput; where: MovieWhereUniqueInput }) => MoviePromise;
   updateManyMovies: (args: {
     data: MovieUpdateManyMutationInput;
     where?: MovieWhereInput;
@@ -142,10 +125,7 @@ export interface Prisma {
   deleteMovie: (where: MovieWhereUniqueInput) => MoviePromise;
   deleteManyMovies: (where?: MovieWhereInput) => BatchPayloadPromise;
   createUser: (data: UserCreateInput) => UserPromise;
-  updateUser: (args: {
-    data: UserUpdateInput;
-    where: UserWhereUniqueInput;
-  }) => UserPromise;
+  updateUser: (args: { data: UserUpdateInput; where: UserWhereUniqueInput }) => UserPromise;
   updateManyUsers: (args: {
     data: UserUpdateManyMutationInput;
     where?: UserWhereInput;
@@ -167,14 +147,10 @@ export interface Prisma {
 
 export interface Subscription {
   configuration: (
-    where?: ConfigurationSubscriptionWhereInput
+    where?: ConfigurationSubscriptionWhereInput,
   ) => ConfigurationSubscriptionPayloadSubscription;
-  movie: (
-    where?: MovieSubscriptionWhereInput
-  ) => MovieSubscriptionPayloadSubscription;
-  user: (
-    where?: UserSubscriptionWhereInput
-  ) => UserSubscriptionPayloadSubscription;
+  movie: (where?: MovieSubscriptionWhereInput) => MovieSubscriptionPayloadSubscription;
+  user: (where?: UserSubscriptionWhereInput) => UserSubscriptionPayloadSubscription;
 }
 
 export interface ClientConstructor<T> {
@@ -577,9 +553,7 @@ export interface UserCreateWithoutConfigurationInput {
 }
 
 export interface MovieCreateManyWithoutRequestedByInput {
-  create?: Maybe<
-    MovieCreateWithoutRequestedByInput[] | MovieCreateWithoutRequestedByInput
-  >;
+  create?: Maybe<MovieCreateWithoutRequestedByInput[] | MovieCreateWithoutRequestedByInput>;
   connect?: Maybe<MovieWhereUniqueInput[] | MovieWhereUniqueInput>;
 }
 
@@ -629,9 +603,7 @@ export interface UserUpdateWithoutConfigurationDataInput {
 }
 
 export interface MovieUpdateManyWithoutRequestedByInput {
-  create?: Maybe<
-    MovieCreateWithoutRequestedByInput[] | MovieCreateWithoutRequestedByInput
-  >;
+  create?: Maybe<MovieCreateWithoutRequestedByInput[] | MovieCreateWithoutRequestedByInput>;
   delete?: Maybe<MovieWhereUniqueInput[] | MovieWhereUniqueInput>;
   connect?: Maybe<MovieWhereUniqueInput[] | MovieWhereUniqueInput>;
   set?: Maybe<MovieWhereUniqueInput[] | MovieWhereUniqueInput>;
@@ -645,9 +617,7 @@ export interface MovieUpdateManyWithoutRequestedByInput {
     | MovieUpsertWithWhereUniqueWithoutRequestedByInput
   >;
   deleteMany?: Maybe<MovieScalarWhereInput[] | MovieScalarWhereInput>;
-  updateMany?: Maybe<
-    MovieUpdateManyWithWhereNestedInput[] | MovieUpdateManyWithWhereNestedInput
-  >;
+  updateMany?: Maybe<MovieUpdateManyWithWhereNestedInput[] | MovieUpdateManyWithWhereNestedInput>;
 }
 
 export interface MovieUpdateWithWhereUniqueWithoutRequestedByInput {
@@ -974,15 +944,9 @@ export interface ConfigurationSubscriptionWhereInput {
   updatedFields_contains_every?: Maybe<String[] | String>;
   updatedFields_contains_some?: Maybe<String[] | String>;
   node?: Maybe<ConfigurationWhereInput>;
-  AND?: Maybe<
-    ConfigurationSubscriptionWhereInput[] | ConfigurationSubscriptionWhereInput
-  >;
-  OR?: Maybe<
-    ConfigurationSubscriptionWhereInput[] | ConfigurationSubscriptionWhereInput
-  >;
-  NOT?: Maybe<
-    ConfigurationSubscriptionWhereInput[] | ConfigurationSubscriptionWhereInput
-  >;
+  AND?: Maybe<ConfigurationSubscriptionWhereInput[] | ConfigurationSubscriptionWhereInput>;
+  OR?: Maybe<ConfigurationSubscriptionWhereInput[] | ConfigurationSubscriptionWhereInput>;
+  NOT?: Maybe<ConfigurationSubscriptionWhereInput[] | ConfigurationSubscriptionWhereInput>;
 }
 
 export interface MovieSubscriptionWhereInput {
@@ -1021,9 +985,7 @@ export interface Configuration {
   pushoverUserKey?: String;
 }
 
-export interface ConfigurationPromise
-  extends Promise<Configuration>,
-    Fragmentable {
+export interface ConfigurationPromise extends Promise<Configuration>, Fragmentable {
   id: () => Promise<ID_Output>;
   radarrApiKey: () => Promise<String>;
   radarrEndpoint: () => Promise<String>;
@@ -1047,9 +1009,7 @@ export interface ConfigurationSubscription
   user: <T = UserSubscription>() => T;
 }
 
-export interface ConfigurationNullablePromise
-  extends Promise<Configuration | null>,
-    Fragmentable {
+export interface ConfigurationNullablePromise extends Promise<Configuration | null>, Fragmentable {
   id: () => Promise<ID_Output>;
   radarrApiKey: () => Promise<String>;
   radarrEndpoint: () => Promise<String>;
@@ -1088,9 +1048,7 @@ export interface UserPromise extends Promise<User>, Fragmentable {
   configuration: <T = ConfigurationPromise>() => T;
 }
 
-export interface UserSubscription
-  extends Promise<AsyncIterator<User>>,
-    Fragmentable {
+export interface UserSubscription extends Promise<AsyncIterator<User>>, Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   name: () => Promise<AsyncIterator<String>>;
   email: () => Promise<AsyncIterator<String>>;
@@ -1109,9 +1067,7 @@ export interface UserSubscription
   configuration: <T = ConfigurationSubscription>() => T;
 }
 
-export interface UserNullablePromise
-  extends Promise<User | null>,
-    Fragmentable {
+export interface UserNullablePromise extends Promise<User | null>, Fragmentable {
   id: () => Promise<ID_Output>;
   name: () => Promise<String>;
   email: () => Promise<String>;
@@ -1159,9 +1115,7 @@ export interface MoviePromise extends Promise<Movie>, Fragmentable {
   downloaded: () => Promise<Boolean>;
 }
 
-export interface MovieSubscription
-  extends Promise<AsyncIterator<Movie>>,
-    Fragmentable {
+export interface MovieSubscription extends Promise<AsyncIterator<Movie>>, Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   title: () => Promise<AsyncIterator<String>>;
@@ -1176,9 +1130,7 @@ export interface MovieSubscription
   downloaded: () => Promise<AsyncIterator<Boolean>>;
 }
 
-export interface MovieNullablePromise
-  extends Promise<Movie | null>,
-    Fragmentable {
+export interface MovieNullablePromise extends Promise<Movie | null>, Fragmentable {
   id: () => Promise<ID_Output>;
   createdAt: () => Promise<DateTimeOutput>;
   title: () => Promise<String>;
@@ -1228,9 +1180,7 @@ export interface PageInfoPromise extends Promise<PageInfo>, Fragmentable {
   endCursor: () => Promise<String>;
 }
 
-export interface PageInfoSubscription
-  extends Promise<AsyncIterator<PageInfo>>,
-    Fragmentable {
+export interface PageInfoSubscription extends Promise<AsyncIterator<PageInfo>>, Fragmentable {
   hasNextPage: () => Promise<AsyncIterator<Boolean>>;
   hasPreviousPage: () => Promise<AsyncIterator<Boolean>>;
   startCursor: () => Promise<AsyncIterator<String>>;
@@ -1242,9 +1192,7 @@ export interface ConfigurationEdge {
   cursor: String;
 }
 
-export interface ConfigurationEdgePromise
-  extends Promise<ConfigurationEdge>,
-    Fragmentable {
+export interface ConfigurationEdgePromise extends Promise<ConfigurationEdge>, Fragmentable {
   node: <T = ConfigurationPromise>() => T;
   cursor: () => Promise<String>;
 }
@@ -1277,9 +1225,7 @@ export interface MovieConnection {
   edges: MovieEdge[];
 }
 
-export interface MovieConnectionPromise
-  extends Promise<MovieConnection>,
-    Fragmentable {
+export interface MovieConnectionPromise extends Promise<MovieConnection>, Fragmentable {
   pageInfo: <T = PageInfoPromise>() => T;
   edges: <T = FragmentableArray<MovieEdge>>() => T;
   aggregate: <T = AggregateMoviePromise>() => T;
@@ -1303,9 +1249,7 @@ export interface MovieEdgePromise extends Promise<MovieEdge>, Fragmentable {
   cursor: () => Promise<String>;
 }
 
-export interface MovieEdgeSubscription
-  extends Promise<AsyncIterator<MovieEdge>>,
-    Fragmentable {
+export interface MovieEdgeSubscription extends Promise<AsyncIterator<MovieEdge>>, Fragmentable {
   node: <T = MovieSubscription>() => T;
   cursor: () => Promise<AsyncIterator<String>>;
 }
@@ -1314,9 +1258,7 @@ export interface AggregateMovie {
   count: Int;
 }
 
-export interface AggregateMoviePromise
-  extends Promise<AggregateMovie>,
-    Fragmentable {
+export interface AggregateMoviePromise extends Promise<AggregateMovie>, Fragmentable {
   count: () => Promise<Int>;
 }
 
@@ -1331,9 +1273,7 @@ export interface UserConnection {
   edges: UserEdge[];
 }
 
-export interface UserConnectionPromise
-  extends Promise<UserConnection>,
-    Fragmentable {
+export interface UserConnectionPromise extends Promise<UserConnection>, Fragmentable {
   pageInfo: <T = PageInfoPromise>() => T;
   edges: <T = FragmentableArray<UserEdge>>() => T;
   aggregate: <T = AggregateUserPromise>() => T;
@@ -1357,9 +1297,7 @@ export interface UserEdgePromise extends Promise<UserEdge>, Fragmentable {
   cursor: () => Promise<String>;
 }
 
-export interface UserEdgeSubscription
-  extends Promise<AsyncIterator<UserEdge>>,
-    Fragmentable {
+export interface UserEdgeSubscription extends Promise<AsyncIterator<UserEdge>>, Fragmentable {
   node: <T = UserSubscription>() => T;
   cursor: () => Promise<AsyncIterator<String>>;
 }
@@ -1368,9 +1306,7 @@ export interface AggregateUser {
   count: Int;
 }
 
-export interface AggregateUserPromise
-  extends Promise<AggregateUser>,
-    Fragmentable {
+export interface AggregateUserPromise extends Promise<AggregateUser>, Fragmentable {
   count: () => Promise<Int>;
 }
 
@@ -1384,9 +1320,7 @@ export interface BatchPayload {
   count: Long;
 }
 
-export interface BatchPayloadPromise
-  extends Promise<BatchPayload>,
-    Fragmentable {
+export interface BatchPayloadPromise extends Promise<BatchPayload>, Fragmentable {
   count: () => Promise<Long>;
 }
 
@@ -1494,9 +1428,7 @@ export interface MoviePreviousValues {
   downloaded?: Boolean;
 }
 
-export interface MoviePreviousValuesPromise
-  extends Promise<MoviePreviousValues>,
-    Fragmentable {
+export interface MoviePreviousValuesPromise extends Promise<MoviePreviousValues>, Fragmentable {
   id: () => Promise<ID_Output>;
   createdAt: () => Promise<DateTimeOutput>;
   title: () => Promise<String>;
@@ -1560,9 +1492,7 @@ export interface UserPreviousValues {
   role?: Role;
 }
 
-export interface UserPreviousValuesPromise
-  extends Promise<UserPreviousValues>,
-    Fragmentable {
+export interface UserPreviousValuesPromise extends Promise<UserPreviousValues>, Fragmentable {
   id: () => Promise<ID_Output>;
   name: () => Promise<String>;
   email: () => Promise<String>;

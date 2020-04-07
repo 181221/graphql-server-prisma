@@ -722,10 +722,7 @@ export const typeDefs = /* GraphQL */ `
     deleteManyConfigurations(where: ConfigurationWhereInput): BatchPayload!
     createMovie(data: MovieCreateInput!): Movie!
     updateMovie(data: MovieUpdateInput!, where: MovieWhereUniqueInput!): Movie
-    updateManyMovies(
-      data: MovieUpdateManyMutationInput!
-      where: MovieWhereInput
-    ): BatchPayload!
+    updateManyMovies(data: MovieUpdateManyMutationInput!, where: MovieWhereInput): BatchPayload!
     upsertMovie(
       where: MovieWhereUniqueInput!
       create: MovieCreateInput!
@@ -735,10 +732,7 @@ export const typeDefs = /* GraphQL */ `
     deleteManyMovies(where: MovieWhereInput): BatchPayload!
     createUser(data: UserCreateInput!): User!
     updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
-    updateManyUsers(
-      data: UserUpdateManyMutationInput!
-      where: UserWhereInput
-    ): BatchPayload!
+    updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
     upsertUser(
       where: UserWhereUniqueInput!
       create: UserCreateInput!
@@ -832,9 +826,7 @@ export const typeDefs = /* GraphQL */ `
   }
 
   type Subscription {
-    configuration(
-      where: ConfigurationSubscriptionWhereInput
-    ): ConfigurationSubscriptionPayload
+    configuration(where: ConfigurationSubscriptionWhereInput): ConfigurationSubscriptionPayload
     movie(where: MovieSubscriptionWhereInput): MovieSubscriptionPayload
     user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
   }
