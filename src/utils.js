@@ -18,5 +18,5 @@ function authenticate(context) {
 // Rules
 module.exports = {
   APP_SECRET,
-  authenticate
+  authenticate,
 };

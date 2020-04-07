@@ -1,13 +1,18 @@
 import { GraphQLServer } from "graphql-yoga";
 import fetch from "node-fetch";
+import { polyfill } from "es6-promise";
 import { Movie, User, prisma, Configuration } from "./generated/prisma-client";
 import sendPushRequest from "./notification";
 import { resolvers } from "./resolvers";
+import { config as DotEnvConfig } from "dotenv";
 
-require("es6-promise").polyfill();
+polyfill();
 
-const dotenv = require("dotenv").config({
-  path: ".env.development",
+const dotenv = DotEnvConfig({
+  path:
+    process.env.NODE_ENV === "development"
+      ? ".env.development"
+      : ".env.development",
 });
 
 if (dotenv.error) {
@@ -26,25 +31,25 @@ async function main() {
     },
   });
 
-  const options = {
+  const serverOptions = {
     port: 4000,
     debug: true,
   };
-  server.start(options, ({ port }) =>
+  server.start(serverOptions, ({ port }) =>
     console.log(`Server is running on http://localhost:${port}`)
   );
 
   const movieUpdatePushRequest = async () => {
-    let movie = await prisma.$subscribe
+    const movie = await prisma.$subscribe
       .movie({ mutation_in: ["UPDATED"] })
       .node();
 
     let result = await movie.next();
     while (!result.done) {
-      let user: User = await prisma.user({ id: result.value.requestedById });
+      const user: User = await prisma.user({ id: result.value.requestedById });
       let sub = user.subscription;
       if (sub) {
-        let mov: Array<Movie> = await prisma
+        const mov: Movie[] = await prisma
           .user({ id: result.value.requestedById })
           .movies({ where: { id: result.value.id } });
 
@@ -61,12 +66,12 @@ async function main() {
   };
 
   const movieCreatedPushbulletRequest = async () => {
-    let movie = await prisma.$subscribe
+    const movie = await prisma.$subscribe
       .movie({ mutation_in: ["CREATED"] })
       .node();
     let result = await movie.next();
     while (!result.done) {
-      const users: Array<User> = await prisma.users({
+      const users: User[] = await prisma.users({
         where: { role: "ADMIN" },
       });
       const movieCreated: Movie = result.value;
@@ -75,16 +80,14 @@ async function main() {
           id: movieCreated.requestedById,
         });
         users.map(async (user) => {
-          let config = await prisma.user({ id: user.id }).configuration();
+          const config = await prisma.user({ id: user.id }).configuration();
           if (
             config &&
             config.pushoverApiKey &&
             config.pushoverEndpoint &&
             config.pushoverUserKey
           ) {
-            const msg = `${requestedByUser.email} \nHas requested the movie:\n${
-              result.value.title
-            }`;
+            const msg = `${requestedByUser.email} \nHas requested the movie:\n${result.value.title}`;
             const obj = {
               title: result.value.title,
               message: msg,
@@ -100,9 +103,7 @@ async function main() {
             };
             const response = await fetch(config.pushoverEndpoint, options);
             console.log(
-              `Fetch ${config.pushoverEndpoint} responded with ${
-                response.statusText
-              }`
+              `Fetch ${config.pushoverEndpoint} responded with ${response.statusText}`
             );
           }
         });
@@ -112,19 +113,16 @@ async function main() {
   };
 
   const radarrCollectionFetcher = async () => {
-    const user: Array<User> = await prisma.users({ where: { role: "ADMIN" } });
+    const user: User[] = await prisma.users({ where: { role: "ADMIN" } });
     if (user && user.length !== 0) {
-      let config: Configuration = await prisma
+      const config: Configuration = await prisma
         .user({ id: user[0].id })
         .configuration();
       if (config) {
         setInterval(() => {
-          console.log("scanning for downloaded movies");
-          const radarr_url = config.radarrEndpoint;
-          const url_collection = `${radarr_url}/movie?apikey=${
-            config.radarrApiKey
-          }`;
-          fetch(url_collection)
+          const radarrUrl = config.radarrEndpoint;
+          const urlCollection = `${radarrUrl}/movie?apikey=${config.radarrApiKey}`;
+          fetch(urlCollection)
             .then((res) => res.json())
             .then((json) => {
               json.map(async (el) => {

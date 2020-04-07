@@ -2,7 +2,7 @@ import { ApolloError } from "apollo-server-core";
 import { GraphQLResolveInfo } from "graphql";
 import fetch, { Response } from "node-fetch";
 import { Configuration, User } from "../generated/prisma-client";
-import { tmdb_endpoint } from "../constants";
+import { tmdbEndpoint } from "../constants";
 import { QueryResolvers } from "../generated/prisma";
 import { authenticate } from "../utils";
 import { Context } from "./types/Context";
@@ -52,9 +52,7 @@ export const Query: QueryResolvers.Type = {
     info: GraphQLResolveInfo
   ) => {
     authenticate(context);
-    const url = `${tmdb_endpoint}/movie/${args.tmdbId}/similar?api_key=${
-      process.env.TMDB_API_KEY
-    }`;
+    const url = `${tmdbEndpoint}/movie/${args.tmdbId}/similar?api_key=${process.env.TMDB_API_KEY}`;
     if (args && args.tmdbId) {
       return fetch(url)
         .then((res) => {
@@ -78,13 +76,11 @@ export const Query: QueryResolvers.Type = {
     if (args && args.tmdbId) {
       const configs = await context.prisma.configurations();
       if (configs && configs.length > 0) {
-        let config: Configuration = configs[0];
-        const radarr_url = config.radarrEndpoint;
-        const url_collection = `${radarr_url}/movie?apikey=${
-          config.radarrApiKey
-        }`;
-        const url_queue = `${radarr_url}/queue?apikey=${config.radarrApiKey}`;
-        return fetch(url_collection)
+        const config: Configuration = configs[0];
+        const radarrUrl = config.radarrEndpoint;
+        const urlCollection = `${radarrUrl}/movie?apikey=${config.radarrApiKey}`;
+        const urlQueue = `${radarrUrl}/queue?apikey=${config.radarrApiKey}`;
+        return fetch(urlCollection)
           .then((res) => {
             if (res.ok) return res.json();
             return Promise.reject(res.statusText);
@@ -94,8 +90,8 @@ export const Query: QueryResolvers.Type = {
               (element) => element.tmdbId === args.tmdbId
             );
             if (found) {
-              let response: Response = await fetch(url_queue);
-              let data = await response.json();
+              const response: Response = await fetch(urlQueue);
+              const data = await response.json();
               if (data && data.length > 0) {
                 const queueElement = json.find(
                   (element) => element.movie.tmdbId === found.tmdbId
@@ -128,17 +124,17 @@ export const Query: QueryResolvers.Type = {
     context: Context,
     info: GraphQLResolveInfo
   ) => {
-    let users: Array<User> = await context.prisma.users({
+    const users: User[] = await context.prisma.users({
       where: { role: "ADMIN" },
     });
     if (users && users.length !== 0) {
-      let config: Configuration = await context.prisma
+      const config: Configuration = await context.prisma
         .user({ id: users[0].id })
         .configuration();
       if (config) {
-        const radarr_url = config.radarrEndpoint;
-        let url = `${radarr_url}/movie?apikey=${config.radarrApiKey}`;
-        let res: Response = await fetch(url, { method: "HEAD" });
+        const radarrUrl = config.radarrEndpoint;
+        const url = `${radarrUrl}/movie?apikey=${config.radarrApiKey}`;
+        const res: Response = await fetch(url, { method: "HEAD" });
         if (!res.ok)
           throw new ApolloError(res.statusText, res.status.toString());
         return true;
@@ -153,9 +149,9 @@ export const Query: QueryResolvers.Type = {
     context: Context,
     info: GraphQLResolveInfo
   ) => {
-    let { userId, claims } = authenticate(context);
+    const { userId, claims } = authenticate(context);
     if (claims === "admin") {
-      let config: Configuration = await context.prisma
+      const config: Configuration = await context.prisma
         .user({ id: userId })
         .configuration();
       if (!config) {
@@ -173,7 +169,7 @@ export const Query: QueryResolvers.Type = {
     info: GraphQLResolveInfo
   ) => {
     authenticate(context);
-    const user: Array<User> = await context.prisma.users();
+    const user: User[] = await context.prisma.users();
     return user;
   },
 };

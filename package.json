@@ -7,9 +7,11 @@
     "start": "ts-node src/index.ts",
     "dev": "ts-node-dev --no-notify --respawn --transpileOnly src/index.ts src/index.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "tslint -c tslint.json 'src/**/*.ts'",
     "scaffold-resolvers": "graphql-resolver-codegen scaffold -s src/schema.graphql",
     "generate-resolvers": "graphql-resolver-codegen interfaces -s src/schema.graphql -o src/generated/resolvers.ts",
-    "generate": "graphqlgen"
+    "generate": "graphqlgen",
+    "format": "prettier --write \"**/*.{ts,js,json}\""
   },
   "keywords": [],
   "author": "",
@@ -30,8 +32,10 @@
     "graphql": "^14.5.8",
     "graphql-cli": "^3.0.14",
     "graphqlgen": "^0.6.0-rc9",
+    "prettier": "^2.0.4",
     "ts-node": "^8.6.2",
     "ts-node-dev": "^1.0.0-pre.44",
+    "tslint": "^6.1.1",
     "typescript": "^3.7.5"
   }
 }

@@ -29,7 +29,7 @@ const addMovieToRadarrCollection = async (args, config) => {
     body: JSON.stringify(obj),
     method: "POST",
   };
-  let url = `${config.radarrEndpoint}/movie?apikey=${config.radarrApiKey}`;
+  const url = `${config.radarrEndpoint}/movie?apikey=${config.radarrApiKey}`;
   const res = await fetch(url, options);
   if (!res.ok) {
     throw new ApolloError(res.statusText, res.status.toString());
@@ -47,9 +47,8 @@ export const Mutation: MutationResolvers.Type = {
   ) => {
     const { userId } = authenticate(context);
     const configs = await context.prisma.configurations();
-
     if (configs && configs.length > 0) {
-      let config: Configuration = configs[0];
+      const config: Configuration = configs[0];
       addMovieToRadarrCollection(args, config);
     } else {
       throw new ApolloError("No config", "400");
@@ -138,7 +137,7 @@ export const Mutation: MutationResolvers.Type = {
     if (claims !== "admin") {
       throw new ApolloError("Unauthorized", "401");
     }
-    let config = await context.prisma.user({ id: userId }).configuration();
+    const config = await context.prisma.user({ id: userId }).configuration();
     if (!config) {
       return await context.prisma.createConfiguration({
         radarrApiKey: args.radarrApiKey || "",
@@ -173,7 +172,7 @@ export const Mutation: MutationResolvers.Type = {
   ) => {
     let user = await context.prisma.user({ email: args.email });
     if (!user) {
-      let users = await context.prisma.users();
+      const users = await context.prisma.users();
       let token;
       let adminToken = false;
       if (users.length === 0) {

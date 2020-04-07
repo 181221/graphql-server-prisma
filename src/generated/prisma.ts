@@ -324,7 +324,7 @@ export namespace UserResolvers {
       parent.notification === undefined ? null : parent.notification,
     subscription: (parent: User) =>
       parent.subscription === undefined ? null : parent.subscription,
-    role: (parent: User) => (parent.role === undefined ? null : parent.role)
+    role: (parent: User) => (parent.role === undefined ? null : parent.role),
   };
 
   export type IdResolver =
@@ -619,7 +619,7 @@ export namespace MovieResolvers {
     overview: (parent: Movie) =>
       parent.overview === undefined ? null : parent.overview,
     downloaded: (parent: Movie) =>
-      parent.downloaded === undefined ? null : parent.downloaded
+      parent.downloaded === undefined ? null : parent.downloaded,
   };
 
   export type IdResolver =
@@ -1220,7 +1220,7 @@ export namespace ConfigurationResolvers {
     pushoverApiKey: (parent: Configuration) =>
       parent.pushoverApiKey === undefined ? null : parent.pushoverApiKey,
     pushoverUserKey: (parent: Configuration) =>
-      parent.pushoverUserKey === undefined ? null : parent.pushoverUserKey
+      parent.pushoverUserKey === undefined ? null : parent.pushoverUserKey,
   };
 
   export type IdResolver =
@@ -1511,7 +1511,7 @@ export namespace RadarrStatusResolvers {
     timeleft: (parent: RadarrStatus) =>
       parent.timeleft === undefined ? null : parent.timeleft,
     title: (parent: RadarrStatus) =>
-      parent.title === undefined ? null : parent.title
+      parent.title === undefined ? null : parent.title,
   };
 
   export type IsRequestedResolver =
@@ -2055,7 +2055,7 @@ export namespace MutationResolvers {
 export namespace AuthPayloadResolvers {
   export const defaultResolvers = {
     token: (parent: AuthPayload) =>
-      parent.token === undefined ? null : parent.token
+      parent.token === undefined ? null : parent.token,
   };
 
   export type TokenResolver =
