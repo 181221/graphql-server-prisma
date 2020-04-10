@@ -62,7 +62,7 @@ export const Mutation: MutationResolvers.Type = {
       img: args.img,
       tmdbId: args.tmdbId,
       voteAverage: args.voteAverage,
-      voteCount: args.voteAverage,
+      voteCount: args.voteCount,
       year: args.year,
       overview: args.overview,
     });
