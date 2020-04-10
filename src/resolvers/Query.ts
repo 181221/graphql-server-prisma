@@ -68,7 +68,6 @@ export const Query: QueryResolvers.Type = {
     const tmdbUrl = `${tmdbEndpoint}/movie/${args.tmdbId}?api_key=${process.env.TMDB_API_KEY}`;
     const response = await fetch(tmdbUrl);
     const json = await response.json();
-    response.
     const movie: Movie = {
       genres: Object.values(json.genres).map(({ name }) => name),
       title: json.title,
