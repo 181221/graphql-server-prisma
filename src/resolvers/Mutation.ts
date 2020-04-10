@@ -6,7 +6,10 @@ import { Context } from "./Context";
 import { Configuration, Movie } from "../generated/prisma-client";
 import { MutationResolvers } from "../generated/prisma";
 
-const addMovieToRadarrCollection = async (args, config) => {
+const addMovieToRadarrCollection = async (
+  args: MutationResolvers.ArgsCreateMovie,
+  config: Configuration,
+) => {
   const obj = {
     title: args.title,
     qualityProfileId: 3,
@@ -18,7 +21,7 @@ const addMovieToRadarrCollection = async (args, config) => {
       },
     ],
     tmdbId: args.tmdbId,
-    year: Number(new Date(args.release_date).getFullYear()),
+    year: args.year,
     rootFolderPath: config.radarrRootFolder,
   };
   const options = {
@@ -55,12 +58,12 @@ export const Mutation: MutationResolvers.Type = {
     return await context.prisma.createMovie({
       title: args.title,
       requestedBy: { connect: { id: userId } },
-      requestedById: userId,
       genres: { set: args.genres },
       img: args.img,
       tmdbId: args.tmdbId,
-      vote_average: args.vote_average,
-      release_date: args.release_date,
+      voteAverage: args.voteAverage,
+      voteCount: args.voteAverage,
+      year: args.year,
       overview: args.overview,
     });
   },
@@ -122,7 +125,6 @@ export const Mutation: MutationResolvers.Type = {
       pushoverEndpoint: args.pushoverApiKey || "",
       pushoverApiKey: args.pushoverApiKey || "",
       pushoverUserKey: args.pushoverUserKey || "",
-      user: { connect: { id: userId } },
     });
   },
 
@@ -145,7 +147,6 @@ export const Mutation: MutationResolvers.Type = {
         pushoverEndpoint: args.pushoverEndpoint || "",
         pushoverApiKey: args.pushoverApiKey || "",
         pushoverUserKey: args.pushoverUserKey || "",
-        user: { connect: { id: userId } },
       });
     }
     return await context.prisma.updateConfiguration({

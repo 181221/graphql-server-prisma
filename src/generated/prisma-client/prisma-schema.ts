@@ -26,7 +26,6 @@ type Configuration {
   pushoverEndpoint: String
   pushoverApiKey: String
   pushoverUserKey: String
-  user: User
 }
 
 type ConfigurationConnection {
@@ -43,22 +42,11 @@ input ConfigurationCreateInput {
   pushoverEndpoint: String
   pushoverApiKey: String
   pushoverUserKey: String
-  user: UserCreateOneWithoutConfigurationInput
 }
 
-input ConfigurationCreateOneWithoutUserInput {
-  create: ConfigurationCreateWithoutUserInput
+input ConfigurationCreateOneInput {
+  create: ConfigurationCreateInput
   connect: ConfigurationWhereUniqueInput
-}
-
-input ConfigurationCreateWithoutUserInput {
-  id: ID
-  radarrApiKey: String
-  radarrEndpoint: String
-  radarrRootFolder: String
-  pushoverEndpoint: String
-  pushoverApiKey: String
-  pushoverUserKey: String
 }
 
 type ConfigurationEdge {
@@ -111,6 +99,15 @@ input ConfigurationSubscriptionWhereInput {
   NOT: [ConfigurationSubscriptionWhereInput!]
 }
 
+input ConfigurationUpdateDataInput {
+  radarrApiKey: String
+  radarrEndpoint: String
+  radarrRootFolder: String
+  pushoverEndpoint: String
+  pushoverApiKey: String
+  pushoverUserKey: String
+}
+
 input ConfigurationUpdateInput {
   radarrApiKey: String
   radarrEndpoint: String
@@ -118,7 +115,6 @@ input ConfigurationUpdateInput {
   pushoverEndpoint: String
   pushoverApiKey: String
   pushoverUserKey: String
-  user: UserUpdateOneWithoutConfigurationInput
 }
 
 input ConfigurationUpdateManyMutationInput {
@@ -130,27 +126,18 @@ input ConfigurationUpdateManyMutationInput {
   pushoverUserKey: String
 }
 
-input ConfigurationUpdateOneWithoutUserInput {
-  create: ConfigurationCreateWithoutUserInput
-  update: ConfigurationUpdateWithoutUserDataInput
-  upsert: ConfigurationUpsertWithoutUserInput
+input ConfigurationUpdateOneInput {
+  create: ConfigurationCreateInput
+  update: ConfigurationUpdateDataInput
+  upsert: ConfigurationUpsertNestedInput
   delete: Boolean
   disconnect: Boolean
   connect: ConfigurationWhereUniqueInput
 }
 
-input ConfigurationUpdateWithoutUserDataInput {
-  radarrApiKey: String
-  radarrEndpoint: String
-  radarrRootFolder: String
-  pushoverEndpoint: String
-  pushoverApiKey: String
-  pushoverUserKey: String
-}
-
-input ConfigurationUpsertWithoutUserInput {
-  update: ConfigurationUpdateWithoutUserDataInput!
-  create: ConfigurationCreateWithoutUserInput!
+input ConfigurationUpsertNestedInput {
+  update: ConfigurationUpdateDataInput!
+  create: ConfigurationCreateInput!
 }
 
 input ConfigurationWhereInput {
@@ -252,7 +239,6 @@ input ConfigurationWhereInput {
   pushoverUserKey_not_starts_with: String
   pushoverUserKey_ends_with: String
   pushoverUserKey_not_ends_with: String
-  user: UserWhereInput
   AND: [ConfigurationWhereInput!]
   OR: [ConfigurationWhereInput!]
   NOT: [ConfigurationWhereInput!]
@@ -268,17 +254,18 @@ scalar Long
 
 type Movie {
   id: ID!
-  createdAt: DateTime!
+  createdAt: DateTime
   title: String!
   requestedBy: User
-  requestedById: String
   img: String
   tmdbId: Int!
-  genres: [Int!]!
-  release_date: String
-  vote_average: Float
+  genres: [String!]!
+  year: Int
   overview: String
   downloaded: Boolean
+  hasFile: Boolean
+  voteAverage: Float
+  voteCount: Int
 }
 
 type MovieConnection {
@@ -288,21 +275,22 @@ type MovieConnection {
 }
 
 input MovieCreategenresInput {
-  set: [Int!]
+  set: [String!]
 }
 
 input MovieCreateInput {
   id: ID
   title: String!
   requestedBy: UserCreateOneWithoutMoviesInput
-  requestedById: String
   img: String
   tmdbId: Int!
   genres: MovieCreategenresInput
-  release_date: String
-  vote_average: Float
+  year: Int
   overview: String
   downloaded: Boolean
+  hasFile: Boolean
+  voteAverage: Float
+  voteCount: Int
 }
 
 input MovieCreateManyWithoutRequestedByInput {
@@ -313,14 +301,15 @@ input MovieCreateManyWithoutRequestedByInput {
 input MovieCreateWithoutRequestedByInput {
   id: ID
   title: String!
-  requestedById: String
   img: String
   tmdbId: Int!
   genres: MovieCreategenresInput
-  release_date: String
-  vote_average: Float
+  year: Int
   overview: String
   downloaded: Boolean
+  hasFile: Boolean
+  voteAverage: Float
+  voteCount: Int
 }
 
 type MovieEdge {
@@ -335,34 +324,37 @@ enum MovieOrderByInput {
   createdAt_DESC
   title_ASC
   title_DESC
-  requestedById_ASC
-  requestedById_DESC
   img_ASC
   img_DESC
   tmdbId_ASC
   tmdbId_DESC
-  release_date_ASC
-  release_date_DESC
-  vote_average_ASC
-  vote_average_DESC
+  year_ASC
+  year_DESC
   overview_ASC
   overview_DESC
   downloaded_ASC
   downloaded_DESC
+  hasFile_ASC
+  hasFile_DESC
+  voteAverage_ASC
+  voteAverage_DESC
+  voteCount_ASC
+  voteCount_DESC
 }
 
 type MoviePreviousValues {
   id: ID!
-  createdAt: DateTime!
+  createdAt: DateTime
   title: String!
-  requestedById: String
   img: String
   tmdbId: Int!
-  genres: [Int!]!
-  release_date: String
-  vote_average: Float
+  genres: [String!]!
+  year: Int
   overview: String
   downloaded: Boolean
+  hasFile: Boolean
+  voteAverage: Float
+  voteCount: Int
 }
 
 input MovieScalarWhereInput {
@@ -402,20 +394,6 @@ input MovieScalarWhereInput {
   title_not_starts_with: String
   title_ends_with: String
   title_not_ends_with: String
-  requestedById: String
-  requestedById_not: String
-  requestedById_in: [String!]
-  requestedById_not_in: [String!]
-  requestedById_lt: String
-  requestedById_lte: String
-  requestedById_gt: String
-  requestedById_gte: String
-  requestedById_contains: String
-  requestedById_not_contains: String
-  requestedById_starts_with: String
-  requestedById_not_starts_with: String
-  requestedById_ends_with: String
-  requestedById_not_ends_with: String
   img: String
   img_not: String
   img_in: [String!]
@@ -438,28 +416,14 @@ input MovieScalarWhereInput {
   tmdbId_lte: Int
   tmdbId_gt: Int
   tmdbId_gte: Int
-  release_date: String
-  release_date_not: String
-  release_date_in: [String!]
-  release_date_not_in: [String!]
-  release_date_lt: String
-  release_date_lte: String
-  release_date_gt: String
-  release_date_gte: String
-  release_date_contains: String
-  release_date_not_contains: String
-  release_date_starts_with: String
-  release_date_not_starts_with: String
-  release_date_ends_with: String
-  release_date_not_ends_with: String
-  vote_average: Float
-  vote_average_not: Float
-  vote_average_in: [Float!]
-  vote_average_not_in: [Float!]
-  vote_average_lt: Float
-  vote_average_lte: Float
-  vote_average_gt: Float
-  vote_average_gte: Float
+  year: Int
+  year_not: Int
+  year_in: [Int!]
+  year_not_in: [Int!]
+  year_lt: Int
+  year_lte: Int
+  year_gt: Int
+  year_gte: Int
   overview: String
   overview_not: String
   overview_in: [String!]
@@ -476,6 +440,24 @@ input MovieScalarWhereInput {
   overview_not_ends_with: String
   downloaded: Boolean
   downloaded_not: Boolean
+  hasFile: Boolean
+  hasFile_not: Boolean
+  voteAverage: Float
+  voteAverage_not: Float
+  voteAverage_in: [Float!]
+  voteAverage_not_in: [Float!]
+  voteAverage_lt: Float
+  voteAverage_lte: Float
+  voteAverage_gt: Float
+  voteAverage_gte: Float
+  voteCount: Int
+  voteCount_not: Int
+  voteCount_in: [Int!]
+  voteCount_not_in: [Int!]
+  voteCount_lt: Int
+  voteCount_lte: Int
+  voteCount_gt: Int
+  voteCount_gte: Int
   AND: [MovieScalarWhereInput!]
   OR: [MovieScalarWhereInput!]
   NOT: [MovieScalarWhereInput!]
@@ -500,44 +482,47 @@ input MovieSubscriptionWhereInput {
 }
 
 input MovieUpdategenresInput {
-  set: [Int!]
+  set: [String!]
 }
 
 input MovieUpdateInput {
   title: String
   requestedBy: UserUpdateOneWithoutMoviesInput
-  requestedById: String
   img: String
   tmdbId: Int
   genres: MovieUpdategenresInput
-  release_date: String
-  vote_average: Float
+  year: Int
   overview: String
   downloaded: Boolean
+  hasFile: Boolean
+  voteAverage: Float
+  voteCount: Int
 }
 
 input MovieUpdateManyDataInput {
   title: String
-  requestedById: String
   img: String
   tmdbId: Int
   genres: MovieUpdategenresInput
-  release_date: String
-  vote_average: Float
+  year: Int
   overview: String
   downloaded: Boolean
+  hasFile: Boolean
+  voteAverage: Float
+  voteCount: Int
 }
 
 input MovieUpdateManyMutationInput {
   title: String
-  requestedById: String
   img: String
   tmdbId: Int
   genres: MovieUpdategenresInput
-  release_date: String
-  vote_average: Float
+  year: Int
   overview: String
   downloaded: Boolean
+  hasFile: Boolean
+  voteAverage: Float
+  voteCount: Int
 }
 
 input MovieUpdateManyWithoutRequestedByInput {
@@ -559,14 +544,15 @@ input MovieUpdateManyWithWhereNestedInput {
 
 input MovieUpdateWithoutRequestedByDataInput {
   title: String
-  requestedById: String
   img: String
   tmdbId: Int
   genres: MovieUpdategenresInput
-  release_date: String
-  vote_average: Float
+  year: Int
   overview: String
   downloaded: Boolean
+  hasFile: Boolean
+  voteAverage: Float
+  voteCount: Int
 }
 
 input MovieUpdateWithWhereUniqueWithoutRequestedByInput {
@@ -618,20 +604,6 @@ input MovieWhereInput {
   title_ends_with: String
   title_not_ends_with: String
   requestedBy: UserWhereInput
-  requestedById: String
-  requestedById_not: String
-  requestedById_in: [String!]
-  requestedById_not_in: [String!]
-  requestedById_lt: String
-  requestedById_lte: String
-  requestedById_gt: String
-  requestedById_gte: String
-  requestedById_contains: String
-  requestedById_not_contains: String
-  requestedById_starts_with: String
-  requestedById_not_starts_with: String
-  requestedById_ends_with: String
-  requestedById_not_ends_with: String
   img: String
   img_not: String
   img_in: [String!]
@@ -654,28 +626,14 @@ input MovieWhereInput {
   tmdbId_lte: Int
   tmdbId_gt: Int
   tmdbId_gte: Int
-  release_date: String
-  release_date_not: String
-  release_date_in: [String!]
-  release_date_not_in: [String!]
-  release_date_lt: String
-  release_date_lte: String
-  release_date_gt: String
-  release_date_gte: String
-  release_date_contains: String
-  release_date_not_contains: String
-  release_date_starts_with: String
-  release_date_not_starts_with: String
-  release_date_ends_with: String
-  release_date_not_ends_with: String
-  vote_average: Float
-  vote_average_not: Float
-  vote_average_in: [Float!]
-  vote_average_not_in: [Float!]
-  vote_average_lt: Float
-  vote_average_lte: Float
-  vote_average_gt: Float
-  vote_average_gte: Float
+  year: Int
+  year_not: Int
+  year_in: [Int!]
+  year_not_in: [Int!]
+  year_lt: Int
+  year_lte: Int
+  year_gt: Int
+  year_gte: Int
   overview: String
   overview_not: String
   overview_in: [String!]
@@ -692,6 +650,24 @@ input MovieWhereInput {
   overview_not_ends_with: String
   downloaded: Boolean
   downloaded_not: Boolean
+  hasFile: Boolean
+  hasFile_not: Boolean
+  voteAverage: Float
+  voteAverage_not: Float
+  voteAverage_in: [Float!]
+  voteAverage_not_in: [Float!]
+  voteAverage_lt: Float
+  voteAverage_lte: Float
+  voteAverage_gt: Float
+  voteAverage_gte: Float
+  voteCount: Int
+  voteCount_not: Int
+  voteCount_in: [Int!]
+  voteCount_not_in: [Int!]
+  voteCount_lt: Int
+  voteCount_lte: Int
+  voteCount_gt: Int
+  voteCount_gte: Int
   AND: [MovieWhereInput!]
   OR: [MovieWhereInput!]
   NOT: [MovieWhereInput!]
@@ -789,27 +765,12 @@ input UserCreateInput {
   notification: Boolean
   subscription: String
   role: Role
-  configuration: ConfigurationCreateOneWithoutUserInput
-}
-
-input UserCreateOneWithoutConfigurationInput {
-  create: UserCreateWithoutConfigurationInput
-  connect: UserWhereUniqueInput
+  configuration: ConfigurationCreateOneInput
 }
 
 input UserCreateOneWithoutMoviesInput {
   create: UserCreateWithoutMoviesInput
   connect: UserWhereUniqueInput
-}
-
-input UserCreateWithoutConfigurationInput {
-  id: ID
-  name: String
-  email: String!
-  movies: MovieCreateManyWithoutRequestedByInput
-  notification: Boolean
-  subscription: String
-  role: Role
 }
 
 input UserCreateWithoutMoviesInput {
@@ -819,7 +780,7 @@ input UserCreateWithoutMoviesInput {
   notification: Boolean
   subscription: String
   role: Role
-  configuration: ConfigurationCreateOneWithoutUserInput
+  configuration: ConfigurationCreateOneInput
 }
 
 type UserEdge {
@@ -876,7 +837,7 @@ input UserUpdateInput {
   notification: Boolean
   subscription: String
   role: Role
-  configuration: ConfigurationUpdateOneWithoutUserInput
+  configuration: ConfigurationUpdateOneInput
 }
 
 input UserUpdateManyMutationInput {
@@ -885,15 +846,6 @@ input UserUpdateManyMutationInput {
   notification: Boolean
   subscription: String
   role: Role
-}
-
-input UserUpdateOneWithoutConfigurationInput {
-  create: UserCreateWithoutConfigurationInput
-  update: UserUpdateWithoutConfigurationDataInput
-  upsert: UserUpsertWithoutConfigurationInput
-  delete: Boolean
-  disconnect: Boolean
-  connect: UserWhereUniqueInput
 }
 
 input UserUpdateOneWithoutMoviesInput {
@@ -905,27 +857,13 @@ input UserUpdateOneWithoutMoviesInput {
   connect: UserWhereUniqueInput
 }
 
-input UserUpdateWithoutConfigurationDataInput {
-  name: String
-  email: String
-  movies: MovieUpdateManyWithoutRequestedByInput
-  notification: Boolean
-  subscription: String
-  role: Role
-}
-
 input UserUpdateWithoutMoviesDataInput {
   name: String
   email: String
   notification: Boolean
   subscription: String
   role: Role
-  configuration: ConfigurationUpdateOneWithoutUserInput
-}
-
-input UserUpsertWithoutConfigurationInput {
-  update: UserUpdateWithoutConfigurationDataInput!
-  create: UserCreateWithoutConfigurationInput!
+  configuration: ConfigurationUpdateOneInput
 }
 
 input UserUpsertWithoutMoviesInput {

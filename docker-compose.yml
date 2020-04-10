@@ -28,8 +28,6 @@ services:
       - web
     ports:
       - "27017:27017"
-    volumes:
-      - ${HOME}/dev/data:/var/lib/mongo
 
   graphql-server:
     build:

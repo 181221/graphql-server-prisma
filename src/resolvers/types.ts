@@ -1,3 +1,5 @@
+import { Int, Float } from "../generated/prisma-client";
+
 export interface AuthPayload {
   token: string | null;
 }
@@ -23,8 +25,8 @@ export interface RadarrStatus {
 export interface TmdbMovieResponse {
   adult: boolean | null;
   backdrop_path: string | null;
-  genre_ids: number[] | null;
-  id: number | null;
+  genre_ids: Int[] | null;
+  id: Int | null;
   original_language: string | null;
   original_title: string | null;
   overview: string | null;
@@ -32,7 +34,8 @@ export interface TmdbMovieResponse {
   release_date: string | null;
   title: string | null;
   video: boolean | null;
-  vote_average: number | null;
-  vote_count: number | null;
-  popularity: number | null;
+  vote_average: Float | null;
+  vote_count: Int | null;
+  popularity: Int | null;
+  runtime: Int;
 }

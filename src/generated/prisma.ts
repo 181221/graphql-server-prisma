@@ -2,7 +2,7 @@
 
 import { GraphQLResolveInfo } from "graphql";
 import { User, Movie, Configuration } from "./prisma-client";
-import { RadarrStatus, TmdbMovieResponse, AuthPayload } from "../resolvers/types";
+import { RadarrStatus, AuthPayload } from "../resolvers/types";
 import { Context } from "../resolvers/Context";
 
 export type Role = "ADMIN" | "CUSTOMER";
@@ -36,6 +36,10 @@ export namespace QueryResolvers {
     tmdbId?: number | null;
   }
 
+  export interface ArgsTmdbMovie {
+    tmdbId?: number | null;
+  }
+
   export interface ArgsSimilarMovies {
     tmdbId?: number | null;
   }
@@ -45,7 +49,7 @@ export namespace QueryResolvers {
         parent: undefined,
         args: {},
         ctx: Context,
-        info: GraphQLResolveInfo,
+        info: GraphQLResolveInfo
       ) => Array<User | null> | null | Promise<Array<User | null> | null>)
     | {
         fragment: string;
@@ -53,7 +57,7 @@ export namespace QueryResolvers {
           parent: undefined,
           args: {},
           ctx: Context,
-          info: GraphQLResolveInfo,
+          info: GraphQLResolveInfo
         ) => Array<User | null> | null | Promise<Array<User | null> | null>;
       };
 
@@ -62,7 +66,7 @@ export namespace QueryResolvers {
         parent: undefined,
         args: ArgsUser,
         ctx: Context,
-        info: GraphQLResolveInfo,
+        info: GraphQLResolveInfo
       ) => User | null | Promise<User | null>)
     | {
         fragment: string;
@@ -70,7 +74,7 @@ export namespace QueryResolvers {
           parent: undefined,
           args: ArgsUser,
           ctx: Context,
-          info: GraphQLResolveInfo,
+          info: GraphQLResolveInfo
         ) => User | null | Promise<User | null>;
       };
 
@@ -79,7 +83,7 @@ export namespace QueryResolvers {
         parent: undefined,
         args: ArgsMovies,
         ctx: Context,
-        info: GraphQLResolveInfo,
+        info: GraphQLResolveInfo
       ) => Movie[] | null | Promise<Movie[] | null>)
     | {
         fragment: string;
@@ -87,7 +91,7 @@ export namespace QueryResolvers {
           parent: undefined,
           args: ArgsMovies,
           ctx: Context,
-          info: GraphQLResolveInfo,
+          info: GraphQLResolveInfo
         ) => Movie[] | null | Promise<Movie[] | null>;
       };
 
@@ -96,7 +100,7 @@ export namespace QueryResolvers {
         parent: undefined,
         args: ArgsMovie,
         ctx: Context,
-        info: GraphQLResolveInfo,
+        info: GraphQLResolveInfo
       ) => Movie | null | Promise<Movie | null>)
     | {
         fragment: string;
@@ -104,7 +108,7 @@ export namespace QueryResolvers {
           parent: undefined,
           args: ArgsMovie,
           ctx: Context,
-          info: GraphQLResolveInfo,
+          info: GraphQLResolveInfo
         ) => Movie | null | Promise<Movie | null>;
       };
 
@@ -113,7 +117,7 @@ export namespace QueryResolvers {
         parent: undefined,
         args: ArgsCheckConfiguration,
         ctx: Context,
-        info: GraphQLResolveInfo,
+        info: GraphQLResolveInfo
       ) => boolean | null | Promise<boolean | null>)
     | {
         fragment: string;
@@ -121,7 +125,7 @@ export namespace QueryResolvers {
           parent: undefined,
           args: ArgsCheckConfiguration,
           ctx: Context,
-          info: GraphQLResolveInfo,
+          info: GraphQLResolveInfo
         ) => boolean | null | Promise<boolean | null>;
       };
 
@@ -130,7 +134,7 @@ export namespace QueryResolvers {
         parent: undefined,
         args: ArgsConfiguration,
         ctx: Context,
-        info: GraphQLResolveInfo,
+        info: GraphQLResolveInfo
       ) => Configuration | null | Promise<Configuration | null>)
     | {
         fragment: string;
@@ -138,7 +142,7 @@ export namespace QueryResolvers {
           parent: undefined,
           args: ArgsConfiguration,
           ctx: Context,
-          info: GraphQLResolveInfo,
+          info: GraphQLResolveInfo
         ) => Configuration | null | Promise<Configuration | null>;
       };
 
@@ -147,7 +151,7 @@ export namespace QueryResolvers {
         parent: undefined,
         args: ArgsRadarrCollection,
         ctx: Context,
-        info: GraphQLResolveInfo,
+        info: GraphQLResolveInfo
       ) => RadarrStatus | null | Promise<RadarrStatus | null>)
     | {
         fragment: string;
@@ -155,8 +159,25 @@ export namespace QueryResolvers {
           parent: undefined,
           args: ArgsRadarrCollection,
           ctx: Context,
-          info: GraphQLResolveInfo,
+          info: GraphQLResolveInfo
         ) => RadarrStatus | null | Promise<RadarrStatus | null>;
+      };
+
+  export type TmdbMovieResolver =
+    | ((
+        parent: undefined,
+        args: ArgsTmdbMovie,
+        ctx: Context,
+        info: GraphQLResolveInfo
+      ) => Movie | null | Promise<Movie | null>)
+    | {
+        fragment: string;
+        resolve: (
+          parent: undefined,
+          args: ArgsTmdbMovie,
+          ctx: Context,
+          info: GraphQLResolveInfo
+        ) => Movie | null | Promise<Movie | null>;
       };
 
   export type SimilarMoviesResolver =
@@ -164,19 +185,16 @@ export namespace QueryResolvers {
         parent: undefined,
         args: ArgsSimilarMovies,
         ctx: Context,
-        info: GraphQLResolveInfo,
-      ) => Array<TmdbMovieResponse | null> | null | Promise<Array<TmdbMovieResponse | null> | null>)
+        info: GraphQLResolveInfo
+      ) => Movie[] | null | Promise<Movie[] | null>)
     | {
         fragment: string;
         resolve: (
           parent: undefined,
           args: ArgsSimilarMovies,
           ctx: Context,
-          info: GraphQLResolveInfo,
-        ) =>
-          | Array<TmdbMovieResponse | null>
-          | null
-          | Promise<Array<TmdbMovieResponse | null> | null>;
+          info: GraphQLResolveInfo
+        ) => Movie[] | null | Promise<Movie[] | null>;
       };
 
   export interface Type {
@@ -185,7 +203,7 @@ export namespace QueryResolvers {
           parent: undefined,
           args: {},
           ctx: Context,
-          info: GraphQLResolveInfo,
+          info: GraphQLResolveInfo
         ) => Array<User | null> | null | Promise<Array<User | null> | null>)
       | {
           fragment: string;
@@ -193,7 +211,7 @@ export namespace QueryResolvers {
             parent: undefined,
             args: {},
             ctx: Context,
-            info: GraphQLResolveInfo,
+            info: GraphQLResolveInfo
           ) => Array<User | null> | null | Promise<Array<User | null> | null>;
         };
 
@@ -202,7 +220,7 @@ export namespace QueryResolvers {
           parent: undefined,
           args: ArgsUser,
           ctx: Context,
-          info: GraphQLResolveInfo,
+          info: GraphQLResolveInfo
         ) => User | null | Promise<User | null>)
       | {
           fragment: string;
@@ -210,7 +228,7 @@ export namespace QueryResolvers {
             parent: undefined,
             args: ArgsUser,
             ctx: Context,
-            info: GraphQLResolveInfo,
+            info: GraphQLResolveInfo
           ) => User | null | Promise<User | null>;
         };
 
@@ -219,7 +237,7 @@ export namespace QueryResolvers {
           parent: undefined,
           args: ArgsMovies,
           ctx: Context,
-          info: GraphQLResolveInfo,
+          info: GraphQLResolveInfo
         ) => Movie[] | null | Promise<Movie[] | null>)
       | {
           fragment: string;
@@ -227,7 +245,7 @@ export namespace QueryResolvers {
             parent: undefined,
             args: ArgsMovies,
             ctx: Context,
-            info: GraphQLResolveInfo,
+            info: GraphQLResolveInfo
           ) => Movie[] | null | Promise<Movie[] | null>;
         };
 
@@ -236,7 +254,7 @@ export namespace QueryResolvers {
           parent: undefined,
           args: ArgsMovie,
           ctx: Context,
-          info: GraphQLResolveInfo,
+          info: GraphQLResolveInfo
         ) => Movie | null | Promise<Movie | null>)
       | {
           fragment: string;
@@ -244,7 +262,7 @@ export namespace QueryResolvers {
             parent: undefined,
             args: ArgsMovie,
             ctx: Context,
-            info: GraphQLResolveInfo,
+            info: GraphQLResolveInfo
           ) => Movie | null | Promise<Movie | null>;
         };
 
@@ -253,7 +271,7 @@ export namespace QueryResolvers {
           parent: undefined,
           args: ArgsCheckConfiguration,
           ctx: Context,
-          info: GraphQLResolveInfo,
+          info: GraphQLResolveInfo
         ) => boolean | null | Promise<boolean | null>)
       | {
           fragment: string;
@@ -261,7 +279,7 @@ export namespace QueryResolvers {
             parent: undefined,
             args: ArgsCheckConfiguration,
             ctx: Context,
-            info: GraphQLResolveInfo,
+            info: GraphQLResolveInfo
           ) => boolean | null | Promise<boolean | null>;
         };
 
@@ -270,7 +288,7 @@ export namespace QueryResolvers {
           parent: undefined,
           args: ArgsConfiguration,
           ctx: Context,
-          info: GraphQLResolveInfo,
+          info: GraphQLResolveInfo
         ) => Configuration | null | Promise<Configuration | null>)
       | {
           fragment: string;
@@ -278,7 +296,7 @@ export namespace QueryResolvers {
             parent: undefined,
             args: ArgsConfiguration,
             ctx: Context,
-            info: GraphQLResolveInfo,
+            info: GraphQLResolveInfo
           ) => Configuration | null | Promise<Configuration | null>;
         };
 
@@ -287,7 +305,7 @@ export namespace QueryResolvers {
           parent: undefined,
           args: ArgsRadarrCollection,
           ctx: Context,
-          info: GraphQLResolveInfo,
+          info: GraphQLResolveInfo
         ) => RadarrStatus | null | Promise<RadarrStatus | null>)
       | {
           fragment: string;
@@ -295,8 +313,25 @@ export namespace QueryResolvers {
             parent: undefined,
             args: ArgsRadarrCollection,
             ctx: Context,
-            info: GraphQLResolveInfo,
+            info: GraphQLResolveInfo
           ) => RadarrStatus | null | Promise<RadarrStatus | null>;
+        };
+
+    tmdbMovie:
+      | ((
+          parent: undefined,
+          args: ArgsTmdbMovie,
+          ctx: Context,
+          info: GraphQLResolveInfo
+        ) => Movie | null | Promise<Movie | null>)
+      | {
+          fragment: string;
+          resolve: (
+            parent: undefined,
+            args: ArgsTmdbMovie,
+            ctx: Context,
+            info: GraphQLResolveInfo
+          ) => Movie | null | Promise<Movie | null>;
         };
 
     similarMovies:
@@ -304,23 +339,16 @@ export namespace QueryResolvers {
           parent: undefined,
           args: ArgsSimilarMovies,
           ctx: Context,
-          info: GraphQLResolveInfo,
-        ) =>
-          | Array<TmdbMovieResponse | null>
-          | null
-          | Promise<Array<TmdbMovieResponse | null> | null>
-        )
+          info: GraphQLResolveInfo
+        ) => Movie[] | null | Promise<Movie[] | null>)
       | {
           fragment: string;
           resolve: (
             parent: undefined,
             args: ArgsSimilarMovies,
             ctx: Context,
-            info: GraphQLResolveInfo,
-          ) =>
-            | Array<TmdbMovieResponse | null>
-            | null
-            | Promise<Array<TmdbMovieResponse | null> | null>;
+            info: GraphQLResolveInfo
+          ) => Movie[] | null | Promise<Movie[] | null>;
         };
   }
 }
@@ -334,18 +362,23 @@ export namespace UserResolvers {
       parent.notification === undefined ? null : parent.notification,
     subscription: (parent: User) =>
       parent.subscription === undefined ? null : parent.subscription,
-    role: (parent: User) => (parent.role === undefined ? null : parent.role),
+    role: (parent: User) => (parent.role === undefined ? null : parent.role)
   };
 
   export type IdResolver =
-    | ((parent: User, args: {}, ctx: Context, info: GraphQLResolveInfo) => string | Promise<string>)
+    | ((
+        parent: User,
+        args: {},
+        ctx: Context,
+        info: GraphQLResolveInfo
+      ) => string | Promise<string>)
     | {
         fragment: string;
         resolve: (
           parent: User,
           args: {},
           ctx: Context,
-          info: GraphQLResolveInfo,
+          info: GraphQLResolveInfo
         ) => string | Promise<string>;
       };
 
@@ -354,7 +387,7 @@ export namespace UserResolvers {
         parent: User,
         args: {},
         ctx: Context,
-        info: GraphQLResolveInfo,
+        info: GraphQLResolveInfo
       ) => string | null | Promise<string | null>)
     | {
         fragment: string;
@@ -362,19 +395,24 @@ export namespace UserResolvers {
           parent: User,
           args: {},
           ctx: Context,
-          info: GraphQLResolveInfo,
+          info: GraphQLResolveInfo
         ) => string | null | Promise<string | null>;
       };
 
   export type EmailResolver =
-    | ((parent: User, args: {}, ctx: Context, info: GraphQLResolveInfo) => string | Promise<string>)
+    | ((
+        parent: User,
+        args: {},
+        ctx: Context,
+        info: GraphQLResolveInfo
+      ) => string | Promise<string>)
     | {
         fragment: string;
         resolve: (
           parent: User,
           args: {},
           ctx: Context,
-          info: GraphQLResolveInfo,
+          info: GraphQLResolveInfo
         ) => string | Promise<string>;
       };
 
@@ -383,7 +421,7 @@ export namespace UserResolvers {
         parent: User,
         args: {},
         ctx: Context,
-        info: GraphQLResolveInfo,
+        info: GraphQLResolveInfo
       ) => Movie[] | Promise<Movie[]>)
     | {
         fragment: string;
@@ -391,7 +429,7 @@ export namespace UserResolvers {
           parent: User,
           args: {},
           ctx: Context,
-          info: GraphQLResolveInfo,
+          info: GraphQLResolveInfo
         ) => Movie[] | Promise<Movie[]>;
       };
 
@@ -400,7 +438,7 @@ export namespace UserResolvers {
         parent: User,
         args: {},
         ctx: Context,
-        info: GraphQLResolveInfo,
+        info: GraphQLResolveInfo
       ) => boolean | null | Promise<boolean | null>)
     | {
         fragment: string;
@@ -408,7 +446,7 @@ export namespace UserResolvers {
           parent: User,
           args: {},
           ctx: Context,
-          info: GraphQLResolveInfo,
+          info: GraphQLResolveInfo
         ) => boolean | null | Promise<boolean | null>;
       };
 
@@ -417,7 +455,7 @@ export namespace UserResolvers {
         parent: User,
         args: {},
         ctx: Context,
-        info: GraphQLResolveInfo,
+        info: GraphQLResolveInfo
       ) => string | null | Promise<string | null>)
     | {
         fragment: string;
@@ -425,7 +463,7 @@ export namespace UserResolvers {
           parent: User,
           args: {},
           ctx: Context,
-          info: GraphQLResolveInfo,
+          info: GraphQLResolveInfo
         ) => string | null | Promise<string | null>;
       };
 
@@ -434,7 +472,7 @@ export namespace UserResolvers {
         parent: User,
         args: {},
         ctx: Context,
-        info: GraphQLResolveInfo,
+        info: GraphQLResolveInfo
       ) => Role | null | Promise<Role | null>)
     | {
         fragment: string;
@@ -442,7 +480,7 @@ export namespace UserResolvers {
           parent: User,
           args: {},
           ctx: Context,
-          info: GraphQLResolveInfo,
+          info: GraphQLResolveInfo
         ) => Role | null | Promise<Role | null>;
       };
 
@@ -451,7 +489,7 @@ export namespace UserResolvers {
         parent: User,
         args: {},
         ctx: Context,
-        info: GraphQLResolveInfo,
+        info: GraphQLResolveInfo
       ) => Configuration | null | Promise<Configuration | null>)
     | {
         fragment: string;
@@ -459,7 +497,7 @@ export namespace UserResolvers {
           parent: User,
           args: {},
           ctx: Context,
-          info: GraphQLResolveInfo,
+          info: GraphQLResolveInfo
         ) => Configuration | null | Promise<Configuration | null>;
       };
 
@@ -469,7 +507,7 @@ export namespace UserResolvers {
           parent: User,
           args: {},
           ctx: Context,
-          info: GraphQLResolveInfo,
+          info: GraphQLResolveInfo
         ) => string | Promise<string>)
       | {
           fragment: string;
@@ -477,7 +515,7 @@ export namespace UserResolvers {
             parent: User,
             args: {},
             ctx: Context,
-            info: GraphQLResolveInfo,
+            info: GraphQLResolveInfo
           ) => string | Promise<string>;
         };
 
@@ -486,7 +524,7 @@ export namespace UserResolvers {
           parent: User,
           args: {},
           ctx: Context,
-          info: GraphQLResolveInfo,
+          info: GraphQLResolveInfo
         ) => string | null | Promise<string | null>)
       | {
           fragment: string;
@@ -494,7 +532,7 @@ export namespace UserResolvers {
             parent: User,
             args: {},
             ctx: Context,
-            info: GraphQLResolveInfo,
+            info: GraphQLResolveInfo
           ) => string | null | Promise<string | null>;
         };
 
@@ -503,7 +541,7 @@ export namespace UserResolvers {
           parent: User,
           args: {},
           ctx: Context,
-          info: GraphQLResolveInfo,
+          info: GraphQLResolveInfo
         ) => string | Promise<string>)
       | {
           fragment: string;
@@ -511,7 +549,7 @@ export namespace UserResolvers {
             parent: User,
             args: {},
             ctx: Context,
-            info: GraphQLResolveInfo,
+            info: GraphQLResolveInfo
           ) => string | Promise<string>;
         };
 
@@ -520,7 +558,7 @@ export namespace UserResolvers {
           parent: User,
           args: {},
           ctx: Context,
-          info: GraphQLResolveInfo,
+          info: GraphQLResolveInfo
         ) => Movie[] | Promise<Movie[]>)
       | {
           fragment: string;
@@ -528,7 +566,7 @@ export namespace UserResolvers {
             parent: User,
             args: {},
             ctx: Context,
-            info: GraphQLResolveInfo,
+            info: GraphQLResolveInfo
           ) => Movie[] | Promise<Movie[]>;
         };
 
@@ -537,7 +575,7 @@ export namespace UserResolvers {
           parent: User,
           args: {},
           ctx: Context,
-          info: GraphQLResolveInfo,
+          info: GraphQLResolveInfo
         ) => boolean | null | Promise<boolean | null>)
       | {
           fragment: string;
@@ -545,7 +583,7 @@ export namespace UserResolvers {
             parent: User,
             args: {},
             ctx: Context,
-            info: GraphQLResolveInfo,
+            info: GraphQLResolveInfo
           ) => boolean | null | Promise<boolean | null>;
         };
 
@@ -554,7 +592,7 @@ export namespace UserResolvers {
           parent: User,
           args: {},
           ctx: Context,
-          info: GraphQLResolveInfo,
+          info: GraphQLResolveInfo
         ) => string | null | Promise<string | null>)
       | {
           fragment: string;
@@ -562,7 +600,7 @@ export namespace UserResolvers {
             parent: User,
             args: {},
             ctx: Context,
-            info: GraphQLResolveInfo,
+            info: GraphQLResolveInfo
           ) => string | null | Promise<string | null>;
         };
 
@@ -571,7 +609,7 @@ export namespace UserResolvers {
           parent: User,
           args: {},
           ctx: Context,
-          info: GraphQLResolveInfo,
+          info: GraphQLResolveInfo
         ) => Role | null | Promise<Role | null>)
       | {
           fragment: string;
@@ -579,7 +617,7 @@ export namespace UserResolvers {
             parent: User,
             args: {},
             ctx: Context,
-            info: GraphQLResolveInfo,
+            info: GraphQLResolveInfo
           ) => Role | null | Promise<Role | null>;
         };
 
@@ -588,7 +626,7 @@ export namespace UserResolvers {
           parent: User,
           args: {},
           ctx: Context,
-          info: GraphQLResolveInfo,
+          info: GraphQLResolveInfo
         ) => Configuration | null | Promise<Configuration | null>)
       | {
           fragment: string;
@@ -596,7 +634,7 @@ export namespace UserResolvers {
             parent: User,
             args: {},
             ctx: Context,
-            info: GraphQLResolveInfo,
+            info: GraphQLResolveInfo
           ) => Configuration | null | Promise<Configuration | null>;
         };
   }
@@ -605,19 +643,23 @@ export namespace UserResolvers {
 export namespace MovieResolvers {
   export const defaultResolvers = {
     id: (parent: Movie) => parent.id,
-    createdAt: (parent: Movie) => parent.createdAt,
+    createdAt: (parent: Movie) =>
+      parent.createdAt === undefined ? null : parent.createdAt,
     title: (parent: Movie) => parent.title,
-    requestedById: (parent: Movie) =>
-      parent.requestedById === undefined ? null : parent.requestedById,
     img: (parent: Movie) => (parent.img === undefined ? null : parent.img),
     tmdbId: (parent: Movie) => parent.tmdbId,
     genres: (parent: Movie) => parent.genres,
-    release_date: (parent: Movie) =>
-      parent.release_date === undefined ? null : parent.release_date,
-    vote_average: (parent: Movie) =>
-      parent.vote_average === undefined ? null : parent.vote_average,
-    overview: (parent: Movie) => (parent.overview === undefined ? null : parent.overview),
-    downloaded: (parent: Movie) => (parent.downloaded === undefined ? null : parent.downloaded),
+    year: (parent: Movie) => (parent.year === undefined ? null : parent.year),
+    overview: (parent: Movie) =>
+      parent.overview === undefined ? null : parent.overview,
+    downloaded: (parent: Movie) =>
+      parent.downloaded === undefined ? null : parent.downloaded,
+    hasFile: (parent: Movie) =>
+      parent.hasFile === undefined ? null : parent.hasFile,
+    voteAverage: (parent: Movie) =>
+      parent.voteAverage === undefined ? null : parent.voteAverage,
+    voteCount: (parent: Movie) =>
+      parent.voteCount === undefined ? null : parent.voteCount
   };
 
   export type IdResolver =
@@ -625,7 +667,7 @@ export namespace MovieResolvers {
         parent: Movie,
         args: {},
         ctx: Context,
-        info: GraphQLResolveInfo,
+        info: GraphQLResolveInfo
       ) => string | Promise<string>)
     | {
         fragment: string;
@@ -633,8 +675,25 @@ export namespace MovieResolvers {
           parent: Movie,
           args: {},
           ctx: Context,
-          info: GraphQLResolveInfo,
+          info: GraphQLResolveInfo
         ) => string | Promise<string>;
+      };
+
+  export type CreatedAtResolver =
+    | ((
+        parent: Movie,
+        args: {},
+        ctx: Context,
+        info: GraphQLResolveInfo
+      ) => string | null | Promise<string | null>)
+    | {
+        fragment: string;
+        resolve: (
+          parent: Movie,
+          args: {},
+          ctx: Context,
+          info: GraphQLResolveInfo
+        ) => string | null | Promise<string | null>;
       };
 
   export type TitleResolver =
@@ -642,7 +701,7 @@ export namespace MovieResolvers {
         parent: Movie,
         args: {},
         ctx: Context,
-        info: GraphQLResolveInfo,
+        info: GraphQLResolveInfo
       ) => string | Promise<string>)
     | {
         fragment: string;
@@ -650,37 +709,25 @@ export namespace MovieResolvers {
           parent: Movie,
           args: {},
           ctx: Context,
-          info: GraphQLResolveInfo,
+          info: GraphQLResolveInfo
         ) => string | Promise<string>;
       };
 
   export type RequestedByResolver =
-    | ((parent: Movie, args: {}, ctx: Context, info: GraphQLResolveInfo) => User | Promise<User>)
-    | {
-        fragment: string;
-        resolve: (
-          parent: Movie,
-          args: {},
-          ctx: Context,
-          info: GraphQLResolveInfo,
-        ) => User | Promise<User>;
-      };
-
-  export type RequestedByIdResolver =
     | ((
         parent: Movie,
         args: {},
         ctx: Context,
-        info: GraphQLResolveInfo,
-      ) => string | null | Promise<string | null>)
+        info: GraphQLResolveInfo
+      ) => User | null | Promise<User | null>)
     | {
         fragment: string;
         resolve: (
           parent: Movie,
           args: {},
           ctx: Context,
-          info: GraphQLResolveInfo,
-        ) => string | null | Promise<string | null>;
+          info: GraphQLResolveInfo
+        ) => User | null | Promise<User | null>;
       };
 
   export type ImgResolver =
@@ -688,7 +735,7 @@ export namespace MovieResolvers {
         parent: Movie,
         args: {},
         ctx: Context,
-        info: GraphQLResolveInfo,
+        info: GraphQLResolveInfo
       ) => string | null | Promise<string | null>)
     | {
         fragment: string;
@@ -696,7 +743,7 @@ export namespace MovieResolvers {
           parent: Movie,
           args: {},
           ctx: Context,
-          info: GraphQLResolveInfo,
+          info: GraphQLResolveInfo
         ) => string | null | Promise<string | null>;
       };
 
@@ -705,33 +752,16 @@ export namespace MovieResolvers {
         parent: Movie,
         args: {},
         ctx: Context,
-        info: GraphQLResolveInfo,
-      ) => number | null | Promise<number | null>)
+        info: GraphQLResolveInfo
+      ) => number | Promise<number>)
     | {
         fragment: string;
         resolve: (
           parent: Movie,
           args: {},
           ctx: Context,
-          info: GraphQLResolveInfo,
-        ) => number | null | Promise<number | null>;
-      };
-
-  export type HasFileResolver =
-    | ((
-        parent: Movie,
-        args: {},
-        ctx: Context,
-        info: GraphQLResolveInfo,
-      ) => boolean | null | Promise<boolean | null>)
-    | {
-        fragment: string;
-        resolve: (
-          parent: Movie,
-          args: {},
-          ctx: Context,
-          info: GraphQLResolveInfo,
-        ) => boolean | null | Promise<boolean | null>;
+          info: GraphQLResolveInfo
+        ) => number | Promise<number>;
       };
 
   export type GenresResolver =
@@ -739,58 +769,24 @@ export namespace MovieResolvers {
         parent: Movie,
         args: {},
         ctx: Context,
-        info: GraphQLResolveInfo,
-      ) => Array<number | null> | null | Promise<Array<number | null> | null>)
+        info: GraphQLResolveInfo
+      ) => string[] | Promise<string[]>)
     | {
         fragment: string;
         resolve: (
           parent: Movie,
           args: {},
           ctx: Context,
-          info: GraphQLResolveInfo,
-        ) => Array<number | null> | null | Promise<Array<number | null> | null>;
+          info: GraphQLResolveInfo
+        ) => string[] | Promise<string[]>;
       };
 
-  export type Release_dateResolver =
+  export type YearResolver =
     | ((
         parent: Movie,
         args: {},
         ctx: Context,
-        info: GraphQLResolveInfo,
-      ) => string | null | Promise<string | null>)
-    | {
-        fragment: string;
-        resolve: (
-          parent: Movie,
-          args: {},
-          ctx: Context,
-          info: GraphQLResolveInfo,
-        ) => string | null | Promise<string | null>;
-      };
-
-  export type CreatedAtResolver =
-    | ((
-        parent: Movie,
-        args: {},
-        ctx: Context,
-        info: GraphQLResolveInfo,
-      ) => string | Promise<string>)
-    | {
-        fragment: string;
-        resolve: (
-          parent: Movie,
-          args: {},
-          ctx: Context,
-          info: GraphQLResolveInfo,
-        ) => string | Promise<string>;
-      };
-
-  export type Vote_averageResolver =
-    | ((
-        parent: Movie,
-        args: {},
-        ctx: Context,
-        info: GraphQLResolveInfo,
+        info: GraphQLResolveInfo
       ) => number | null | Promise<number | null>)
     | {
         fragment: string;
@@ -798,7 +794,7 @@ export namespace MovieResolvers {
           parent: Movie,
           args: {},
           ctx: Context,
-          info: GraphQLResolveInfo,
+          info: GraphQLResolveInfo
         ) => number | null | Promise<number | null>;
       };
 
@@ -807,7 +803,7 @@ export namespace MovieResolvers {
         parent: Movie,
         args: {},
         ctx: Context,
-        info: GraphQLResolveInfo,
+        info: GraphQLResolveInfo
       ) => string | null | Promise<string | null>)
     | {
         fragment: string;
@@ -815,7 +811,7 @@ export namespace MovieResolvers {
           parent: Movie,
           args: {},
           ctx: Context,
-          info: GraphQLResolveInfo,
+          info: GraphQLResolveInfo
         ) => string | null | Promise<string | null>;
       };
 
@@ -824,7 +820,7 @@ export namespace MovieResolvers {
         parent: Movie,
         args: {},
         ctx: Context,
-        info: GraphQLResolveInfo,
+        info: GraphQLResolveInfo
       ) => boolean | null | Promise<boolean | null>)
     | {
         fragment: string;
@@ -832,76 +828,76 @@ export namespace MovieResolvers {
           parent: Movie,
           args: {},
           ctx: Context,
-          info: GraphQLResolveInfo,
+          info: GraphQLResolveInfo
         ) => boolean | null | Promise<boolean | null>;
       };
 
-  export type StatusResolver =
+  export type HasFileResolver =
     | ((
         parent: Movie,
         args: {},
         ctx: Context,
-        info: GraphQLResolveInfo,
-      ) => string | null | Promise<string | null>)
+        info: GraphQLResolveInfo
+      ) => boolean | null | Promise<boolean | null>)
     | {
         fragment: string;
         resolve: (
           parent: Movie,
           args: {},
           ctx: Context,
-          info: GraphQLResolveInfo,
-        ) => string | null | Promise<string | null>;
+          info: GraphQLResolveInfo
+        ) => boolean | null | Promise<boolean | null>;
       };
 
-  export type TimeleftResolver =
+  export type VoteAverageResolver =
     | ((
         parent: Movie,
         args: {},
         ctx: Context,
-        info: GraphQLResolveInfo,
-      ) => string | null | Promise<string | null>)
+        info: GraphQLResolveInfo
+      ) => number | null | Promise<number | null>)
     | {
         fragment: string;
         resolve: (
           parent: Movie,
           args: {},
           ctx: Context,
-          info: GraphQLResolveInfo,
-        ) => string | null | Promise<string | null>;
+          info: GraphQLResolveInfo
+        ) => number | null | Promise<number | null>;
       };
 
-  export type Poster_pathResolver =
+  export type VoteCountResolver =
     | ((
         parent: Movie,
         args: {},
         ctx: Context,
-        info: GraphQLResolveInfo,
-      ) => string | null | Promise<string | null>)
+        info: GraphQLResolveInfo
+      ) => number | null | Promise<number | null>)
     | {
         fragment: string;
         resolve: (
           parent: Movie,
           args: {},
           ctx: Context,
-          info: GraphQLResolveInfo,
-        ) => string | null | Promise<string | null>;
+          info: GraphQLResolveInfo
+        ) => number | null | Promise<number | null>;
       };
 
-  export type Backdrop_pathResolver =
+  export type SimilarMoviesResolver =
     | ((
         parent: Movie,
         args: {},
         ctx: Context,
-        info: GraphQLResolveInfo,
-      ) => string | null | Promise<string | null>)
+        info: GraphQLResolveInfo
+      ) => Movie[] | Promise<Movie[]>)
     | {
         fragment: string;
         resolve: (
           parent: Movie,
           args: {},
           ctx: Context,
-          info: GraphQLResolveInfo,
-        ) => string | null | Promise<string | null>;
+          info: GraphQLResolveInfo
+        ) => Movie[] | Promise<Movie[]>;
       };
 
   export interface Type {
@@ -910,7 +906,7 @@ export namespace MovieResolvers {
           parent: Movie,
           args: {},
           ctx: Context,
-          info: GraphQLResolveInfo,
+          info: GraphQLResolveInfo
         ) => string | Promise<string>)
       | {
           fragment: string;
@@ -918,8 +914,25 @@ export namespace MovieResolvers {
             parent: Movie,
             args: {},
             ctx: Context,
-            info: GraphQLResolveInfo,
+            info: GraphQLResolveInfo
           ) => string | Promise<string>;
+        };
+
+    createdAt:
+      | ((
+          parent: Movie,
+          args: {},
+          ctx: Context,
+          info: GraphQLResolveInfo
+        ) => string | null | Promise<string | null>)
+      | {
+          fragment: string;
+          resolve: (
+            parent: Movie,
+            args: {},
+            ctx: Context,
+            info: GraphQLResolveInfo
+          ) => string | null | Promise<string | null>;
         };
 
     title:
@@ -927,7 +940,7 @@ export namespace MovieResolvers {
           parent: Movie,
           args: {},
           ctx: Context,
-          info: GraphQLResolveInfo,
+          info: GraphQLResolveInfo
         ) => string | Promise<string>)
       | {
           fragment: string;
@@ -935,37 +948,25 @@ export namespace MovieResolvers {
             parent: Movie,
             args: {},
             ctx: Context,
-            info: GraphQLResolveInfo,
+            info: GraphQLResolveInfo
           ) => string | Promise<string>;
         };
 
     requestedBy:
-      | ((parent: Movie, args: {}, ctx: Context, info: GraphQLResolveInfo) => User | Promise<User>)
-      | {
-          fragment: string;
-          resolve: (
-            parent: Movie,
-            args: {},
-            ctx: Context,
-            info: GraphQLResolveInfo,
-          ) => User | Promise<User>;
-        };
-
-    requestedById:
       | ((
           parent: Movie,
           args: {},
           ctx: Context,
-          info: GraphQLResolveInfo,
-        ) => string | null | Promise<string | null>)
+          info: GraphQLResolveInfo
+        ) => User | null | Promise<User | null>)
       | {
           fragment: string;
           resolve: (
             parent: Movie,
             args: {},
             ctx: Context,
-            info: GraphQLResolveInfo,
-          ) => string | null | Promise<string | null>;
+            info: GraphQLResolveInfo
+          ) => User | null | Promise<User | null>;
         };
 
     img:
@@ -973,7 +974,7 @@ export namespace MovieResolvers {
           parent: Movie,
           args: {},
           ctx: Context,
-          info: GraphQLResolveInfo,
+          info: GraphQLResolveInfo
         ) => string | null | Promise<string | null>)
       | {
           fragment: string;
@@ -981,7 +982,7 @@ export namespace MovieResolvers {
             parent: Movie,
             args: {},
             ctx: Context,
-            info: GraphQLResolveInfo,
+            info: GraphQLResolveInfo
           ) => string | null | Promise<string | null>;
         };
 
@@ -990,33 +991,16 @@ export namespace MovieResolvers {
           parent: Movie,
           args: {},
           ctx: Context,
-          info: GraphQLResolveInfo,
-        ) => number | null | Promise<number | null>)
+          info: GraphQLResolveInfo
+        ) => number | Promise<number>)
       | {
           fragment: string;
           resolve: (
             parent: Movie,
             args: {},
             ctx: Context,
-            info: GraphQLResolveInfo,
-          ) => number | null | Promise<number | null>;
-        };
-
-    hasFile:
-      | ((
-          parent: Movie,
-          args: {},
-          ctx: Context,
-          info: GraphQLResolveInfo,
-        ) => boolean | null | Promise<boolean | null>)
-      | {
-          fragment: string;
-          resolve: (
-            parent: Movie,
-            args: {},
-            ctx: Context,
-            info: GraphQLResolveInfo,
-          ) => boolean | null | Promise<boolean | null>;
+            info: GraphQLResolveInfo
+          ) => number | Promise<number>;
         };
 
     genres:
@@ -1024,58 +1008,24 @@ export namespace MovieResolvers {
           parent: Movie,
           args: {},
           ctx: Context,
-          info: GraphQLResolveInfo,
-        ) => Array<number | null> | null | Promise<Array<number | null> | null>)
+          info: GraphQLResolveInfo
+        ) => string[] | Promise<string[]>)
       | {
           fragment: string;
           resolve: (
             parent: Movie,
             args: {},
             ctx: Context,
-            info: GraphQLResolveInfo,
-          ) => Array<number | null> | null | Promise<Array<number | null> | null>;
+            info: GraphQLResolveInfo
+          ) => string[] | Promise<string[]>;
         };
 
-    release_date:
+    year:
       | ((
           parent: Movie,
           args: {},
           ctx: Context,
-          info: GraphQLResolveInfo,
-        ) => string | null | Promise<string | null>)
-      | {
-          fragment: string;
-          resolve: (
-            parent: Movie,
-            args: {},
-            ctx: Context,
-            info: GraphQLResolveInfo,
-          ) => string | null | Promise<string | null>;
-        };
-
-    createdAt:
-      | ((
-          parent: Movie,
-          args: {},
-          ctx: Context,
-          info: GraphQLResolveInfo,
-        ) => string | Promise<string>)
-      | {
-          fragment: string;
-          resolve: (
-            parent: Movie,
-            args: {},
-            ctx: Context,
-            info: GraphQLResolveInfo,
-          ) => string | Promise<string>;
-        };
-
-    vote_average:
-      | ((
-          parent: Movie,
-          args: {},
-          ctx: Context,
-          info: GraphQLResolveInfo,
+          info: GraphQLResolveInfo
         ) => number | null | Promise<number | null>)
       | {
           fragment: string;
@@ -1083,7 +1033,7 @@ export namespace MovieResolvers {
             parent: Movie,
             args: {},
             ctx: Context,
-            info: GraphQLResolveInfo,
+            info: GraphQLResolveInfo
           ) => number | null | Promise<number | null>;
         };
 
@@ -1092,7 +1042,7 @@ export namespace MovieResolvers {
           parent: Movie,
           args: {},
           ctx: Context,
-          info: GraphQLResolveInfo,
+          info: GraphQLResolveInfo
         ) => string | null | Promise<string | null>)
       | {
           fragment: string;
@@ -1100,7 +1050,7 @@ export namespace MovieResolvers {
             parent: Movie,
             args: {},
             ctx: Context,
-            info: GraphQLResolveInfo,
+            info: GraphQLResolveInfo
           ) => string | null | Promise<string | null>;
         };
 
@@ -1109,7 +1059,7 @@ export namespace MovieResolvers {
           parent: Movie,
           args: {},
           ctx: Context,
-          info: GraphQLResolveInfo,
+          info: GraphQLResolveInfo
         ) => boolean | null | Promise<boolean | null>)
       | {
           fragment: string;
@@ -1117,76 +1067,76 @@ export namespace MovieResolvers {
             parent: Movie,
             args: {},
             ctx: Context,
-            info: GraphQLResolveInfo,
+            info: GraphQLResolveInfo
           ) => boolean | null | Promise<boolean | null>;
         };
 
-    status:
+    hasFile:
       | ((
           parent: Movie,
           args: {},
           ctx: Context,
-          info: GraphQLResolveInfo,
-        ) => string | null | Promise<string | null>)
+          info: GraphQLResolveInfo
+        ) => boolean | null | Promise<boolean | null>)
       | {
           fragment: string;
           resolve: (
             parent: Movie,
             args: {},
             ctx: Context,
-            info: GraphQLResolveInfo,
-          ) => string | null | Promise<string | null>;
+            info: GraphQLResolveInfo
+          ) => boolean | null | Promise<boolean | null>;
         };
 
-    timeleft:
+    voteAverage:
       | ((
           parent: Movie,
           args: {},
           ctx: Context,
-          info: GraphQLResolveInfo,
-        ) => string | null | Promise<string | null>)
+          info: GraphQLResolveInfo
+        ) => number | null | Promise<number | null>)
       | {
           fragment: string;
           resolve: (
             parent: Movie,
             args: {},
             ctx: Context,
-            info: GraphQLResolveInfo,
-          ) => string | null | Promise<string | null>;
+            info: GraphQLResolveInfo
+          ) => number | null | Promise<number | null>;
         };
 
-    poster_path:
+    voteCount:
       | ((
           parent: Movie,
           args: {},
           ctx: Context,
-          info: GraphQLResolveInfo,
-        ) => string | null | Promise<string | null>)
+          info: GraphQLResolveInfo
+        ) => number | null | Promise<number | null>)
       | {
           fragment: string;
           resolve: (
             parent: Movie,
             args: {},
             ctx: Context,
-            info: GraphQLResolveInfo,
-          ) => string | null | Promise<string | null>;
+            info: GraphQLResolveInfo
+          ) => number | null | Promise<number | null>;
         };
 
-    backdrop_path:
+    similarMovies:
       | ((
           parent: Movie,
           args: {},
           ctx: Context,
-          info: GraphQLResolveInfo,
-        ) => string | null | Promise<string | null>)
+          info: GraphQLResolveInfo
+        ) => Movie[] | Promise<Movie[]>)
       | {
           fragment: string;
           resolve: (
             parent: Movie,
             args: {},
             ctx: Context,
-            info: GraphQLResolveInfo,
-          ) => string | null | Promise<string | null>;
+            info: GraphQLResolveInfo
+          ) => Movie[] | Promise<Movie[]>;
         };
   }
 }
@@ -1205,7 +1155,7 @@ export namespace ConfigurationResolvers {
     pushoverApiKey: (parent: Configuration) =>
       parent.pushoverApiKey === undefined ? null : parent.pushoverApiKey,
     pushoverUserKey: (parent: Configuration) =>
-      parent.pushoverUserKey === undefined ? null : parent.pushoverUserKey,
+      parent.pushoverUserKey === undefined ? null : parent.pushoverUserKey
   };
 
   export type IdResolver =
@@ -1213,7 +1163,7 @@ export namespace ConfigurationResolvers {
         parent: Configuration,
         args: {},
         ctx: Context,
-        info: GraphQLResolveInfo,
+        info: GraphQLResolveInfo
       ) => string | Promise<string>)
     | {
         fragment: string;
@@ -1221,7 +1171,7 @@ export namespace ConfigurationResolvers {
           parent: Configuration,
           args: {},
           ctx: Context,
-          info: GraphQLResolveInfo,
+          info: GraphQLResolveInfo
         ) => string | Promise<string>;
       };
 
@@ -1230,7 +1180,7 @@ export namespace ConfigurationResolvers {
         parent: Configuration,
         args: {},
         ctx: Context,
-        info: GraphQLResolveInfo,
+        info: GraphQLResolveInfo
       ) => string | null | Promise<string | null>)
     | {
         fragment: string;
@@ -1238,7 +1188,7 @@ export namespace ConfigurationResolvers {
           parent: Configuration,
           args: {},
           ctx: Context,
-          info: GraphQLResolveInfo,
+          info: GraphQLResolveInfo
         ) => string | null | Promise<string | null>;
       };
 
@@ -1247,7 +1197,7 @@ export namespace ConfigurationResolvers {
         parent: Configuration,
         args: {},
         ctx: Context,
-        info: GraphQLResolveInfo,
+        info: GraphQLResolveInfo
       ) => string | null | Promise<string | null>)
     | {
         fragment: string;
@@ -1255,7 +1205,7 @@ export namespace ConfigurationResolvers {
           parent: Configuration,
           args: {},
           ctx: Context,
-          info: GraphQLResolveInfo,
+          info: GraphQLResolveInfo
         ) => string | null | Promise<string | null>;
       };
 
@@ -1264,7 +1214,7 @@ export namespace ConfigurationResolvers {
         parent: Configuration,
         args: {},
         ctx: Context,
-        info: GraphQLResolveInfo,
+        info: GraphQLResolveInfo
       ) => string | null | Promise<string | null>)
     | {
         fragment: string;
@@ -1272,7 +1222,7 @@ export namespace ConfigurationResolvers {
           parent: Configuration,
           args: {},
           ctx: Context,
-          info: GraphQLResolveInfo,
+          info: GraphQLResolveInfo
         ) => string | null | Promise<string | null>;
       };
 
@@ -1281,7 +1231,7 @@ export namespace ConfigurationResolvers {
         parent: Configuration,
         args: {},
         ctx: Context,
-        info: GraphQLResolveInfo,
+        info: GraphQLResolveInfo
       ) => string | null | Promise<string | null>)
     | {
         fragment: string;
@@ -1289,7 +1239,7 @@ export namespace ConfigurationResolvers {
           parent: Configuration,
           args: {},
           ctx: Context,
-          info: GraphQLResolveInfo,
+          info: GraphQLResolveInfo
         ) => string | null | Promise<string | null>;
       };
 
@@ -1298,7 +1248,7 @@ export namespace ConfigurationResolvers {
         parent: Configuration,
         args: {},
         ctx: Context,
-        info: GraphQLResolveInfo,
+        info: GraphQLResolveInfo
       ) => string | null | Promise<string | null>)
     | {
         fragment: string;
@@ -1306,7 +1256,7 @@ export namespace ConfigurationResolvers {
           parent: Configuration,
           args: {},
           ctx: Context,
-          info: GraphQLResolveInfo,
+          info: GraphQLResolveInfo
         ) => string | null | Promise<string | null>;
       };
 
@@ -1315,7 +1265,7 @@ export namespace ConfigurationResolvers {
         parent: Configuration,
         args: {},
         ctx: Context,
-        info: GraphQLResolveInfo,
+        info: GraphQLResolveInfo
       ) => string | null | Promise<string | null>)
     | {
         fragment: string;
@@ -1323,25 +1273,8 @@ export namespace ConfigurationResolvers {
           parent: Configuration,
           args: {},
           ctx: Context,
-          info: GraphQLResolveInfo,
+          info: GraphQLResolveInfo
         ) => string | null | Promise<string | null>;
-      };
-
-  export type UserResolver =
-    | ((
-        parent: Configuration,
-        args: {},
-        ctx: Context,
-        info: GraphQLResolveInfo,
-      ) => User | null | Promise<User | null>)
-    | {
-        fragment: string;
-        resolve: (
-          parent: Configuration,
-          args: {},
-          ctx: Context,
-          info: GraphQLResolveInfo,
-        ) => User | null | Promise<User | null>;
       };
 
   export interface Type {
@@ -1350,7 +1283,7 @@ export namespace ConfigurationResolvers {
           parent: Configuration,
           args: {},
           ctx: Context,
-          info: GraphQLResolveInfo,
+          info: GraphQLResolveInfo
         ) => string | Promise<string>)
       | {
           fragment: string;
@@ -1358,7 +1291,7 @@ export namespace ConfigurationResolvers {
             parent: Configuration,
             args: {},
             ctx: Context,
-            info: GraphQLResolveInfo,
+            info: GraphQLResolveInfo
           ) => string | Promise<string>;
         };
 
@@ -1367,7 +1300,7 @@ export namespace ConfigurationResolvers {
           parent: Configuration,
           args: {},
           ctx: Context,
-          info: GraphQLResolveInfo,
+          info: GraphQLResolveInfo
         ) => string | null | Promise<string | null>)
       | {
           fragment: string;
@@ -1375,7 +1308,7 @@ export namespace ConfigurationResolvers {
             parent: Configuration,
             args: {},
             ctx: Context,
-            info: GraphQLResolveInfo,
+            info: GraphQLResolveInfo
           ) => string | null | Promise<string | null>;
         };
 
@@ -1384,7 +1317,7 @@ export namespace ConfigurationResolvers {
           parent: Configuration,
           args: {},
           ctx: Context,
-          info: GraphQLResolveInfo,
+          info: GraphQLResolveInfo
         ) => string | null | Promise<string | null>)
       | {
           fragment: string;
@@ -1392,7 +1325,7 @@ export namespace ConfigurationResolvers {
             parent: Configuration,
             args: {},
             ctx: Context,
-            info: GraphQLResolveInfo,
+            info: GraphQLResolveInfo
           ) => string | null | Promise<string | null>;
         };
 
@@ -1401,7 +1334,7 @@ export namespace ConfigurationResolvers {
           parent: Configuration,
           args: {},
           ctx: Context,
-          info: GraphQLResolveInfo,
+          info: GraphQLResolveInfo
         ) => string | null | Promise<string | null>)
       | {
           fragment: string;
@@ -1409,7 +1342,7 @@ export namespace ConfigurationResolvers {
             parent: Configuration,
             args: {},
             ctx: Context,
-            info: GraphQLResolveInfo,
+            info: GraphQLResolveInfo
           ) => string | null | Promise<string | null>;
         };
 
@@ -1418,7 +1351,7 @@ export namespace ConfigurationResolvers {
           parent: Configuration,
           args: {},
           ctx: Context,
-          info: GraphQLResolveInfo,
+          info: GraphQLResolveInfo
         ) => string | null | Promise<string | null>)
       | {
           fragment: string;
@@ -1426,7 +1359,7 @@ export namespace ConfigurationResolvers {
             parent: Configuration,
             args: {},
             ctx: Context,
-            info: GraphQLResolveInfo,
+            info: GraphQLResolveInfo
           ) => string | null | Promise<string | null>;
         };
 
@@ -1435,7 +1368,7 @@ export namespace ConfigurationResolvers {
           parent: Configuration,
           args: {},
           ctx: Context,
-          info: GraphQLResolveInfo,
+          info: GraphQLResolveInfo
         ) => string | null | Promise<string | null>)
       | {
           fragment: string;
@@ -1443,7 +1376,7 @@ export namespace ConfigurationResolvers {
             parent: Configuration,
             args: {},
             ctx: Context,
-            info: GraphQLResolveInfo,
+            info: GraphQLResolveInfo
           ) => string | null | Promise<string | null>;
         };
 
@@ -1452,7 +1385,7 @@ export namespace ConfigurationResolvers {
           parent: Configuration,
           args: {},
           ctx: Context,
-          info: GraphQLResolveInfo,
+          info: GraphQLResolveInfo
         ) => string | null | Promise<string | null>)
       | {
           fragment: string;
@@ -1460,25 +1393,8 @@ export namespace ConfigurationResolvers {
             parent: Configuration,
             args: {},
             ctx: Context,
-            info: GraphQLResolveInfo,
+            info: GraphQLResolveInfo
           ) => string | null | Promise<string | null>;
-        };
-
-    user:
-      | ((
-          parent: Configuration,
-          args: {},
-          ctx: Context,
-          info: GraphQLResolveInfo,
-        ) => User | null | Promise<User | null>)
-      | {
-          fragment: string;
-          resolve: (
-            parent: Configuration,
-            args: {},
-            ctx: Context,
-            info: GraphQLResolveInfo,
-          ) => User | null | Promise<User | null>;
         };
   }
 }
@@ -1487,12 +1403,16 @@ export namespace RadarrStatusResolvers {
   export const defaultResolvers = {
     isRequested: (parent: RadarrStatus) =>
       parent.isRequested === undefined ? null : parent.isRequested,
-    hasFile: (parent: RadarrStatus) => (parent.hasFile === undefined ? null : parent.hasFile),
+    hasFile: (parent: RadarrStatus) =>
+      parent.hasFile === undefined ? null : parent.hasFile,
     downloaded: (parent: RadarrStatus) =>
       parent.downloaded === undefined ? null : parent.downloaded,
-    status: (parent: RadarrStatus) => (parent.status === undefined ? null : parent.status),
-    timeleft: (parent: RadarrStatus) => (parent.timeleft === undefined ? null : parent.timeleft),
-    title: (parent: RadarrStatus) => (parent.title === undefined ? null : parent.title),
+    status: (parent: RadarrStatus) =>
+      parent.status === undefined ? null : parent.status,
+    timeleft: (parent: RadarrStatus) =>
+      parent.timeleft === undefined ? null : parent.timeleft,
+    title: (parent: RadarrStatus) =>
+      parent.title === undefined ? null : parent.title
   };
 
   export type IsRequestedResolver =
@@ -1500,7 +1420,7 @@ export namespace RadarrStatusResolvers {
         parent: RadarrStatus,
         args: {},
         ctx: Context,
-        info: GraphQLResolveInfo,
+        info: GraphQLResolveInfo
       ) => boolean | null | Promise<boolean | null>)
     | {
         fragment: string;
@@ -1508,7 +1428,7 @@ export namespace RadarrStatusResolvers {
           parent: RadarrStatus,
           args: {},
           ctx: Context,
-          info: GraphQLResolveInfo,
+          info: GraphQLResolveInfo
         ) => boolean | null | Promise<boolean | null>;
       };
 
@@ -1517,7 +1437,7 @@ export namespace RadarrStatusResolvers {
         parent: RadarrStatus,
         args: {},
         ctx: Context,
-        info: GraphQLResolveInfo,
+        info: GraphQLResolveInfo
       ) => boolean | null | Promise<boolean | null>)
     | {
         fragment: string;
@@ -1525,7 +1445,7 @@ export namespace RadarrStatusResolvers {
           parent: RadarrStatus,
           args: {},
           ctx: Context,
-          info: GraphQLResolveInfo,
+          info: GraphQLResolveInfo
         ) => boolean | null | Promise<boolean | null>;
       };
 
@@ -1534,7 +1454,7 @@ export namespace RadarrStatusResolvers {
         parent: RadarrStatus,
         args: {},
         ctx: Context,
-        info: GraphQLResolveInfo,
+        info: GraphQLResolveInfo
       ) => boolean | null | Promise<boolean | null>)
     | {
         fragment: string;
@@ -1542,7 +1462,7 @@ export namespace RadarrStatusResolvers {
           parent: RadarrStatus,
           args: {},
           ctx: Context,
-          info: GraphQLResolveInfo,
+          info: GraphQLResolveInfo
         ) => boolean | null | Promise<boolean | null>;
       };
 
@@ -1551,7 +1471,7 @@ export namespace RadarrStatusResolvers {
         parent: RadarrStatus,
         args: {},
         ctx: Context,
-        info: GraphQLResolveInfo,
+        info: GraphQLResolveInfo
       ) => string | null | Promise<string | null>)
     | {
         fragment: string;
@@ -1559,7 +1479,7 @@ export namespace RadarrStatusResolvers {
           parent: RadarrStatus,
           args: {},
           ctx: Context,
-          info: GraphQLResolveInfo,
+          info: GraphQLResolveInfo
         ) => string | null | Promise<string | null>;
       };
 
@@ -1568,7 +1488,7 @@ export namespace RadarrStatusResolvers {
         parent: RadarrStatus,
         args: {},
         ctx: Context,
-        info: GraphQLResolveInfo,
+        info: GraphQLResolveInfo
       ) => string | null | Promise<string | null>)
     | {
         fragment: string;
@@ -1576,7 +1496,7 @@ export namespace RadarrStatusResolvers {
           parent: RadarrStatus,
           args: {},
           ctx: Context,
-          info: GraphQLResolveInfo,
+          info: GraphQLResolveInfo
         ) => string | null | Promise<string | null>;
       };
 
@@ -1585,7 +1505,7 @@ export namespace RadarrStatusResolvers {
         parent: RadarrStatus,
         args: {},
         ctx: Context,
-        info: GraphQLResolveInfo,
+        info: GraphQLResolveInfo
       ) => string | null | Promise<string | null>)
     | {
         fragment: string;
@@ -1593,7 +1513,7 @@ export namespace RadarrStatusResolvers {
           parent: RadarrStatus,
           args: {},
           ctx: Context,
-          info: GraphQLResolveInfo,
+          info: GraphQLResolveInfo
         ) => string | null | Promise<string | null>;
       };
 
@@ -1603,7 +1523,7 @@ export namespace RadarrStatusResolvers {
           parent: RadarrStatus,
           args: {},
           ctx: Context,
-          info: GraphQLResolveInfo,
+          info: GraphQLResolveInfo
         ) => boolean | null | Promise<boolean | null>)
       | {
           fragment: string;
@@ -1611,7 +1531,7 @@ export namespace RadarrStatusResolvers {
             parent: RadarrStatus,
             args: {},
             ctx: Context,
-            info: GraphQLResolveInfo,
+            info: GraphQLResolveInfo
           ) => boolean | null | Promise<boolean | null>;
         };
 
@@ -1620,7 +1540,7 @@ export namespace RadarrStatusResolvers {
           parent: RadarrStatus,
           args: {},
           ctx: Context,
-          info: GraphQLResolveInfo,
+          info: GraphQLResolveInfo
         ) => boolean | null | Promise<boolean | null>)
       | {
           fragment: string;
@@ -1628,7 +1548,7 @@ export namespace RadarrStatusResolvers {
             parent: RadarrStatus,
             args: {},
             ctx: Context,
-            info: GraphQLResolveInfo,
+            info: GraphQLResolveInfo
           ) => boolean | null | Promise<boolean | null>;
         };
 
@@ -1637,7 +1557,7 @@ export namespace RadarrStatusResolvers {
           parent: RadarrStatus,
           args: {},
           ctx: Context,
-          info: GraphQLResolveInfo,
+          info: GraphQLResolveInfo
         ) => boolean | null | Promise<boolean | null>)
       | {
           fragment: string;
@@ -1645,7 +1565,7 @@ export namespace RadarrStatusResolvers {
             parent: RadarrStatus,
             args: {},
             ctx: Context,
-            info: GraphQLResolveInfo,
+            info: GraphQLResolveInfo
           ) => boolean | null | Promise<boolean | null>;
         };
 
@@ -1654,7 +1574,7 @@ export namespace RadarrStatusResolvers {
           parent: RadarrStatus,
           args: {},
           ctx: Context,
-          info: GraphQLResolveInfo,
+          info: GraphQLResolveInfo
         ) => string | null | Promise<string | null>)
       | {
           fragment: string;
@@ -1662,7 +1582,7 @@ export namespace RadarrStatusResolvers {
             parent: RadarrStatus,
             args: {},
             ctx: Context,
-            info: GraphQLResolveInfo,
+            info: GraphQLResolveInfo
           ) => string | null | Promise<string | null>;
         };
 
@@ -1671,7 +1591,7 @@ export namespace RadarrStatusResolvers {
           parent: RadarrStatus,
           args: {},
           ctx: Context,
-          info: GraphQLResolveInfo,
+          info: GraphQLResolveInfo
         ) => string | null | Promise<string | null>)
       | {
           fragment: string;
@@ -1679,7 +1599,7 @@ export namespace RadarrStatusResolvers {
             parent: RadarrStatus,
             args: {},
             ctx: Context,
-            info: GraphQLResolveInfo,
+            info: GraphQLResolveInfo
           ) => string | null | Promise<string | null>;
         };
 
@@ -1688,7 +1608,7 @@ export namespace RadarrStatusResolvers {
           parent: RadarrStatus,
           args: {},
           ctx: Context,
-          info: GraphQLResolveInfo,
+          info: GraphQLResolveInfo
         ) => string | null | Promise<string | null>)
       | {
           fragment: string;
@@ -1696,515 +1616,8 @@ export namespace RadarrStatusResolvers {
             parent: RadarrStatus,
             args: {},
             ctx: Context,
-            info: GraphQLResolveInfo,
+            info: GraphQLResolveInfo
           ) => string | null | Promise<string | null>;
-        };
-  }
-}
-
-export namespace TmdbMovieResponseResolvers {
-  export const defaultResolvers = {
-    adult: (parent: TmdbMovieResponse) => (parent.adult === undefined ? null : parent.adult),
-    backdrop_path: (parent: TmdbMovieResponse) =>
-      parent.backdrop_path === undefined ? null : parent.backdrop_path,
-    genre_ids: (parent: TmdbMovieResponse) =>
-      parent.genre_ids === undefined ? null : parent.genre_ids,
-    id: (parent: TmdbMovieResponse) => (parent.id === undefined ? null : parent.id),
-    original_language: (parent: TmdbMovieResponse) =>
-      parent.original_language === undefined ? null : parent.original_language,
-    original_title: (parent: TmdbMovieResponse) =>
-      parent.original_title === undefined ? null : parent.original_title,
-    overview: (parent: TmdbMovieResponse) =>
-      parent.overview === undefined ? null : parent.overview,
-    poster_path: (parent: TmdbMovieResponse) =>
-      parent.poster_path === undefined ? null : parent.poster_path,
-    release_date: (parent: TmdbMovieResponse) =>
-      parent.release_date === undefined ? null : parent.release_date,
-    title: (parent: TmdbMovieResponse) => (parent.title === undefined ? null : parent.title),
-    video: (parent: TmdbMovieResponse) => (parent.video === undefined ? null : parent.video),
-    vote_average: (parent: TmdbMovieResponse) =>
-      parent.vote_average === undefined ? null : parent.vote_average,
-    vote_count: (parent: TmdbMovieResponse) =>
-      parent.vote_count === undefined ? null : parent.vote_count,
-    popularity: (parent: TmdbMovieResponse) =>
-      parent.popularity === undefined ? null : parent.popularity,
-  };
-
-  export type AdultResolver =
-    | ((
-        parent: TmdbMovieResponse,
-        args: {},
-        ctx: Context,
-        info: GraphQLResolveInfo,
-      ) => boolean | null | Promise<boolean | null>)
-    | {
-        fragment: string;
-        resolve: (
-          parent: TmdbMovieResponse,
-          args: {},
-          ctx: Context,
-          info: GraphQLResolveInfo,
-        ) => boolean | null | Promise<boolean | null>;
-      };
-
-  export type Backdrop_pathResolver =
-    | ((
-        parent: TmdbMovieResponse,
-        args: {},
-        ctx: Context,
-        info: GraphQLResolveInfo,
-      ) => string | null | Promise<string | null>)
-    | {
-        fragment: string;
-        resolve: (
-          parent: TmdbMovieResponse,
-          args: {},
-          ctx: Context,
-          info: GraphQLResolveInfo,
-        ) => string | null | Promise<string | null>;
-      };
-
-  export type Genre_idsResolver =
-    | ((
-        parent: TmdbMovieResponse,
-        args: {},
-        ctx: Context,
-        info: GraphQLResolveInfo,
-      ) => Array<number | null> | null | Promise<Array<number | null> | null>)
-    | {
-        fragment: string;
-        resolve: (
-          parent: TmdbMovieResponse,
-          args: {},
-          ctx: Context,
-          info: GraphQLResolveInfo,
-        ) => Array<number | null> | null | Promise<Array<number | null> | null>;
-      };
-
-  export type IdResolver =
-    | ((
-        parent: TmdbMovieResponse,
-        args: {},
-        ctx: Context,
-        info: GraphQLResolveInfo,
-      ) => number | null | Promise<number | null>)
-    | {
-        fragment: string;
-        resolve: (
-          parent: TmdbMovieResponse,
-          args: {},
-          ctx: Context,
-          info: GraphQLResolveInfo,
-        ) => number | null | Promise<number | null>;
-      };
-
-  export type Original_languageResolver =
-    | ((
-        parent: TmdbMovieResponse,
-        args: {},
-        ctx: Context,
-        info: GraphQLResolveInfo,
-      ) => string | null | Promise<string | null>)
-    | {
-        fragment: string;
-        resolve: (
-          parent: TmdbMovieResponse,
-          args: {},
-          ctx: Context,
-          info: GraphQLResolveInfo,
-        ) => string | null | Promise<string | null>;
-      };
-
-  export type Original_titleResolver =
-    | ((
-        parent: TmdbMovieResponse,
-        args: {},
-        ctx: Context,
-        info: GraphQLResolveInfo,
-      ) => string | null | Promise<string | null>)
-    | {
-        fragment: string;
-        resolve: (
-          parent: TmdbMovieResponse,
-          args: {},
-          ctx: Context,
-          info: GraphQLResolveInfo,
-        ) => string | null | Promise<string | null>;
-      };
-
-  export type OverviewResolver =
-    | ((
-        parent: TmdbMovieResponse,
-        args: {},
-        ctx: Context,
-        info: GraphQLResolveInfo,
-      ) => string | null | Promise<string | null>)
-    | {
-        fragment: string;
-        resolve: (
-          parent: TmdbMovieResponse,
-          args: {},
-          ctx: Context,
-          info: GraphQLResolveInfo,
-        ) => string | null | Promise<string | null>;
-      };
-
-  export type Poster_pathResolver =
-    | ((
-        parent: TmdbMovieResponse,
-        args: {},
-        ctx: Context,
-        info: GraphQLResolveInfo,
-      ) => string | null | Promise<string | null>)
-    | {
-        fragment: string;
-        resolve: (
-          parent: TmdbMovieResponse,
-          args: {},
-          ctx: Context,
-          info: GraphQLResolveInfo,
-        ) => string | null | Promise<string | null>;
-      };
-
-  export type Release_dateResolver =
-    | ((
-        parent: TmdbMovieResponse,
-        args: {},
-        ctx: Context,
-        info: GraphQLResolveInfo,
-      ) => string | null | Promise<string | null>)
-    | {
-        fragment: string;
-        resolve: (
-          parent: TmdbMovieResponse,
-          args: {},
-          ctx: Context,
-          info: GraphQLResolveInfo,
-        ) => string | null | Promise<string | null>;
-      };
-
-  export type TitleResolver =
-    | ((
-        parent: TmdbMovieResponse,
-        args: {},
-        ctx: Context,
-        info: GraphQLResolveInfo,
-      ) => string | null | Promise<string | null>)
-    | {
-        fragment: string;
-        resolve: (
-          parent: TmdbMovieResponse,
-          args: {},
-          ctx: Context,
-          info: GraphQLResolveInfo,
-        ) => string | null | Promise<string | null>;
-      };
-
-  export type VideoResolver =
-    | ((
-        parent: TmdbMovieResponse,
-        args: {},
-        ctx: Context,
-        info: GraphQLResolveInfo,
-      ) => boolean | null | Promise<boolean | null>)
-    | {
-        fragment: string;
-        resolve: (
-          parent: TmdbMovieResponse,
-          args: {},
-          ctx: Context,
-          info: GraphQLResolveInfo,
-        ) => boolean | null | Promise<boolean | null>;
-      };
-
-  export type Vote_averageResolver =
-    | ((
-        parent: TmdbMovieResponse,
-        args: {},
-        ctx: Context,
-        info: GraphQLResolveInfo,
-      ) => number | null | Promise<number | null>)
-    | {
-        fragment: string;
-        resolve: (
-          parent: TmdbMovieResponse,
-          args: {},
-          ctx: Context,
-          info: GraphQLResolveInfo,
-        ) => number | null | Promise<number | null>;
-      };
-
-  export type Vote_countResolver =
-    | ((
-        parent: TmdbMovieResponse,
-        args: {},
-        ctx: Context,
-        info: GraphQLResolveInfo,
-      ) => number | null | Promise<number | null>)
-    | {
-        fragment: string;
-        resolve: (
-          parent: TmdbMovieResponse,
-          args: {},
-          ctx: Context,
-          info: GraphQLResolveInfo,
-        ) => number | null | Promise<number | null>;
-      };
-
-  export type PopularityResolver =
-    | ((
-        parent: TmdbMovieResponse,
-        args: {},
-        ctx: Context,
-        info: GraphQLResolveInfo,
-      ) => number | null | Promise<number | null>)
-    | {
-        fragment: string;
-        resolve: (
-          parent: TmdbMovieResponse,
-          args: {},
-          ctx: Context,
-          info: GraphQLResolveInfo,
-        ) => number | null | Promise<number | null>;
-      };
-
-  export interface Type {
-    adult:
-      | ((
-          parent: TmdbMovieResponse,
-          args: {},
-          ctx: Context,
-          info: GraphQLResolveInfo,
-        ) => boolean | null | Promise<boolean | null>)
-      | {
-          fragment: string;
-          resolve: (
-            parent: TmdbMovieResponse,
-            args: {},
-            ctx: Context,
-            info: GraphQLResolveInfo,
-          ) => boolean | null | Promise<boolean | null>;
-        };
-
-    backdrop_path:
-      | ((
-          parent: TmdbMovieResponse,
-          args: {},
-          ctx: Context,
-          info: GraphQLResolveInfo,
-        ) => string | null | Promise<string | null>)
-      | {
-          fragment: string;
-          resolve: (
-            parent: TmdbMovieResponse,
-            args: {},
-            ctx: Context,
-            info: GraphQLResolveInfo,
-          ) => string | null | Promise<string | null>;
-        };
-
-    genre_ids:
-      | ((
-          parent: TmdbMovieResponse,
-          args: {},
-          ctx: Context,
-          info: GraphQLResolveInfo,
-        ) => Array<number | null> | null | Promise<Array<number | null> | null>)
-      | {
-          fragment: string;
-          resolve: (
-            parent: TmdbMovieResponse,
-            args: {},
-            ctx: Context,
-            info: GraphQLResolveInfo,
-          ) => Array<number | null> | null | Promise<Array<number | null> | null>;
-        };
-
-    id:
-      | ((
-          parent: TmdbMovieResponse,
-          args: {},
-          ctx: Context,
-          info: GraphQLResolveInfo,
-        ) => number | null | Promise<number | null>)
-      | {
-          fragment: string;
-          resolve: (
-            parent: TmdbMovieResponse,
-            args: {},
-            ctx: Context,
-            info: GraphQLResolveInfo,
-          ) => number | null | Promise<number | null>;
-        };
-
-    original_language:
-      | ((
-          parent: TmdbMovieResponse,
-          args: {},
-          ctx: Context,
-          info: GraphQLResolveInfo,
-        ) => string | null | Promise<string | null>)
-      | {
-          fragment: string;
-          resolve: (
-            parent: TmdbMovieResponse,
-            args: {},
-            ctx: Context,
-            info: GraphQLResolveInfo,
-          ) => string | null | Promise<string | null>;
-        };
-
-    original_title:
-      | ((
-          parent: TmdbMovieResponse,
-          args: {},
-          ctx: Context,
-          info: GraphQLResolveInfo,
-        ) => string | null | Promise<string | null>)
-      | {
-          fragment: string;
-          resolve: (
-            parent: TmdbMovieResponse,
-            args: {},
-            ctx: Context,
-            info: GraphQLResolveInfo,
-          ) => string | null | Promise<string | null>;
-        };
-
-    overview:
-      | ((
-          parent: TmdbMovieResponse,
-          args: {},
-          ctx: Context,
-          info: GraphQLResolveInfo,
-        ) => string | null | Promise<string | null>)
-      | {
-          fragment: string;
-          resolve: (
-            parent: TmdbMovieResponse,
-            args: {},
-            ctx: Context,
-            info: GraphQLResolveInfo,
-          ) => string | null | Promise<string | null>;
-        };
-
-    poster_path:
-      | ((
-          parent: TmdbMovieResponse,
-          args: {},
-          ctx: Context,
-          info: GraphQLResolveInfo,
-        ) => string | null | Promise<string | null>)
-      | {
-          fragment: string;
-          resolve: (
-            parent: TmdbMovieResponse,
-            args: {},
-            ctx: Context,
-            info: GraphQLResolveInfo,
-          ) => string | null | Promise<string | null>;
-        };
-
-    release_date:
-      | ((
-          parent: TmdbMovieResponse,
-          args: {},
-          ctx: Context,
-          info: GraphQLResolveInfo,
-        ) => string | null | Promise<string | null>)
-      | {
-          fragment: string;
-          resolve: (
-            parent: TmdbMovieResponse,
-            args: {},
-            ctx: Context,
-            info: GraphQLResolveInfo,
-          ) => string | null | Promise<string | null>;
-        };
-
-    title:
-      | ((
-          parent: TmdbMovieResponse,
-          args: {},
-          ctx: Context,
-          info: GraphQLResolveInfo,
-        ) => string | null | Promise<string | null>)
-      | {
-          fragment: string;
-          resolve: (
-            parent: TmdbMovieResponse,
-            args: {},
-            ctx: Context,
-            info: GraphQLResolveInfo,
-          ) => string | null | Promise<string | null>;
-        };
-
-    video:
-      | ((
-          parent: TmdbMovieResponse,
-          args: {},
-          ctx: Context,
-          info: GraphQLResolveInfo,
-        ) => boolean | null | Promise<boolean | null>)
-      | {
-          fragment: string;
-          resolve: (
-            parent: TmdbMovieResponse,
-            args: {},
-            ctx: Context,
-            info: GraphQLResolveInfo,
-          ) => boolean | null | Promise<boolean | null>;
-        };
-
-    vote_average:
-      | ((
-          parent: TmdbMovieResponse,
-          args: {},
-          ctx: Context,
-          info: GraphQLResolveInfo,
-        ) => number | null | Promise<number | null>)
-      | {
-          fragment: string;
-          resolve: (
-            parent: TmdbMovieResponse,
-            args: {},
-            ctx: Context,
-            info: GraphQLResolveInfo,
-          ) => number | null | Promise<number | null>;
-        };
-
-    vote_count:
-      | ((
-          parent: TmdbMovieResponse,
-          args: {},
-          ctx: Context,
-          info: GraphQLResolveInfo,
-        ) => number | null | Promise<number | null>)
-      | {
-          fragment: string;
-          resolve: (
-            parent: TmdbMovieResponse,
-            args: {},
-            ctx: Context,
-            info: GraphQLResolveInfo,
-          ) => number | null | Promise<number | null>;
-        };
-
-    popularity:
-      | ((
-          parent: TmdbMovieResponse,
-          args: {},
-          ctx: Context,
-          info: GraphQLResolveInfo,
-        ) => number | null | Promise<number | null>)
-      | {
-          fragment: string;
-          resolve: (
-            parent: TmdbMovieResponse,
-            args: {},
-            ctx: Context,
-            info: GraphQLResolveInfo,
-          ) => number | null | Promise<number | null>;
         };
   }
 }
@@ -2250,9 +1663,10 @@ export namespace MutationResolvers {
     title: string;
     img?: string | null;
     tmdbId?: number | null;
-    genres?: Array<number | null> | null;
-    vote_average?: number | null;
-    release_date?: string | null;
+    genres?: Array<string | null> | null;
+    voteAverage?: number | null;
+    voteCount?: number | null;
+    year?: number | null;
     overview?: string | null;
   }
 
@@ -2270,7 +1684,7 @@ export namespace MutationResolvers {
         parent: undefined,
         args: ArgsCreateConfiguration,
         ctx: Context,
-        info: GraphQLResolveInfo,
+        info: GraphQLResolveInfo
       ) => Configuration | null | Promise<Configuration | null>)
     | {
         fragment: string;
@@ -2278,7 +1692,7 @@ export namespace MutationResolvers {
           parent: undefined,
           args: ArgsCreateConfiguration,
           ctx: Context,
-          info: GraphQLResolveInfo,
+          info: GraphQLResolveInfo
         ) => Configuration | null | Promise<Configuration | null>;
       };
 
@@ -2287,7 +1701,7 @@ export namespace MutationResolvers {
         parent: undefined,
         args: ArgsUpdateConfiguration,
         ctx: Context,
-        info: GraphQLResolveInfo,
+        info: GraphQLResolveInfo
       ) => Configuration | null | Promise<Configuration | null>)
     | {
         fragment: string;
@@ -2295,7 +1709,7 @@ export namespace MutationResolvers {
           parent: undefined,
           args: ArgsUpdateConfiguration,
           ctx: Context,
-          info: GraphQLResolveInfo,
+          info: GraphQLResolveInfo
         ) => Configuration | null | Promise<Configuration | null>;
       };
 
@@ -2304,7 +1718,7 @@ export namespace MutationResolvers {
         parent: undefined,
         args: ArgsCreateToken,
         ctx: Context,
-        info: GraphQLResolveInfo,
+        info: GraphQLResolveInfo
       ) => AuthPayload | null | Promise<AuthPayload | null>)
     | {
         fragment: string;
@@ -2312,7 +1726,7 @@ export namespace MutationResolvers {
           parent: undefined,
           args: ArgsCreateToken,
           ctx: Context,
-          info: GraphQLResolveInfo,
+          info: GraphQLResolveInfo
         ) => AuthPayload | null | Promise<AuthPayload | null>;
       };
 
@@ -2321,7 +1735,7 @@ export namespace MutationResolvers {
         parent: undefined,
         args: ArgsGetToken,
         ctx: Context,
-        info: GraphQLResolveInfo,
+        info: GraphQLResolveInfo
       ) => AuthPayload | null | Promise<AuthPayload | null>)
     | {
         fragment: string;
@@ -2329,7 +1743,7 @@ export namespace MutationResolvers {
           parent: undefined,
           args: ArgsGetToken,
           ctx: Context,
-          info: GraphQLResolveInfo,
+          info: GraphQLResolveInfo
         ) => AuthPayload | null | Promise<AuthPayload | null>;
       };
 
@@ -2338,7 +1752,7 @@ export namespace MutationResolvers {
         parent: undefined,
         args: ArgsUpdateUser,
         ctx: Context,
-        info: GraphQLResolveInfo,
+        info: GraphQLResolveInfo
       ) => User | null | Promise<User | null>)
     | {
         fragment: string;
@@ -2346,7 +1760,7 @@ export namespace MutationResolvers {
           parent: undefined,
           args: ArgsUpdateUser,
           ctx: Context,
-          info: GraphQLResolveInfo,
+          info: GraphQLResolveInfo
         ) => User | null | Promise<User | null>;
       };
 
@@ -2355,7 +1769,7 @@ export namespace MutationResolvers {
         parent: undefined,
         args: ArgsCreateMovie,
         ctx: Context,
-        info: GraphQLResolveInfo,
+        info: GraphQLResolveInfo
       ) => Movie | null | Promise<Movie | null>)
     | {
         fragment: string;
@@ -2363,7 +1777,7 @@ export namespace MutationResolvers {
           parent: undefined,
           args: ArgsCreateMovie,
           ctx: Context,
-          info: GraphQLResolveInfo,
+          info: GraphQLResolveInfo
         ) => Movie | null | Promise<Movie | null>;
       };
 
@@ -2372,7 +1786,7 @@ export namespace MutationResolvers {
         parent: undefined,
         args: ArgsUpdateMovie,
         ctx: Context,
-        info: GraphQLResolveInfo,
+        info: GraphQLResolveInfo
       ) => Movie | null | Promise<Movie | null>)
     | {
         fragment: string;
@@ -2380,7 +1794,7 @@ export namespace MutationResolvers {
           parent: undefined,
           args: ArgsUpdateMovie,
           ctx: Context,
-          info: GraphQLResolveInfo,
+          info: GraphQLResolveInfo
         ) => Movie | null | Promise<Movie | null>;
       };
 
@@ -2389,7 +1803,7 @@ export namespace MutationResolvers {
         parent: undefined,
         args: ArgsDeleteMovie,
         ctx: Context,
-        info: GraphQLResolveInfo,
+        info: GraphQLResolveInfo
       ) => Movie | null | Promise<Movie | null>)
     | {
         fragment: string;
@@ -2397,7 +1811,7 @@ export namespace MutationResolvers {
           parent: undefined,
           args: ArgsDeleteMovie,
           ctx: Context,
-          info: GraphQLResolveInfo,
+          info: GraphQLResolveInfo
         ) => Movie | null | Promise<Movie | null>;
       };
 
@@ -2407,7 +1821,7 @@ export namespace MutationResolvers {
           parent: undefined,
           args: ArgsCreateConfiguration,
           ctx: Context,
-          info: GraphQLResolveInfo,
+          info: GraphQLResolveInfo
         ) => Configuration | null | Promise<Configuration | null>)
       | {
           fragment: string;
@@ -2415,7 +1829,7 @@ export namespace MutationResolvers {
             parent: undefined,
             args: ArgsCreateConfiguration,
             ctx: Context,
-            info: GraphQLResolveInfo,
+            info: GraphQLResolveInfo
           ) => Configuration | null | Promise<Configuration | null>;
         };
 
@@ -2424,7 +1838,7 @@ export namespace MutationResolvers {
           parent: undefined,
           args: ArgsUpdateConfiguration,
           ctx: Context,
-          info: GraphQLResolveInfo,
+          info: GraphQLResolveInfo
         ) => Configuration | null | Promise<Configuration | null>)
       | {
           fragment: string;
@@ -2432,7 +1846,7 @@ export namespace MutationResolvers {
             parent: undefined,
             args: ArgsUpdateConfiguration,
             ctx: Context,
-            info: GraphQLResolveInfo,
+            info: GraphQLResolveInfo
           ) => Configuration | null | Promise<Configuration | null>;
         };
 
@@ -2441,7 +1855,7 @@ export namespace MutationResolvers {
           parent: undefined,
           args: ArgsCreateToken,
           ctx: Context,
-          info: GraphQLResolveInfo,
+          info: GraphQLResolveInfo
         ) => AuthPayload | null | Promise<AuthPayload | null>)
       | {
           fragment: string;
@@ -2449,7 +1863,7 @@ export namespace MutationResolvers {
             parent: undefined,
             args: ArgsCreateToken,
             ctx: Context,
-            info: GraphQLResolveInfo,
+            info: GraphQLResolveInfo
           ) => AuthPayload | null | Promise<AuthPayload | null>;
         };
 
@@ -2458,7 +1872,7 @@ export namespace MutationResolvers {
           parent: undefined,
           args: ArgsGetToken,
           ctx: Context,
-          info: GraphQLResolveInfo,
+          info: GraphQLResolveInfo
         ) => AuthPayload | null | Promise<AuthPayload | null>)
       | {
           fragment: string;
@@ -2466,7 +1880,7 @@ export namespace MutationResolvers {
             parent: undefined,
             args: ArgsGetToken,
             ctx: Context,
-            info: GraphQLResolveInfo,
+            info: GraphQLResolveInfo
           ) => AuthPayload | null | Promise<AuthPayload | null>;
         };
 
@@ -2475,7 +1889,7 @@ export namespace MutationResolvers {
           parent: undefined,
           args: ArgsUpdateUser,
           ctx: Context,
-          info: GraphQLResolveInfo,
+          info: GraphQLResolveInfo
         ) => User | null | Promise<User | null>)
       | {
           fragment: string;
@@ -2483,7 +1897,7 @@ export namespace MutationResolvers {
             parent: undefined,
             args: ArgsUpdateUser,
             ctx: Context,
-            info: GraphQLResolveInfo,
+            info: GraphQLResolveInfo
           ) => User | null | Promise<User | null>;
         };
 
@@ -2492,7 +1906,7 @@ export namespace MutationResolvers {
           parent: undefined,
           args: ArgsCreateMovie,
           ctx: Context,
-          info: GraphQLResolveInfo,
+          info: GraphQLResolveInfo
         ) => Movie | null | Promise<Movie | null>)
       | {
           fragment: string;
@@ -2500,7 +1914,7 @@ export namespace MutationResolvers {
             parent: undefined,
             args: ArgsCreateMovie,
             ctx: Context,
-            info: GraphQLResolveInfo,
+            info: GraphQLResolveInfo
           ) => Movie | null | Promise<Movie | null>;
         };
 
@@ -2509,7 +1923,7 @@ export namespace MutationResolvers {
           parent: undefined,
           args: ArgsUpdateMovie,
           ctx: Context,
-          info: GraphQLResolveInfo,
+          info: GraphQLResolveInfo
         ) => Movie | null | Promise<Movie | null>)
       | {
           fragment: string;
@@ -2517,7 +1931,7 @@ export namespace MutationResolvers {
             parent: undefined,
             args: ArgsUpdateMovie,
             ctx: Context,
-            info: GraphQLResolveInfo,
+            info: GraphQLResolveInfo
           ) => Movie | null | Promise<Movie | null>;
         };
 
@@ -2526,7 +1940,7 @@ export namespace MutationResolvers {
           parent: undefined,
           args: ArgsDeleteMovie,
           ctx: Context,
-          info: GraphQLResolveInfo,
+          info: GraphQLResolveInfo
         ) => Movie | null | Promise<Movie | null>)
       | {
           fragment: string;
@@ -2534,7 +1948,7 @@ export namespace MutationResolvers {
             parent: undefined,
             args: ArgsDeleteMovie,
             ctx: Context,
-            info: GraphQLResolveInfo,
+            info: GraphQLResolveInfo
           ) => Movie | null | Promise<Movie | null>;
         };
   }
@@ -2542,7 +1956,8 @@ export namespace MutationResolvers {
 
 export namespace AuthPayloadResolvers {
   export const defaultResolvers = {
-    token: (parent: AuthPayload) => (parent.token === undefined ? null : parent.token),
+    token: (parent: AuthPayload) =>
+      parent.token === undefined ? null : parent.token
   };
 
   export type TokenResolver =
@@ -2550,7 +1965,7 @@ export namespace AuthPayloadResolvers {
         parent: AuthPayload,
         args: {},
         ctx: Context,
-        info: GraphQLResolveInfo,
+        info: GraphQLResolveInfo
       ) => string | null | Promise<string | null>)
     | {
         fragment: string;
@@ -2558,7 +1973,7 @@ export namespace AuthPayloadResolvers {
           parent: AuthPayload,
           args: {},
           ctx: Context,
-          info: GraphQLResolveInfo,
+          info: GraphQLResolveInfo
         ) => string | null | Promise<string | null>;
       };
 
@@ -2568,7 +1983,7 @@ export namespace AuthPayloadResolvers {
           parent: AuthPayload,
           args: {},
           ctx: Context,
-          info: GraphQLResolveInfo,
+          info: GraphQLResolveInfo
         ) => string | null | Promise<string | null>)
       | {
           fragment: string;
@@ -2576,7 +1991,7 @@ export namespace AuthPayloadResolvers {
             parent: AuthPayload,
             args: {},
             ctx: Context,
-            info: GraphQLResolveInfo,
+            info: GraphQLResolveInfo
           ) => string | null | Promise<string | null>;
         };
   }
@@ -2590,13 +2005,13 @@ export namespace SubscriptionResolvers {
       parent: undefined,
       args: {},
       ctx: Context,
-      info: GraphQLResolveInfo,
+      info: GraphQLResolveInfo
     ) => AsyncIterator<Movie | null> | Promise<AsyncIterator<Movie | null>>;
     resolve?: (
       parent: undefined,
       args: {},
       ctx: Context,
-      info: GraphQLResolveInfo,
+      info: GraphQLResolveInfo
     ) => Movie | null | Promise<Movie | null>;
   };
 
@@ -2606,13 +2021,13 @@ export namespace SubscriptionResolvers {
         parent: undefined,
         args: {},
         ctx: Context,
-        info: GraphQLResolveInfo,
+        info: GraphQLResolveInfo
       ) => AsyncIterator<Movie | null> | Promise<AsyncIterator<Movie | null>>;
       resolve?: (
         parent: undefined,
         args: {},
         ctx: Context,
-        info: GraphQLResolveInfo,
+        info: GraphQLResolveInfo
       ) => Movie | null | Promise<Movie | null>;
     };
   }
@@ -2624,7 +2039,6 @@ export interface Resolvers {
   Movie: MovieResolvers.Type;
   Configuration: ConfigurationResolvers.Type;
   RadarrStatus: RadarrStatusResolvers.Type;
-  TmdbMovieResponse: TmdbMovieResponseResolvers.Type;
   Mutation: MutationResolvers.Type;
   AuthPayload: AuthPayloadResolvers.Type;
   Subscription: SubscriptionResolvers.Type;

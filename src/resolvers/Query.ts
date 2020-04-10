@@ -1,11 +1,35 @@
 import { ApolloError } from "apollo-server-core";
 import { GraphQLResolveInfo } from "graphql";
 import fetch, { Response } from "node-fetch";
-import { Configuration, User } from "../generated/prisma-client";
+import { Configuration, User, Movie } from "../generated/prisma-client";
 import { tmdbEndpoint } from "../constants";
 import { QueryResolvers } from "../generated/prisma";
 import { authenticate } from "../utils";
 import { Context } from "./Context";
+import { TmdbMovieResponse } from "./types";
+import { genresMap } from "../constants";
+
+const getSimilarMovies = async (url: string) => {
+  const response = await fetch(url);
+  if (response.ok) {
+    const { results } = await response.json();
+    const movies: Movie[] = Object.values(results).map((el: TmdbMovieResponse) => {
+      return {
+        id: null,
+        title: el.title,
+        tmdbId: el.id,
+        img: el.poster_path,
+        genres: Object.values(el.genre_ids).map((id: number) => genresMap[id]),
+        overview: el.overview,
+        voteCount: el.vote_count,
+        voteAverage: el.vote_average,
+        year: new Date(el.release_date).getFullYear(),
+      };
+    });
+    return movies;
+  }
+  return Promise.reject(response);
+};
 
 export const Query: QueryResolvers.Type = {
   ...QueryResolvers.defaultResolvers,
@@ -34,6 +58,31 @@ export const Query: QueryResolvers.Type = {
     return movies;
   },
 
+  tmdbMovie: async (
+    parent,
+    args: QueryResolvers.ArgsTmdbMovie,
+    context: Context,
+    info: GraphQLResolveInfo,
+  ) => {
+    authenticate(context);
+    const tmdbUrl = `${tmdbEndpoint}/movie/${args.tmdbId}?api_key=${process.env.TMDB_API_KEY}`;
+    const response = await fetch(tmdbUrl);
+    const json = await response.json();
+    response.
+    const movie: Movie = {
+      genres: Object.values(json.genres).map(({ name }) => name),
+      title: json.title,
+      tmdbId: json.id,
+      img: json.poster_path,
+      overview: json.overview,
+      voteAverage: json.vote_average,
+      voteCount: json.vote_count,
+      year: new Date(json.release_date).getFullYear(),
+      id: json.id,
+    };
+    return movie;
+  },
+
   user: async (
     parent,
     args: QueryResolvers.ArgsUser,
@@ -54,15 +103,7 @@ export const Query: QueryResolvers.Type = {
     authenticate(context);
     const url = `${tmdbEndpoint}/movie/${args.tmdbId}/similar?api_key=${process.env.TMDB_API_KEY}`;
     if (args && args.tmdbId) {
-      return fetch(url)
-        .then((res) => {
-          if (res.ok) return res.json();
-          return Promise.reject(res.statusText);
-        })
-        .then((json) => {
-          return json.results;
-        })
-        .catch((err) => new ApolloError(err.message, err.statusText));
+      return getSimilarMovies(url);
     }
   },
 

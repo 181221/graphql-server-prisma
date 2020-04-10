@@ -1,3 +1,4 @@
+scalar DateTime
 type Query {
   users: [User]
   user(email: String!): User
@@ -6,7 +7,8 @@ type Query {
   checkConfiguration(id: ID): Boolean
   configuration(id: ID): Configuration
   radarrCollection(tmdbId: Int): RadarrStatus
-  similarMovies(tmdbId: Int): [TmdbMovieResponse]
+  tmdbMovie(tmdbId: Int): Movie
+  similarMovies(tmdbId: Int): [Movie!]
 }
 type RadarrStatus {
   isRequested: Boolean
@@ -19,39 +21,18 @@ type RadarrStatus {
 
 type Movie {
   id: ID!
+  createdAt: DateTime
   title: String!
-  requestedBy: User!
-  requestedById: String
+  requestedBy: User
   img: String
-  tmdbId: Int
-  hasFile: Boolean
-  genres: [Int]
-  release_date: String
-  createdAt: String!
-  vote_average: Float
+  tmdbId: Int!
+  genres: [String!]!
+  year: Int
   overview: String
   downloaded: Boolean
-  status: String
-  timeleft: String
-  poster_path: String
-  backdrop_path: String
-}
-
-type TmdbMovieResponse {
-  adult: Boolean
-  backdrop_path: String
-  genre_ids: [Int]
-  id: Int
-  original_language: String
-  original_title: String
-  overview: String
-  poster_path: String
-  release_date: String
-  title: String
-  video: Boolean
-  vote_average: Float
-  vote_count: Int
-  popularity: Float
+  hasFile: Boolean
+  voteAverage: Float
+  voteCount: Int
 }
 
 type Configuration {
@@ -62,7 +43,6 @@ type Configuration {
   pushoverEndpoint: String
   pushoverApiKey: String
   pushoverUserKey: String
-  user: User
 }
 
 type AuthPayload {
@@ -120,9 +100,10 @@ type Mutation {
     title: String!
     img: String
     tmdbId: Int
-    genres: [Int]
-    vote_average: Float
-    release_date: String
+    genres: [String]
+    voteAverage: Float
+    voteCount: Int
+    year: Int
     overview: String
   ): Movie
 
