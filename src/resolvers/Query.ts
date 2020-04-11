@@ -131,7 +131,7 @@ export const Query: QueryResolvers.Type = {
               const response: Response = await fetch(urlQueue);
               const data = await response.json();
               if (data && data.length > 0) {
-                const queueElement = json.find((element) => element.movie.tmdbId === found.tmdbId);
+                const queueElement = data.find((element) => element.movie.tmdbId === found.tmdbId);
                 if (queueElement) {
                   queueElement.isRequested = true;
                   return queueElement;
