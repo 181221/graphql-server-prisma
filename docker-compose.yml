@@ -28,8 +28,6 @@ services:
       - backend
     ports:
       - "27017:27017"
-    volumes:
-      - /home/peder/dev/requesterr/prisma/mongo:/var/lib/mongo
 
   graphql-server:
     build:
@@ -37,12 +35,12 @@ services:
       dockerfile: Dockerfile-alternative
       args:
         buildno: 1
-    image: test/test:tag
+    image: requester-backend/requester-backend:1.0
     container_name: graphql
     restart: unless-stopped
     volumes:
-      - /home/peder/dev/requesterr/graphql-server-prisma/prisma:/usr/src/prisma/prisma
-      - /home/peder/dev/requesterr/graphql-server-prisma/src:/usr/src/prisma/src
+      - ${HOME}/dev/requesterr/graphql-server-prisma/prisma:/usr/src/prisma/prisma
+      - ${HOME}/dev/requesterr/graphql-server-prisma/src:/usr/src/prisma/src
     depends_on:
       - prisma
     networks:
@@ -50,28 +48,7 @@ services:
       - backend
     ports:
       - 4000:4000
-    command: bash -c "yarn prisma deploy && yarn start"
-
-  nginx:
-    image: linuxserver/nginx
-    container_name: nginx
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Europe/Oslo
-    volumes:
-      - nginx:/config
-    networks:
-      - web
-    ports:
-      - 80:80
-      - 8080:8080
-    restart: unless-stopped
-
-volumes:
-  nginx:
-    external: true
-
+    command: bash -c "yarn generate && yarn prisma generate && yarn prisma deploy && yarn dev"
 networks:
   web:
     external: true

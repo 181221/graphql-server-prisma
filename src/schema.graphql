@@ -1,36 +1,41 @@
+scalar DateTime
 type Query {
   users: [User]
   user(email: String!): User
   movies(orderBy: MovieOrderByInput, first: Int): [Movie!]
   movie(id: ID): Movie
+  checkConfiguration(id: ID): Boolean
   configuration(id: ID): Configuration
-  configurationPrivate(id: ID): PrivateConfiguration
+  radarrCollection(tmdbId: Int): RadarrStatus
+  tmdbMovie(tmdbId: Int): Movie
+  similarMovies(tmdbId: Int): [Movie!]
+}
+type RadarrStatus {
+  isRequested: Boolean
+  hasFile: Boolean
+  downloaded: Boolean
+  status: String
+  timeleft: String
+  title: String
 }
 
 type Movie {
   id: ID!
+  createdAt: DateTime
   title: String!
-  requestedBy: User!
-  requestedById: String
+  requestedBy: User
   img: String
-  tmdb_id: String
-  genres: [String]
-  release_date: String
-  createdAt: String!
-  vote_average: String
+  tmdbId: Int!
+  genres: [String!]!
+  year: Int
   overview: String
   downloaded: Boolean
+  hasFile: Boolean
+  voteAverage: Float
+  voteCount: Int
 }
 
 type Configuration {
-  id: ID!
-  radarrApiKey: String
-  radarrEndpoint: String
-  radarrRootFolder: String
-  user: User
-}
-
-type PrivateConfiguration {
   id: ID!
   radarrApiKey: String
   radarrEndpoint: String
@@ -43,8 +48,6 @@ type PrivateConfiguration {
 
 type AuthPayload {
   token: String
-  user: User
-  adminToken: Boolean
 }
 
 type User {
@@ -71,7 +74,7 @@ type Mutation {
     pushoverEndpoint: String
     pushoverApiKey: String
     pushoverUserKey: String
-  ): PrivateConfiguration
+  ): Configuration
 
   updateConfiguration(
     radarrApiKey: String
@@ -80,7 +83,7 @@ type Mutation {
     pushoverEndpoint: String
     pushoverApiKey: String
     pushoverUserKey: String
-  ): PrivateConfiguration
+  ): Configuration
 
   createToken(email: String!): AuthPayload
 
@@ -97,14 +100,15 @@ type Mutation {
   createMovie(
     title: String!
     img: String
-    tmdb_id: String!
+    tmdbId: Int
     genres: [String]
-    vote_average: String
-    release_date: String
+    voteAverage: Float
+    voteCount: Int
+    year: Int
     overview: String
   ): Movie
 
-  updateMovie(tmdb_id: String!, downloaded: Boolean): Movie
+  updateMovie(tmdbId: Int!, downloaded: Boolean): Movie
 
   deleteMovie(id: ID!): Movie
 }

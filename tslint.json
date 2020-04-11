@@ -1,0 +1,18 @@
+{
+  "defaultSeverity": "error",
+  "extends": ["tslint:recommended"],
+  "jsRules": {},
+  "rules": {
+    "max-line-length": {
+      "options": [120]
+    },
+    "no-console": {
+      "severity": "warning",
+      "options": ["debug", "info", "log", "time", "timeEnd", "trace"]
+    }
+  },
+  "rulesDirectory": [],
+  "linterOptions": {
+    "exclude": ["src/generated/**/*.ts", "src/generated/*.ts"]
+  }
+}

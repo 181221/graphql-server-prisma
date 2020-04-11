@@ -1,16 +1,17 @@
 type Movie {
   id: ID! @id
-  createdAt: DateTime! @createdAt
+  createdAt: DateTime @createdAt
   title: String!
   requestedBy: User @relation(link: INLINE)
-  requestedById : String 
   img: String
-  tmdb_id: String! @unique
-  genres: [String]
-  release_date: String
-  vote_average: String
+  tmdbId: Int! @unique
+  genres: [String!]!
+  year: Int
   overview: String
   downloaded: Boolean  @default(value: false)
+  hasFile: Boolean @default(value: false)
+  voteAverage: Float
+  voteCount: Int
 }
 
 type Configuration {
@@ -26,7 +27,7 @@ type Configuration {
 
 type User { 
   id: ID! @id
-  name: String
+  name: String @default(value: "")
   email: String! @unique
   movies: [Movie!]! 
   notification: Boolean  @default(value: false)

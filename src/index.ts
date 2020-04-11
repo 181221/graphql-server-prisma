@@ -1,79 +1,57 @@
-export {};
 import { GraphQLServer } from "graphql-yoga";
+import fetch from "node-fetch";
+import { polyfill } from "es6-promise";
 import { Movie, User, prisma, Configuration } from "./generated/prisma-client";
 import sendPushRequest from "./notification";
+import { resolvers } from "./resolvers";
+import { config as DotEnvConfig } from "dotenv";
 
-const fetch = require("isomorphic-fetch");
-const Query = require("./resolvers/Query");
-const Mutation = require("./resolvers/Mutation");
-const User = require("./resolvers/User");
-const Movie = require("./resolvers/Movie");
-const Subscription = require("./resolvers/Subscription");
-const resolvers = { Query, Mutation, User, Movie, Subscription };
+polyfill();
 
-require("es6-promise").polyfill();
-
-const dotenv = require("dotenv").config({
-  path: ".env.development"
+const dotenv = DotEnvConfig({
+  path: process.env.NODE_ENV === "development" ? ".env.development" : ".env.development",
 });
 
 if (dotenv.error) {
   throw dotenv.error;
 }
+export const APP_SECRET = process.env.APP_SECRET;
+
 console.log(dotenv.parsed);
 async function main() {
   const server = new GraphQLServer({
     typeDefs: "./src/schema.graphql",
-    resolvers: resolvers,
-    context: request => {
+    resolvers,
+    context: (request) => {
       return {
         ...request,
-        prisma
+        prisma,
       };
-    }
+    },
   });
 
-  const options = {
+  const serverOptions = {
     port: 4000,
     debug: true,
   };
-  server.start(options, ({ port }) =>
-    console.log(`Server is running on http://localhost:${port}`)
+  server.start(serverOptions, ({ port }) =>
+    console.log(`Server is running on http://localhost:${port}`),
   );
 
-  const getMovie = async tmdb_id => {
-    return await prisma.movie({
-      tmdb_id: tmdb_id
-    });
-  };
-
-  const updateMovie = async id => {
-    return await prisma.updateMovie({
-      data: { downloaded: true },
-      where: { id: id }
-    });
-  };
-
   const movieUpdatePushRequest = async () => {
-    let movie = await prisma.$subscribe
-      .movie({ mutation_in: ["UPDATED"] })
-      .node();
+    const movie = await prisma.$subscribe.movie({ mutation_in: ["UPDATED"] }).node();
 
     let result = await movie.next();
     while (!result.done) {
-      let user: User = await prisma.user({ id: result.value.requestedById });
+      const mov: Movie = await prisma.movie({ id: result.value.id });
+      const user: User = await prisma.movie({ id: result.value.id }).requestedBy();
+      // const user: User = await prisma.user({ id: result.value.requestedById });
       let sub = user.subscription;
       if (sub) {
-        let mov: Array<Movie> = await prisma
-          .user({ id: result.value.requestedById })
-          .movies({ where: { id: result.value.id } });
-
-        if (mov && mov[0]) {
-          if (mov[0].downloaded) {
-            sub = JSON.parse(sub);
-            const payload = JSON.stringify({ title: mov[0].title });
-            sendPushRequest(sub, payload);
-          }
+        if (mov && mov.downloaded) {
+          sub = JSON.parse(sub);
+          const payload = JSON.stringify({ title: mov.title });
+          sendPushRequest(sub, payload);
         }
       }
       result = await movie.next();
@@ -81,21 +59,20 @@ async function main() {
   };
 
   const movieCreatedPushbulletRequest = async () => {
-    let movie = await prisma.$subscribe
-      .movie({ mutation_in: ["CREATED"] })
-      .node();
+    const movie = await prisma.$subscribe.movie({ mutation_in: ["CREATED"] }).node();
     let result = await movie.next();
     while (!result.done) {
-      const users: Array<User> = await prisma.users({
-        where: { role: "ADMIN" }
+      const users: User[] = await prisma.users({
+        where: { role: "ADMIN" },
       });
-      const movieCreated: Movie = result.value;
       if (users && users.length !== 0) {
-        const requestedByUser: User = await prisma.user({
-          id: movieCreated.requestedById
-        });
-        users.map(async user => {
-          let config = await prisma.user({ id: user.id }).configuration();
+        const requestedByUser: User = await prisma
+          .movie({
+            id: result.value.id,
+          })
+          .requestedBy();
+        users.map(async (user) => {
+          const config = await prisma.user({ id: user.id }).configuration();
           if (
             config &&
             config.pushoverApiKey &&
@@ -107,19 +84,17 @@ async function main() {
               title: result.value.title,
               message: msg,
               token: config.pushoverApiKey,
-              user: config.pushoverUserKey
+              user: config.pushoverUserKey,
             };
             const options = {
               method: "POST",
               headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
               },
-              body: JSON.stringify(obj)
+              body: JSON.stringify(obj),
             };
             const response = await fetch(config.pushoverEndpoint, options);
-            console.log(
-              `Fetch ${config.pushoverEndpoint} responded with ${response.statusText}`
-            );
+            console.log(`Fetch ${config.pushoverEndpoint} responded with ${response.statusText}`);
           }
         });
       }
@@ -128,27 +103,27 @@ async function main() {
   };
 
   const radarrCollectionFetcher = async () => {
-    const user: Array<User> = await prisma.users({ where: { role: "ADMIN" } });
+    const user: User[] = await prisma.users({ where: { role: "ADMIN" } });
     if (user && user.length !== 0) {
-      let config: Configuration = await prisma
-        .user({ id: user[0].id })
-        .configuration();
+      const config: Configuration = await prisma.user({ id: user[0].id }).configuration();
       if (config) {
         setInterval(() => {
-          console.log("scanning for downloaded movies");
-          const radarr_url = config.radarrEndpoint;
-          const url_collection = `${radarr_url}/movie?apikey=${config.radarrApiKey}`;
-          fetch(url_collection)
-            .then(res => res.json())
-            .then(json => {
-              json.map(async el => {
-                const movie = await getMovie(el.tmdbId.toString());
+          const radarrUrl = config.radarrEndpoint;
+          const urlCollection = `${radarrUrl}/movie?apikey=${config.radarrApiKey}`;
+          fetch(urlCollection)
+            .then((res) => res.json())
+            .then((json) => {
+              json.map(async (el) => {
+                const movie = await prisma.movie({ tmdbId: el.tmdbId });
                 if (movie && el.downloaded && !movie.downloaded) {
-                  updateMovie(movie.id);
+                  return await prisma.updateMovie({
+                    data: { downloaded: true },
+                    where: { id: movie.id },
+                  });
                 }
               });
             })
-            .catch(err => console.error(err));
+            .catch((err) => console.error(err));
         }, 600000);
       }
     }
@@ -158,4 +133,4 @@ async function main() {
   radarrCollectionFetcher();
   movieCreatedPushbulletRequest();
 }
-main().catch(e => console.error(e));
+main().catch((e) => console.error(e));
