@@ -43,6 +43,7 @@ type Configuration {
   pushoverEndpoint: String
   pushoverApiKey: String
   pushoverUserKey: String
+  user: User
 }
 
 type AuthPayload {

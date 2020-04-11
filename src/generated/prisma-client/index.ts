@@ -185,22 +185,6 @@ export interface ClientConstructor<T> {
  * Types
  */
 
-export type ConfigurationOrderByInput =
-  | "id_ASC"
-  | "id_DESC"
-  | "radarrApiKey_ASC"
-  | "radarrApiKey_DESC"
-  | "radarrEndpoint_ASC"
-  | "radarrEndpoint_DESC"
-  | "radarrRootFolder_ASC"
-  | "radarrRootFolder_DESC"
-  | "pushoverEndpoint_ASC"
-  | "pushoverEndpoint_DESC"
-  | "pushoverApiKey_ASC"
-  | "pushoverApiKey_DESC"
-  | "pushoverUserKey_ASC"
-  | "pushoverUserKey_DESC";
-
 export type Role = "ADMIN" | "CUSTOMER";
 
 export type MovieOrderByInput =
@@ -227,6 +211,22 @@ export type MovieOrderByInput =
   | "voteCount_ASC"
   | "voteCount_DESC";
 
+export type ConfigurationOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "radarrApiKey_ASC"
+  | "radarrApiKey_DESC"
+  | "radarrEndpoint_ASC"
+  | "radarrEndpoint_DESC"
+  | "radarrRootFolder_ASC"
+  | "radarrRootFolder_DESC"
+  | "pushoverEndpoint_ASC"
+  | "pushoverEndpoint_DESC"
+  | "pushoverApiKey_ASC"
+  | "pushoverApiKey_DESC"
+  | "pushoverUserKey_ASC"
+  | "pushoverUserKey_DESC";
+
 export type UserOrderByInput =
   | "id_ASC"
   | "id_DESC"
@@ -245,115 +245,6 @@ export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
 export type ConfigurationWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
-}>;
-
-export interface ConfigurationWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  radarrApiKey?: Maybe<String>;
-  radarrApiKey_not?: Maybe<String>;
-  radarrApiKey_in?: Maybe<String[] | String>;
-  radarrApiKey_not_in?: Maybe<String[] | String>;
-  radarrApiKey_lt?: Maybe<String>;
-  radarrApiKey_lte?: Maybe<String>;
-  radarrApiKey_gt?: Maybe<String>;
-  radarrApiKey_gte?: Maybe<String>;
-  radarrApiKey_contains?: Maybe<String>;
-  radarrApiKey_not_contains?: Maybe<String>;
-  radarrApiKey_starts_with?: Maybe<String>;
-  radarrApiKey_not_starts_with?: Maybe<String>;
-  radarrApiKey_ends_with?: Maybe<String>;
-  radarrApiKey_not_ends_with?: Maybe<String>;
-  radarrEndpoint?: Maybe<String>;
-  radarrEndpoint_not?: Maybe<String>;
-  radarrEndpoint_in?: Maybe<String[] | String>;
-  radarrEndpoint_not_in?: Maybe<String[] | String>;
-  radarrEndpoint_lt?: Maybe<String>;
-  radarrEndpoint_lte?: Maybe<String>;
-  radarrEndpoint_gt?: Maybe<String>;
-  radarrEndpoint_gte?: Maybe<String>;
-  radarrEndpoint_contains?: Maybe<String>;
-  radarrEndpoint_not_contains?: Maybe<String>;
-  radarrEndpoint_starts_with?: Maybe<String>;
-  radarrEndpoint_not_starts_with?: Maybe<String>;
-  radarrEndpoint_ends_with?: Maybe<String>;
-  radarrEndpoint_not_ends_with?: Maybe<String>;
-  radarrRootFolder?: Maybe<String>;
-  radarrRootFolder_not?: Maybe<String>;
-  radarrRootFolder_in?: Maybe<String[] | String>;
-  radarrRootFolder_not_in?: Maybe<String[] | String>;
-  radarrRootFolder_lt?: Maybe<String>;
-  radarrRootFolder_lte?: Maybe<String>;
-  radarrRootFolder_gt?: Maybe<String>;
-  radarrRootFolder_gte?: Maybe<String>;
-  radarrRootFolder_contains?: Maybe<String>;
-  radarrRootFolder_not_contains?: Maybe<String>;
-  radarrRootFolder_starts_with?: Maybe<String>;
-  radarrRootFolder_not_starts_with?: Maybe<String>;
-  radarrRootFolder_ends_with?: Maybe<String>;
-  radarrRootFolder_not_ends_with?: Maybe<String>;
-  pushoverEndpoint?: Maybe<String>;
-  pushoverEndpoint_not?: Maybe<String>;
-  pushoverEndpoint_in?: Maybe<String[] | String>;
-  pushoverEndpoint_not_in?: Maybe<String[] | String>;
-  pushoverEndpoint_lt?: Maybe<String>;
-  pushoverEndpoint_lte?: Maybe<String>;
-  pushoverEndpoint_gt?: Maybe<String>;
-  pushoverEndpoint_gte?: Maybe<String>;
-  pushoverEndpoint_contains?: Maybe<String>;
-  pushoverEndpoint_not_contains?: Maybe<String>;
-  pushoverEndpoint_starts_with?: Maybe<String>;
-  pushoverEndpoint_not_starts_with?: Maybe<String>;
-  pushoverEndpoint_ends_with?: Maybe<String>;
-  pushoverEndpoint_not_ends_with?: Maybe<String>;
-  pushoverApiKey?: Maybe<String>;
-  pushoverApiKey_not?: Maybe<String>;
-  pushoverApiKey_in?: Maybe<String[] | String>;
-  pushoverApiKey_not_in?: Maybe<String[] | String>;
-  pushoverApiKey_lt?: Maybe<String>;
-  pushoverApiKey_lte?: Maybe<String>;
-  pushoverApiKey_gt?: Maybe<String>;
-  pushoverApiKey_gte?: Maybe<String>;
-  pushoverApiKey_contains?: Maybe<String>;
-  pushoverApiKey_not_contains?: Maybe<String>;
-  pushoverApiKey_starts_with?: Maybe<String>;
-  pushoverApiKey_not_starts_with?: Maybe<String>;
-  pushoverApiKey_ends_with?: Maybe<String>;
-  pushoverApiKey_not_ends_with?: Maybe<String>;
-  pushoverUserKey?: Maybe<String>;
-  pushoverUserKey_not?: Maybe<String>;
-  pushoverUserKey_in?: Maybe<String[] | String>;
-  pushoverUserKey_not_in?: Maybe<String[] | String>;
-  pushoverUserKey_lt?: Maybe<String>;
-  pushoverUserKey_lte?: Maybe<String>;
-  pushoverUserKey_gt?: Maybe<String>;
-  pushoverUserKey_gte?: Maybe<String>;
-  pushoverUserKey_contains?: Maybe<String>;
-  pushoverUserKey_not_contains?: Maybe<String>;
-  pushoverUserKey_starts_with?: Maybe<String>;
-  pushoverUserKey_not_starts_with?: Maybe<String>;
-  pushoverUserKey_ends_with?: Maybe<String>;
-  pushoverUserKey_not_ends_with?: Maybe<String>;
-  AND?: Maybe<ConfigurationWhereInput[] | ConfigurationWhereInput>;
-  OR?: Maybe<ConfigurationWhereInput[] | ConfigurationWhereInput>;
-  NOT?: Maybe<ConfigurationWhereInput[] | ConfigurationWhereInput>;
-}
-
-export type MovieWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-  tmdbId?: Maybe<Int>;
 }>;
 
 export interface MovieWhereInput {
@@ -535,6 +426,116 @@ export interface UserWhereInput {
   NOT?: Maybe<UserWhereInput[] | UserWhereInput>;
 }
 
+export interface ConfigurationWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  radarrApiKey?: Maybe<String>;
+  radarrApiKey_not?: Maybe<String>;
+  radarrApiKey_in?: Maybe<String[] | String>;
+  radarrApiKey_not_in?: Maybe<String[] | String>;
+  radarrApiKey_lt?: Maybe<String>;
+  radarrApiKey_lte?: Maybe<String>;
+  radarrApiKey_gt?: Maybe<String>;
+  radarrApiKey_gte?: Maybe<String>;
+  radarrApiKey_contains?: Maybe<String>;
+  radarrApiKey_not_contains?: Maybe<String>;
+  radarrApiKey_starts_with?: Maybe<String>;
+  radarrApiKey_not_starts_with?: Maybe<String>;
+  radarrApiKey_ends_with?: Maybe<String>;
+  radarrApiKey_not_ends_with?: Maybe<String>;
+  radarrEndpoint?: Maybe<String>;
+  radarrEndpoint_not?: Maybe<String>;
+  radarrEndpoint_in?: Maybe<String[] | String>;
+  radarrEndpoint_not_in?: Maybe<String[] | String>;
+  radarrEndpoint_lt?: Maybe<String>;
+  radarrEndpoint_lte?: Maybe<String>;
+  radarrEndpoint_gt?: Maybe<String>;
+  radarrEndpoint_gte?: Maybe<String>;
+  radarrEndpoint_contains?: Maybe<String>;
+  radarrEndpoint_not_contains?: Maybe<String>;
+  radarrEndpoint_starts_with?: Maybe<String>;
+  radarrEndpoint_not_starts_with?: Maybe<String>;
+  radarrEndpoint_ends_with?: Maybe<String>;
+  radarrEndpoint_not_ends_with?: Maybe<String>;
+  radarrRootFolder?: Maybe<String>;
+  radarrRootFolder_not?: Maybe<String>;
+  radarrRootFolder_in?: Maybe<String[] | String>;
+  radarrRootFolder_not_in?: Maybe<String[] | String>;
+  radarrRootFolder_lt?: Maybe<String>;
+  radarrRootFolder_lte?: Maybe<String>;
+  radarrRootFolder_gt?: Maybe<String>;
+  radarrRootFolder_gte?: Maybe<String>;
+  radarrRootFolder_contains?: Maybe<String>;
+  radarrRootFolder_not_contains?: Maybe<String>;
+  radarrRootFolder_starts_with?: Maybe<String>;
+  radarrRootFolder_not_starts_with?: Maybe<String>;
+  radarrRootFolder_ends_with?: Maybe<String>;
+  radarrRootFolder_not_ends_with?: Maybe<String>;
+  pushoverEndpoint?: Maybe<String>;
+  pushoverEndpoint_not?: Maybe<String>;
+  pushoverEndpoint_in?: Maybe<String[] | String>;
+  pushoverEndpoint_not_in?: Maybe<String[] | String>;
+  pushoverEndpoint_lt?: Maybe<String>;
+  pushoverEndpoint_lte?: Maybe<String>;
+  pushoverEndpoint_gt?: Maybe<String>;
+  pushoverEndpoint_gte?: Maybe<String>;
+  pushoverEndpoint_contains?: Maybe<String>;
+  pushoverEndpoint_not_contains?: Maybe<String>;
+  pushoverEndpoint_starts_with?: Maybe<String>;
+  pushoverEndpoint_not_starts_with?: Maybe<String>;
+  pushoverEndpoint_ends_with?: Maybe<String>;
+  pushoverEndpoint_not_ends_with?: Maybe<String>;
+  pushoverApiKey?: Maybe<String>;
+  pushoverApiKey_not?: Maybe<String>;
+  pushoverApiKey_in?: Maybe<String[] | String>;
+  pushoverApiKey_not_in?: Maybe<String[] | String>;
+  pushoverApiKey_lt?: Maybe<String>;
+  pushoverApiKey_lte?: Maybe<String>;
+  pushoverApiKey_gt?: Maybe<String>;
+  pushoverApiKey_gte?: Maybe<String>;
+  pushoverApiKey_contains?: Maybe<String>;
+  pushoverApiKey_not_contains?: Maybe<String>;
+  pushoverApiKey_starts_with?: Maybe<String>;
+  pushoverApiKey_not_starts_with?: Maybe<String>;
+  pushoverApiKey_ends_with?: Maybe<String>;
+  pushoverApiKey_not_ends_with?: Maybe<String>;
+  pushoverUserKey?: Maybe<String>;
+  pushoverUserKey_not?: Maybe<String>;
+  pushoverUserKey_in?: Maybe<String[] | String>;
+  pushoverUserKey_not_in?: Maybe<String[] | String>;
+  pushoverUserKey_lt?: Maybe<String>;
+  pushoverUserKey_lte?: Maybe<String>;
+  pushoverUserKey_gt?: Maybe<String>;
+  pushoverUserKey_gte?: Maybe<String>;
+  pushoverUserKey_contains?: Maybe<String>;
+  pushoverUserKey_not_contains?: Maybe<String>;
+  pushoverUserKey_starts_with?: Maybe<String>;
+  pushoverUserKey_not_starts_with?: Maybe<String>;
+  pushoverUserKey_ends_with?: Maybe<String>;
+  pushoverUserKey_not_ends_with?: Maybe<String>;
+  user?: Maybe<UserWhereInput>;
+  AND?: Maybe<ConfigurationWhereInput[] | ConfigurationWhereInput>;
+  OR?: Maybe<ConfigurationWhereInput[] | ConfigurationWhereInput>;
+  NOT?: Maybe<ConfigurationWhereInput[] | ConfigurationWhereInput>;
+}
+
+export type MovieWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+  tmdbId?: Maybe<Int>;
+}>;
+
 export type UserWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
   email?: Maybe<String>;
@@ -549,143 +550,15 @@ export interface ConfigurationCreateInput {
   pushoverEndpoint?: Maybe<String>;
   pushoverApiKey?: Maybe<String>;
   pushoverUserKey?: Maybe<String>;
+  user?: Maybe<UserCreateOneWithoutConfigurationInput>;
 }
 
-export interface ConfigurationUpdateInput {
-  radarrApiKey?: Maybe<String>;
-  radarrEndpoint?: Maybe<String>;
-  radarrRootFolder?: Maybe<String>;
-  pushoverEndpoint?: Maybe<String>;
-  pushoverApiKey?: Maybe<String>;
-  pushoverUserKey?: Maybe<String>;
-}
-
-export interface ConfigurationUpdateManyMutationInput {
-  radarrApiKey?: Maybe<String>;
-  radarrEndpoint?: Maybe<String>;
-  radarrRootFolder?: Maybe<String>;
-  pushoverEndpoint?: Maybe<String>;
-  pushoverApiKey?: Maybe<String>;
-  pushoverUserKey?: Maybe<String>;
-}
-
-export interface MovieCreateInput {
-  id?: Maybe<ID_Input>;
-  title: String;
-  requestedBy?: Maybe<UserCreateOneWithoutMoviesInput>;
-  img?: Maybe<String>;
-  tmdbId: Int;
-  genres?: Maybe<MovieCreategenresInput>;
-  year?: Maybe<Int>;
-  overview?: Maybe<String>;
-  downloaded?: Maybe<Boolean>;
-  hasFile?: Maybe<Boolean>;
-  voteAverage?: Maybe<Float>;
-  voteCount?: Maybe<Int>;
-}
-
-export interface UserCreateOneWithoutMoviesInput {
-  create?: Maybe<UserCreateWithoutMoviesInput>;
+export interface UserCreateOneWithoutConfigurationInput {
+  create?: Maybe<UserCreateWithoutConfigurationInput>;
   connect?: Maybe<UserWhereUniqueInput>;
 }
 
-export interface UserCreateWithoutMoviesInput {
-  id?: Maybe<ID_Input>;
-  name?: Maybe<String>;
-  email: String;
-  notification?: Maybe<Boolean>;
-  subscription?: Maybe<String>;
-  role?: Maybe<Role>;
-  configuration?: Maybe<ConfigurationCreateOneInput>;
-}
-
-export interface ConfigurationCreateOneInput {
-  create?: Maybe<ConfigurationCreateInput>;
-  connect?: Maybe<ConfigurationWhereUniqueInput>;
-}
-
-export interface MovieCreategenresInput {
-  set?: Maybe<String[] | String>;
-}
-
-export interface MovieUpdateInput {
-  title?: Maybe<String>;
-  requestedBy?: Maybe<UserUpdateOneWithoutMoviesInput>;
-  img?: Maybe<String>;
-  tmdbId?: Maybe<Int>;
-  genres?: Maybe<MovieUpdategenresInput>;
-  year?: Maybe<Int>;
-  overview?: Maybe<String>;
-  downloaded?: Maybe<Boolean>;
-  hasFile?: Maybe<Boolean>;
-  voteAverage?: Maybe<Float>;
-  voteCount?: Maybe<Int>;
-}
-
-export interface UserUpdateOneWithoutMoviesInput {
-  create?: Maybe<UserCreateWithoutMoviesInput>;
-  update?: Maybe<UserUpdateWithoutMoviesDataInput>;
-  upsert?: Maybe<UserUpsertWithoutMoviesInput>;
-  delete?: Maybe<Boolean>;
-  disconnect?: Maybe<Boolean>;
-  connect?: Maybe<UserWhereUniqueInput>;
-}
-
-export interface UserUpdateWithoutMoviesDataInput {
-  name?: Maybe<String>;
-  email?: Maybe<String>;
-  notification?: Maybe<Boolean>;
-  subscription?: Maybe<String>;
-  role?: Maybe<Role>;
-  configuration?: Maybe<ConfigurationUpdateOneInput>;
-}
-
-export interface ConfigurationUpdateOneInput {
-  create?: Maybe<ConfigurationCreateInput>;
-  update?: Maybe<ConfigurationUpdateDataInput>;
-  upsert?: Maybe<ConfigurationUpsertNestedInput>;
-  delete?: Maybe<Boolean>;
-  disconnect?: Maybe<Boolean>;
-  connect?: Maybe<ConfigurationWhereUniqueInput>;
-}
-
-export interface ConfigurationUpdateDataInput {
-  radarrApiKey?: Maybe<String>;
-  radarrEndpoint?: Maybe<String>;
-  radarrRootFolder?: Maybe<String>;
-  pushoverEndpoint?: Maybe<String>;
-  pushoverApiKey?: Maybe<String>;
-  pushoverUserKey?: Maybe<String>;
-}
-
-export interface ConfigurationUpsertNestedInput {
-  update: ConfigurationUpdateDataInput;
-  create: ConfigurationCreateInput;
-}
-
-export interface UserUpsertWithoutMoviesInput {
-  update: UserUpdateWithoutMoviesDataInput;
-  create: UserCreateWithoutMoviesInput;
-}
-
-export interface MovieUpdategenresInput {
-  set?: Maybe<String[] | String>;
-}
-
-export interface MovieUpdateManyMutationInput {
-  title?: Maybe<String>;
-  img?: Maybe<String>;
-  tmdbId?: Maybe<Int>;
-  genres?: Maybe<MovieUpdategenresInput>;
-  year?: Maybe<Int>;
-  overview?: Maybe<String>;
-  downloaded?: Maybe<Boolean>;
-  hasFile?: Maybe<Boolean>;
-  voteAverage?: Maybe<Float>;
-  voteCount?: Maybe<Int>;
-}
-
-export interface UserCreateInput {
+export interface UserCreateWithoutConfigurationInput {
   id?: Maybe<ID_Input>;
   name?: Maybe<String>;
   email: String;
@@ -693,7 +566,6 @@ export interface UserCreateInput {
   notification?: Maybe<Boolean>;
   subscription?: Maybe<String>;
   role?: Maybe<Role>;
-  configuration?: Maybe<ConfigurationCreateOneInput>;
 }
 
 export interface MovieCreateManyWithoutRequestedByInput {
@@ -717,14 +589,36 @@ export interface MovieCreateWithoutRequestedByInput {
   voteCount?: Maybe<Int>;
 }
 
-export interface UserUpdateInput {
+export interface MovieCreategenresInput {
+  set?: Maybe<String[] | String>;
+}
+
+export interface ConfigurationUpdateInput {
+  radarrApiKey?: Maybe<String>;
+  radarrEndpoint?: Maybe<String>;
+  radarrRootFolder?: Maybe<String>;
+  pushoverEndpoint?: Maybe<String>;
+  pushoverApiKey?: Maybe<String>;
+  pushoverUserKey?: Maybe<String>;
+  user?: Maybe<UserUpdateOneWithoutConfigurationInput>;
+}
+
+export interface UserUpdateOneWithoutConfigurationInput {
+  create?: Maybe<UserCreateWithoutConfigurationInput>;
+  update?: Maybe<UserUpdateWithoutConfigurationDataInput>;
+  upsert?: Maybe<UserUpsertWithoutConfigurationInput>;
+  delete?: Maybe<Boolean>;
+  disconnect?: Maybe<Boolean>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface UserUpdateWithoutConfigurationDataInput {
   name?: Maybe<String>;
   email?: Maybe<String>;
   movies?: Maybe<MovieUpdateManyWithoutRequestedByInput>;
   notification?: Maybe<Boolean>;
   subscription?: Maybe<String>;
   role?: Maybe<Role>;
-  configuration?: Maybe<ConfigurationUpdateOneInput>;
 }
 
 export interface MovieUpdateManyWithoutRequestedByInput {
@@ -765,6 +659,10 @@ export interface MovieUpdateWithoutRequestedByDataInput {
   hasFile?: Maybe<Boolean>;
   voteAverage?: Maybe<Float>;
   voteCount?: Maybe<Int>;
+}
+
+export interface MovieUpdategenresInput {
+  set?: Maybe<String[] | String>;
 }
 
 export interface MovieUpsertWithWhereUniqueWithoutRequestedByInput {
@@ -897,6 +795,159 @@ export interface MovieUpdateManyDataInput {
   voteCount?: Maybe<Int>;
 }
 
+export interface UserUpsertWithoutConfigurationInput {
+  update: UserUpdateWithoutConfigurationDataInput;
+  create: UserCreateWithoutConfigurationInput;
+}
+
+export interface ConfigurationUpdateManyMutationInput {
+  radarrApiKey?: Maybe<String>;
+  radarrEndpoint?: Maybe<String>;
+  radarrRootFolder?: Maybe<String>;
+  pushoverEndpoint?: Maybe<String>;
+  pushoverApiKey?: Maybe<String>;
+  pushoverUserKey?: Maybe<String>;
+}
+
+export interface MovieCreateInput {
+  id?: Maybe<ID_Input>;
+  title: String;
+  requestedBy?: Maybe<UserCreateOneWithoutMoviesInput>;
+  img?: Maybe<String>;
+  tmdbId: Int;
+  genres?: Maybe<MovieCreategenresInput>;
+  year?: Maybe<Int>;
+  overview?: Maybe<String>;
+  downloaded?: Maybe<Boolean>;
+  hasFile?: Maybe<Boolean>;
+  voteAverage?: Maybe<Float>;
+  voteCount?: Maybe<Int>;
+}
+
+export interface UserCreateOneWithoutMoviesInput {
+  create?: Maybe<UserCreateWithoutMoviesInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface UserCreateWithoutMoviesInput {
+  id?: Maybe<ID_Input>;
+  name?: Maybe<String>;
+  email: String;
+  notification?: Maybe<Boolean>;
+  subscription?: Maybe<String>;
+  role?: Maybe<Role>;
+  configuration?: Maybe<ConfigurationCreateOneWithoutUserInput>;
+}
+
+export interface ConfigurationCreateOneWithoutUserInput {
+  create?: Maybe<ConfigurationCreateWithoutUserInput>;
+  connect?: Maybe<ConfigurationWhereUniqueInput>;
+}
+
+export interface ConfigurationCreateWithoutUserInput {
+  id?: Maybe<ID_Input>;
+  radarrApiKey?: Maybe<String>;
+  radarrEndpoint?: Maybe<String>;
+  radarrRootFolder?: Maybe<String>;
+  pushoverEndpoint?: Maybe<String>;
+  pushoverApiKey?: Maybe<String>;
+  pushoverUserKey?: Maybe<String>;
+}
+
+export interface MovieUpdateInput {
+  title?: Maybe<String>;
+  requestedBy?: Maybe<UserUpdateOneWithoutMoviesInput>;
+  img?: Maybe<String>;
+  tmdbId?: Maybe<Int>;
+  genres?: Maybe<MovieUpdategenresInput>;
+  year?: Maybe<Int>;
+  overview?: Maybe<String>;
+  downloaded?: Maybe<Boolean>;
+  hasFile?: Maybe<Boolean>;
+  voteAverage?: Maybe<Float>;
+  voteCount?: Maybe<Int>;
+}
+
+export interface UserUpdateOneWithoutMoviesInput {
+  create?: Maybe<UserCreateWithoutMoviesInput>;
+  update?: Maybe<UserUpdateWithoutMoviesDataInput>;
+  upsert?: Maybe<UserUpsertWithoutMoviesInput>;
+  delete?: Maybe<Boolean>;
+  disconnect?: Maybe<Boolean>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface UserUpdateWithoutMoviesDataInput {
+  name?: Maybe<String>;
+  email?: Maybe<String>;
+  notification?: Maybe<Boolean>;
+  subscription?: Maybe<String>;
+  role?: Maybe<Role>;
+  configuration?: Maybe<ConfigurationUpdateOneWithoutUserInput>;
+}
+
+export interface ConfigurationUpdateOneWithoutUserInput {
+  create?: Maybe<ConfigurationCreateWithoutUserInput>;
+  update?: Maybe<ConfigurationUpdateWithoutUserDataInput>;
+  upsert?: Maybe<ConfigurationUpsertWithoutUserInput>;
+  delete?: Maybe<Boolean>;
+  disconnect?: Maybe<Boolean>;
+  connect?: Maybe<ConfigurationWhereUniqueInput>;
+}
+
+export interface ConfigurationUpdateWithoutUserDataInput {
+  radarrApiKey?: Maybe<String>;
+  radarrEndpoint?: Maybe<String>;
+  radarrRootFolder?: Maybe<String>;
+  pushoverEndpoint?: Maybe<String>;
+  pushoverApiKey?: Maybe<String>;
+  pushoverUserKey?: Maybe<String>;
+}
+
+export interface ConfigurationUpsertWithoutUserInput {
+  update: ConfigurationUpdateWithoutUserDataInput;
+  create: ConfigurationCreateWithoutUserInput;
+}
+
+export interface UserUpsertWithoutMoviesInput {
+  update: UserUpdateWithoutMoviesDataInput;
+  create: UserCreateWithoutMoviesInput;
+}
+
+export interface MovieUpdateManyMutationInput {
+  title?: Maybe<String>;
+  img?: Maybe<String>;
+  tmdbId?: Maybe<Int>;
+  genres?: Maybe<MovieUpdategenresInput>;
+  year?: Maybe<Int>;
+  overview?: Maybe<String>;
+  downloaded?: Maybe<Boolean>;
+  hasFile?: Maybe<Boolean>;
+  voteAverage?: Maybe<Float>;
+  voteCount?: Maybe<Int>;
+}
+
+export interface UserCreateInput {
+  id?: Maybe<ID_Input>;
+  name?: Maybe<String>;
+  email: String;
+  movies?: Maybe<MovieCreateManyWithoutRequestedByInput>;
+  notification?: Maybe<Boolean>;
+  subscription?: Maybe<String>;
+  role?: Maybe<Role>;
+  configuration?: Maybe<ConfigurationCreateOneWithoutUserInput>;
+}
+
+export interface UserUpdateInput {
+  name?: Maybe<String>;
+  email?: Maybe<String>;
+  movies?: Maybe<MovieUpdateManyWithoutRequestedByInput>;
+  notification?: Maybe<Boolean>;
+  subscription?: Maybe<String>;
+  role?: Maybe<Role>;
+  configuration?: Maybe<ConfigurationUpdateOneWithoutUserInput>;
+}
+
 export interface UserUpdateManyMutationInput {
   name?: Maybe<String>;
   email?: Maybe<String>;
@@ -968,6 +1019,7 @@ export interface ConfigurationPromise
   pushoverEndpoint: () => Promise<String>;
   pushoverApiKey: () => Promise<String>;
   pushoverUserKey: () => Promise<String>;
+  user: <T = UserPromise>() => T;
 }
 
 export interface ConfigurationSubscription
@@ -980,6 +1032,7 @@ export interface ConfigurationSubscription
   pushoverEndpoint: () => Promise<AsyncIterator<String>>;
   pushoverApiKey: () => Promise<AsyncIterator<String>>;
   pushoverUserKey: () => Promise<AsyncIterator<String>>;
+  user: <T = UserSubscription>() => T;
 }
 
 export interface ConfigurationNullablePromise
@@ -992,6 +1045,144 @@ export interface ConfigurationNullablePromise
   pushoverEndpoint: () => Promise<String>;
   pushoverApiKey: () => Promise<String>;
   pushoverUserKey: () => Promise<String>;
+  user: <T = UserPromise>() => T;
+}
+
+export interface User {
+  id: ID_Output;
+  name?: String;
+  email: String;
+  notification?: Boolean;
+  subscription?: String;
+  role?: Role;
+}
+
+export interface UserPromise extends Promise<User>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+  email: () => Promise<String>;
+  movies: <T = FragmentableArray<Movie>>(args?: {
+    where?: MovieWhereInput;
+    orderBy?: MovieOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  notification: () => Promise<Boolean>;
+  subscription: () => Promise<String>;
+  role: () => Promise<Role>;
+  configuration: <T = ConfigurationPromise>() => T;
+}
+
+export interface UserSubscription
+  extends Promise<AsyncIterator<User>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  name: () => Promise<AsyncIterator<String>>;
+  email: () => Promise<AsyncIterator<String>>;
+  movies: <T = Promise<AsyncIterator<MovieSubscription>>>(args?: {
+    where?: MovieWhereInput;
+    orderBy?: MovieOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  notification: () => Promise<AsyncIterator<Boolean>>;
+  subscription: () => Promise<AsyncIterator<String>>;
+  role: () => Promise<AsyncIterator<Role>>;
+  configuration: <T = ConfigurationSubscription>() => T;
+}
+
+export interface UserNullablePromise
+  extends Promise<User | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+  email: () => Promise<String>;
+  movies: <T = FragmentableArray<Movie>>(args?: {
+    where?: MovieWhereInput;
+    orderBy?: MovieOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  notification: () => Promise<Boolean>;
+  subscription: () => Promise<String>;
+  role: () => Promise<Role>;
+  configuration: <T = ConfigurationPromise>() => T;
+}
+
+export interface Movie {
+  id: ID_Output;
+  createdAt?: DateTimeOutput;
+  title: String;
+  img?: String;
+  tmdbId: Int;
+  genres: String[];
+  year?: Int;
+  overview?: String;
+  downloaded?: Boolean;
+  hasFile?: Boolean;
+  voteAverage?: Float;
+  voteCount?: Int;
+}
+
+export interface MoviePromise extends Promise<Movie>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  title: () => Promise<String>;
+  requestedBy: <T = UserPromise>() => T;
+  img: () => Promise<String>;
+  tmdbId: () => Promise<Int>;
+  genres: () => Promise<String[]>;
+  year: () => Promise<Int>;
+  overview: () => Promise<String>;
+  downloaded: () => Promise<Boolean>;
+  hasFile: () => Promise<Boolean>;
+  voteAverage: () => Promise<Float>;
+  voteCount: () => Promise<Int>;
+}
+
+export interface MovieSubscription
+  extends Promise<AsyncIterator<Movie>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  title: () => Promise<AsyncIterator<String>>;
+  requestedBy: <T = UserSubscription>() => T;
+  img: () => Promise<AsyncIterator<String>>;
+  tmdbId: () => Promise<AsyncIterator<Int>>;
+  genres: () => Promise<AsyncIterator<String[]>>;
+  year: () => Promise<AsyncIterator<Int>>;
+  overview: () => Promise<AsyncIterator<String>>;
+  downloaded: () => Promise<AsyncIterator<Boolean>>;
+  hasFile: () => Promise<AsyncIterator<Boolean>>;
+  voteAverage: () => Promise<AsyncIterator<Float>>;
+  voteCount: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface MovieNullablePromise
+  extends Promise<Movie | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  title: () => Promise<String>;
+  requestedBy: <T = UserPromise>() => T;
+  img: () => Promise<String>;
+  tmdbId: () => Promise<Int>;
+  genres: () => Promise<String[]>;
+  year: () => Promise<Int>;
+  overview: () => Promise<String>;
+  downloaded: () => Promise<Boolean>;
+  hasFile: () => Promise<Boolean>;
+  voteAverage: () => Promise<Float>;
+  voteCount: () => Promise<Int>;
 }
 
 export interface ConfigurationConnection {
@@ -1071,143 +1262,6 @@ export interface AggregateConfigurationSubscription
   extends Promise<AsyncIterator<AggregateConfiguration>>,
     Fragmentable {
   count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface Movie {
-  id: ID_Output;
-  createdAt?: DateTimeOutput;
-  title: String;
-  img?: String;
-  tmdbId: Int;
-  genres: String[];
-  year?: Int;
-  overview?: String;
-  downloaded?: Boolean;
-  hasFile?: Boolean;
-  voteAverage?: Float;
-  voteCount?: Int;
-}
-
-export interface MoviePromise extends Promise<Movie>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  createdAt: () => Promise<DateTimeOutput>;
-  title: () => Promise<String>;
-  requestedBy: <T = UserPromise>() => T;
-  img: () => Promise<String>;
-  tmdbId: () => Promise<Int>;
-  genres: () => Promise<String[]>;
-  year: () => Promise<Int>;
-  overview: () => Promise<String>;
-  downloaded: () => Promise<Boolean>;
-  hasFile: () => Promise<Boolean>;
-  voteAverage: () => Promise<Float>;
-  voteCount: () => Promise<Int>;
-}
-
-export interface MovieSubscription
-  extends Promise<AsyncIterator<Movie>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  title: () => Promise<AsyncIterator<String>>;
-  requestedBy: <T = UserSubscription>() => T;
-  img: () => Promise<AsyncIterator<String>>;
-  tmdbId: () => Promise<AsyncIterator<Int>>;
-  genres: () => Promise<AsyncIterator<String[]>>;
-  year: () => Promise<AsyncIterator<Int>>;
-  overview: () => Promise<AsyncIterator<String>>;
-  downloaded: () => Promise<AsyncIterator<Boolean>>;
-  hasFile: () => Promise<AsyncIterator<Boolean>>;
-  voteAverage: () => Promise<AsyncIterator<Float>>;
-  voteCount: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface MovieNullablePromise
-  extends Promise<Movie | null>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  createdAt: () => Promise<DateTimeOutput>;
-  title: () => Promise<String>;
-  requestedBy: <T = UserPromise>() => T;
-  img: () => Promise<String>;
-  tmdbId: () => Promise<Int>;
-  genres: () => Promise<String[]>;
-  year: () => Promise<Int>;
-  overview: () => Promise<String>;
-  downloaded: () => Promise<Boolean>;
-  hasFile: () => Promise<Boolean>;
-  voteAverage: () => Promise<Float>;
-  voteCount: () => Promise<Int>;
-}
-
-export interface User {
-  id: ID_Output;
-  name?: String;
-  email: String;
-  notification?: Boolean;
-  subscription?: String;
-  role?: Role;
-}
-
-export interface UserPromise extends Promise<User>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
-  email: () => Promise<String>;
-  movies: <T = FragmentableArray<Movie>>(args?: {
-    where?: MovieWhereInput;
-    orderBy?: MovieOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  notification: () => Promise<Boolean>;
-  subscription: () => Promise<String>;
-  role: () => Promise<Role>;
-  configuration: <T = ConfigurationPromise>() => T;
-}
-
-export interface UserSubscription
-  extends Promise<AsyncIterator<User>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  name: () => Promise<AsyncIterator<String>>;
-  email: () => Promise<AsyncIterator<String>>;
-  movies: <T = Promise<AsyncIterator<MovieSubscription>>>(args?: {
-    where?: MovieWhereInput;
-    orderBy?: MovieOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  notification: () => Promise<AsyncIterator<Boolean>>;
-  subscription: () => Promise<AsyncIterator<String>>;
-  role: () => Promise<AsyncIterator<Role>>;
-  configuration: <T = ConfigurationSubscription>() => T;
-}
-
-export interface UserNullablePromise
-  extends Promise<User | null>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
-  email: () => Promise<String>;
-  movies: <T = FragmentableArray<Movie>>(args?: {
-    where?: MovieWhereInput;
-    orderBy?: MovieOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  notification: () => Promise<Boolean>;
-  subscription: () => Promise<String>;
-  role: () => Promise<Role>;
-  configuration: <T = ConfigurationPromise>() => T;
 }
 
 export interface MovieConnection {
@@ -1535,16 +1589,6 @@ The `String` scalar type represents textual data, represented as UTF-8 character
 export type String = string;
 
 /*
-The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.
-*/
-export type Int = number;
-
-/*
-The `Boolean` scalar type represents `true` or `false`.
-*/
-export type Boolean = boolean;
-
-/*
 DateTime scalar input type, allowing Date
 */
 export type DateTimeInput = Date | string;
@@ -1553,6 +1597,16 @@ export type DateTimeInput = Date | string;
 DateTime scalar output type, which is always a string
 */
 export type DateTimeOutput = string;
+
+/*
+The `Boolean` scalar type represents `true` or `false`.
+*/
+export type Boolean = boolean;
+
+/*
+The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.
+*/
+export type Int = number;
 
 /*
 The `Float` scalar type represents signed double-precision fractional values as specified by [IEEE 754](https://en.wikipedia.org/wiki/IEEE_floating_point).

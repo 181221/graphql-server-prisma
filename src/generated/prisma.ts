@@ -883,23 +883,6 @@ export namespace MovieResolvers {
         ) => number | null | Promise<number | null>;
       };
 
-  export type SimilarMoviesResolver =
-    | ((
-        parent: Movie,
-        args: {},
-        ctx: Context,
-        info: GraphQLResolveInfo
-      ) => Movie[] | Promise<Movie[]>)
-    | {
-        fragment: string;
-        resolve: (
-          parent: Movie,
-          args: {},
-          ctx: Context,
-          info: GraphQLResolveInfo
-        ) => Movie[] | Promise<Movie[]>;
-      };
-
   export interface Type {
     id:
       | ((
@@ -1121,23 +1104,6 @@ export namespace MovieResolvers {
             info: GraphQLResolveInfo
           ) => number | null | Promise<number | null>;
         };
-
-    similarMovies:
-      | ((
-          parent: Movie,
-          args: {},
-          ctx: Context,
-          info: GraphQLResolveInfo
-        ) => Movie[] | Promise<Movie[]>)
-      | {
-          fragment: string;
-          resolve: (
-            parent: Movie,
-            args: {},
-            ctx: Context,
-            info: GraphQLResolveInfo
-          ) => Movie[] | Promise<Movie[]>;
-        };
   }
 }
 
@@ -1277,6 +1243,23 @@ export namespace ConfigurationResolvers {
         ) => string | null | Promise<string | null>;
       };
 
+  export type UserResolver =
+    | ((
+        parent: Configuration,
+        args: {},
+        ctx: Context,
+        info: GraphQLResolveInfo
+      ) => User | null | Promise<User | null>)
+    | {
+        fragment: string;
+        resolve: (
+          parent: Configuration,
+          args: {},
+          ctx: Context,
+          info: GraphQLResolveInfo
+        ) => User | null | Promise<User | null>;
+      };
+
   export interface Type {
     id:
       | ((
@@ -1395,6 +1378,23 @@ export namespace ConfigurationResolvers {
             ctx: Context,
             info: GraphQLResolveInfo
           ) => string | null | Promise<string | null>;
+        };
+
+    user:
+      | ((
+          parent: Configuration,
+          args: {},
+          ctx: Context,
+          info: GraphQLResolveInfo
+        ) => User | null | Promise<User | null>)
+      | {
+          fragment: string;
+          resolve: (
+            parent: Configuration,
+            args: {},
+            ctx: Context,
+            info: GraphQLResolveInfo
+          ) => User | null | Promise<User | null>;
         };
   }
 }

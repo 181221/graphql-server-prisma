@@ -26,6 +26,7 @@ type Configuration {
   pushoverEndpoint: String
   pushoverApiKey: String
   pushoverUserKey: String
+  user: User
 }
 
 type ConfigurationConnection {
@@ -42,11 +43,22 @@ input ConfigurationCreateInput {
   pushoverEndpoint: String
   pushoverApiKey: String
   pushoverUserKey: String
+  user: UserCreateOneWithoutConfigurationInput
 }
 
-input ConfigurationCreateOneInput {
-  create: ConfigurationCreateInput
+input ConfigurationCreateOneWithoutUserInput {
+  create: ConfigurationCreateWithoutUserInput
   connect: ConfigurationWhereUniqueInput
+}
+
+input ConfigurationCreateWithoutUserInput {
+  id: ID
+  radarrApiKey: String
+  radarrEndpoint: String
+  radarrRootFolder: String
+  pushoverEndpoint: String
+  pushoverApiKey: String
+  pushoverUserKey: String
 }
 
 type ConfigurationEdge {
@@ -99,15 +111,6 @@ input ConfigurationSubscriptionWhereInput {
   NOT: [ConfigurationSubscriptionWhereInput!]
 }
 
-input ConfigurationUpdateDataInput {
-  radarrApiKey: String
-  radarrEndpoint: String
-  radarrRootFolder: String
-  pushoverEndpoint: String
-  pushoverApiKey: String
-  pushoverUserKey: String
-}
-
 input ConfigurationUpdateInput {
   radarrApiKey: String
   radarrEndpoint: String
@@ -115,6 +118,7 @@ input ConfigurationUpdateInput {
   pushoverEndpoint: String
   pushoverApiKey: String
   pushoverUserKey: String
+  user: UserUpdateOneWithoutConfigurationInput
 }
 
 input ConfigurationUpdateManyMutationInput {
@@ -126,18 +130,27 @@ input ConfigurationUpdateManyMutationInput {
   pushoverUserKey: String
 }
 
-input ConfigurationUpdateOneInput {
-  create: ConfigurationCreateInput
-  update: ConfigurationUpdateDataInput
-  upsert: ConfigurationUpsertNestedInput
+input ConfigurationUpdateOneWithoutUserInput {
+  create: ConfigurationCreateWithoutUserInput
+  update: ConfigurationUpdateWithoutUserDataInput
+  upsert: ConfigurationUpsertWithoutUserInput
   delete: Boolean
   disconnect: Boolean
   connect: ConfigurationWhereUniqueInput
 }
 
-input ConfigurationUpsertNestedInput {
-  update: ConfigurationUpdateDataInput!
-  create: ConfigurationCreateInput!
+input ConfigurationUpdateWithoutUserDataInput {
+  radarrApiKey: String
+  radarrEndpoint: String
+  radarrRootFolder: String
+  pushoverEndpoint: String
+  pushoverApiKey: String
+  pushoverUserKey: String
+}
+
+input ConfigurationUpsertWithoutUserInput {
+  update: ConfigurationUpdateWithoutUserDataInput!
+  create: ConfigurationCreateWithoutUserInput!
 }
 
 input ConfigurationWhereInput {
@@ -239,6 +252,7 @@ input ConfigurationWhereInput {
   pushoverUserKey_not_starts_with: String
   pushoverUserKey_ends_with: String
   pushoverUserKey_not_ends_with: String
+  user: UserWhereInput
   AND: [ConfigurationWhereInput!]
   OR: [ConfigurationWhereInput!]
   NOT: [ConfigurationWhereInput!]
@@ -765,12 +779,27 @@ input UserCreateInput {
   notification: Boolean
   subscription: String
   role: Role
-  configuration: ConfigurationCreateOneInput
+  configuration: ConfigurationCreateOneWithoutUserInput
+}
+
+input UserCreateOneWithoutConfigurationInput {
+  create: UserCreateWithoutConfigurationInput
+  connect: UserWhereUniqueInput
 }
 
 input UserCreateOneWithoutMoviesInput {
   create: UserCreateWithoutMoviesInput
   connect: UserWhereUniqueInput
+}
+
+input UserCreateWithoutConfigurationInput {
+  id: ID
+  name: String
+  email: String!
+  movies: MovieCreateManyWithoutRequestedByInput
+  notification: Boolean
+  subscription: String
+  role: Role
 }
 
 input UserCreateWithoutMoviesInput {
@@ -780,7 +809,7 @@ input UserCreateWithoutMoviesInput {
   notification: Boolean
   subscription: String
   role: Role
-  configuration: ConfigurationCreateOneInput
+  configuration: ConfigurationCreateOneWithoutUserInput
 }
 
 type UserEdge {
@@ -837,7 +866,7 @@ input UserUpdateInput {
   notification: Boolean
   subscription: String
   role: Role
-  configuration: ConfigurationUpdateOneInput
+  configuration: ConfigurationUpdateOneWithoutUserInput
 }
 
 input UserUpdateManyMutationInput {
@@ -846,6 +875,15 @@ input UserUpdateManyMutationInput {
   notification: Boolean
   subscription: String
   role: Role
+}
+
+input UserUpdateOneWithoutConfigurationInput {
+  create: UserCreateWithoutConfigurationInput
+  update: UserUpdateWithoutConfigurationDataInput
+  upsert: UserUpsertWithoutConfigurationInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: UserWhereUniqueInput
 }
 
 input UserUpdateOneWithoutMoviesInput {
@@ -857,13 +895,27 @@ input UserUpdateOneWithoutMoviesInput {
   connect: UserWhereUniqueInput
 }
 
+input UserUpdateWithoutConfigurationDataInput {
+  name: String
+  email: String
+  movies: MovieUpdateManyWithoutRequestedByInput
+  notification: Boolean
+  subscription: String
+  role: Role
+}
+
 input UserUpdateWithoutMoviesDataInput {
   name: String
   email: String
   notification: Boolean
   subscription: String
   role: Role
-  configuration: ConfigurationUpdateOneInput
+  configuration: ConfigurationUpdateOneWithoutUserInput
+}
+
+input UserUpsertWithoutConfigurationInput {
+  update: UserUpdateWithoutConfigurationDataInput!
+  create: UserCreateWithoutConfigurationInput!
 }
 
 input UserUpsertWithoutMoviesInput {

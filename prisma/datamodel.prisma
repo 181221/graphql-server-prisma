@@ -22,11 +22,12 @@ type Configuration {
   pushoverEndpoint: String
   pushoverApiKey: String
   pushoverUserKey: String
+  user: User
 }
 
 type User { 
   id: ID! @id
-  name: String
+  name: String @default(value: "")
   email: String! @unique
   movies: [Movie!]! 
   notification: Boolean  @default(value: false)

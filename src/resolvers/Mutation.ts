@@ -147,6 +147,7 @@ export const Mutation: MutationResolvers.Type = {
         pushoverEndpoint: args.pushoverEndpoint || "",
         pushoverApiKey: args.pushoverApiKey || "",
         pushoverUserKey: args.pushoverUserKey || "",
+        user: { connect: { id: userId } },
       });
     }
     return await context.prisma.updateConfiguration({
@@ -175,7 +176,6 @@ export const Mutation: MutationResolvers.Type = {
       const users = await context.prisma.users();
       let token;
       let adminToken = false;
-
       if (users.length === 0) {
         user = await context.prisma.createUser({
           email: args.email,
@@ -187,7 +187,7 @@ export const Mutation: MutationResolvers.Type = {
         user = await context.prisma.createUser({ email: args.email });
         token = signKey(user, "read-post");
       }
-      return token;
+      return { token };
     }
     throw new ApolloError("user already exists", "404");
   },

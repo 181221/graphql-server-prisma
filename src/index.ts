@@ -43,19 +43,15 @@ async function main() {
 
     let result = await movie.next();
     while (!result.done) {
-      const user: User = await prisma.user({ id: result.value.requestedById });
+      const mov: Movie = await prisma.movie({ id: result.value.id });
+      const user: User = await prisma.movie({ id: result.value.id }).requestedBy();
+      // const user: User = await prisma.user({ id: result.value.requestedById });
       let sub = user.subscription;
       if (sub) {
-        const mov: Movie[] = await prisma
-          .user({ id: result.value.requestedById })
-          .movies({ where: { id: result.value.id } });
-
-        if (mov && mov[0]) {
-          if (mov[0].downloaded) {
-            sub = JSON.parse(sub);
-            const payload = JSON.stringify({ title: mov[0].title });
-            sendPushRequest(sub, payload);
-          }
+        if (mov && mov.downloaded) {
+          sub = JSON.parse(sub);
+          const payload = JSON.stringify({ title: mov.title });
+          sendPushRequest(sub, payload);
         }
       }
       result = await movie.next();
@@ -69,11 +65,12 @@ async function main() {
       const users: User[] = await prisma.users({
         where: { role: "ADMIN" },
       });
-      const movieCreated: Movie = result.value;
       if (users && users.length !== 0) {
-        const requestedByUser: User = await prisma.user({
-          id: movieCreated.requestedById,
-        });
+        const requestedByUser: User = await prisma
+          .movie({
+            id: result.value.id,
+          })
+          .requestedBy();
         users.map(async (user) => {
           const config = await prisma.user({ id: user.id }).configuration();
           if (
