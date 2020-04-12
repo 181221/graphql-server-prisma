@@ -23,6 +23,7 @@ apolloServer.express.use(
 export const options = {
   port: 4000,
   debug: true,
+  playground: process.env.NODE_ENV === "development" ? "/" : "false",
   validationRules: [depthLimit(7)],
   formatError: (err): Error => {
     if (err.message.startsWith("Database Error: ")) {
