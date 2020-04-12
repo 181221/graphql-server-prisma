@@ -21,6 +21,7 @@
     "apollo-server-core": "^2.9.15",
     "dotenv": "^8.2.0",
     "express-rate-limit": "^5.1.1",
+    "graphql-depth-limit": "^1.1.0",
     "graphql-yoga": "^1.18.0",
     "jsonwebtoken": "^8.5.1",
     "node-fetch": "^2.6.0",
