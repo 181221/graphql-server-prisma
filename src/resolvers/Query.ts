@@ -88,7 +88,6 @@ export const Query: QueryResolvers.Type = {
     context: Context,
     info: GraphQLResolveInfo,
   ) => {
-    authenticate(context);
     const user = await context.prisma.user({ email: args.email });
     return user;
   },

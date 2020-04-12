@@ -17,8 +17,8 @@ export const apolloServer = new GraphQLServer({
 const loggingMiddleware = (req, res, next) => {
   if (req.method === "POST" || req.method === "GET") {
     isUserLoggedIn(req.headers.authorization)
-      .then((res) => {
-        console.log("resolve", res);
+      .then((auth0) => {
+        req.user = auth0;
         next();
       })
       .catch((error) => {
