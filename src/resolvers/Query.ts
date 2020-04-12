@@ -134,7 +134,14 @@ export const Query: QueryResolvers.Type = {
                 const queueElement = data.find((element) => element.movie.tmdbId === found.tmdbId);
                 if (queueElement) {
                   queueElement.isRequested = true;
-                  return queueElement;
+                  return {
+                    title: found.title,
+                    isRequested: true,
+                    hasFile: found.hasFile,
+                    downloaded: found.downloaded,
+                    status: queueElement.status,
+                    timeleft: queueElement.timeleft,
+                  };
                 }
               }
               found.isRequested = true;

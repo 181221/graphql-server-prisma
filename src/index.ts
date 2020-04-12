@@ -1,40 +1,24 @@
-import { GraphQLServer } from "graphql-yoga";
 import fetch from "node-fetch";
 import { polyfill } from "es6-promise";
+import { config as DotEnvConfig } from "dotenv";
+import { apolloServer, options } from "./initGraphQlServer";
 import { Movie, User, prisma, Configuration } from "./generated/prisma-client";
 import sendPushRequest from "./notification";
-import { resolvers } from "./resolvers";
-import { config as DotEnvConfig } from "dotenv";
 
 polyfill();
 
+const NODE_ENV = process.env.NODE_ENV;
 const dotenv = DotEnvConfig({
-  path: process.env.NODE_ENV === "development" ? ".env.development" : ".env.development",
+  path: NODE_ENV === "development" ? ".env.development" : ".env.production",
 });
 
 if (dotenv.error) {
   throw dotenv.error;
 }
 export const APP_SECRET = process.env.APP_SECRET;
-
 console.log(dotenv.parsed);
 async function main() {
-  const server = new GraphQLServer({
-    typeDefs: "./src/schema.graphql",
-    resolvers,
-    context: (request) => {
-      return {
-        ...request,
-        prisma,
-      };
-    },
-  });
-
-  const serverOptions = {
-    port: 4000,
-    debug: true,
-  };
-  server.start(serverOptions, ({ port }) =>
+  apolloServer.start(options, ({ port }) =>
     console.log(`Server is running on http://localhost:${port}`),
   );
 
@@ -45,7 +29,6 @@ async function main() {
     while (!result.done) {
       const mov: Movie = await prisma.movie({ id: result.value.id });
       const user: User = await prisma.movie({ id: result.value.id }).requestedBy();
-      // const user: User = await prisma.user({ id: result.value.requestedById });
       let sub = user.subscription;
       if (sub) {
         if (mov && mov.downloaded) {
@@ -124,7 +107,7 @@ async function main() {
               });
             })
             .catch((err) => console.error(err));
-        }, 600000);
+        }, 300000);
       }
     }
   };
