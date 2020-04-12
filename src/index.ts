@@ -45,7 +45,6 @@ async function main() {
     while (!result.done) {
       const mov: Movie = await prisma.movie({ id: result.value.id });
       const user: User = await prisma.movie({ id: result.value.id }).requestedBy();
-      // const user: User = await prisma.user({ id: result.value.requestedById });
       let sub = user.subscription;
       if (sub) {
         if (mov && mov.downloaded) {
@@ -108,6 +107,7 @@ async function main() {
       const config: Configuration = await prisma.user({ id: user[0].id }).configuration();
       if (config) {
         setInterval(() => {
+          console.log("running fetch");
           const radarrUrl = config.radarrEndpoint;
           const urlCollection = `${radarrUrl}/movie?apikey=${config.radarrApiKey}`;
           fetch(urlCollection)
@@ -116,6 +116,7 @@ async function main() {
               json.map(async (el) => {
                 const movie = await prisma.movie({ tmdbId: el.tmdbId });
                 if (movie && el.downloaded && !movie.downloaded) {
+                  console.log("found moive", movie);
                   return await prisma.updateMovie({
                     data: { downloaded: true },
                     where: { id: movie.id },
@@ -124,7 +125,7 @@ async function main() {
               });
             })
             .catch((err) => console.error(err));
-        }, 600000);
+        }, 60000);
       }
     }
   };
