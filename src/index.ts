@@ -1,22 +1,10 @@
 import fetch from "node-fetch";
 import { polyfill } from "es6-promise";
-import { config as DotEnvConfig } from "dotenv";
 import { apolloServer, options } from "./initGraphQlServer";
 import { Movie, User, prisma, Configuration } from "./generated/prisma-client";
 import sendPushRequest from "./notification";
 
 polyfill();
-
-const NODE_ENV = process.env.NODE_ENV;
-const dotenv = DotEnvConfig({
-  path: NODE_ENV === "development" ? ".env.development" : ".env.production",
-});
-
-if (dotenv.error) {
-  throw dotenv.error;
-}
-export const APP_SECRET = process.env.APP_SECRET;
-console.log(dotenv.parsed);
 async function main() {
   apolloServer.start(options, ({ port }) =>
     console.log(`Server is running on http://localhost:${port}`),

@@ -3,7 +3,7 @@ import depthLimit = require("graphql-depth-limit");
 import rateLimit = require("express-rate-limit");
 import { resolvers } from "./resolvers";
 import { prisma } from "./generated/prisma-client";
-
+import { isUserLoggedIn } from "./utils";
 export const apolloServer = new GraphQLServer({
   typeDefs: "./src/schema.graphql",
   resolvers,
@@ -14,11 +14,27 @@ export const apolloServer = new GraphQLServer({
     };
   },
 });
+const loggingMiddleware = (req, res, next) => {
+  if (req.method === "POST" || req.method === "GET") {
+    isUserLoggedIn(req.headers.authorization)
+      .then((res) => {
+        console.log("resolve", res);
+        next();
+      })
+      .catch((error) => {
+        console.log("error", error);
+        res.status(401).send(error);
+      });
+  } else {
+    next();
+  }
+};
 apolloServer.express.use(
   rateLimit({
     windowMs: 15 * 60 * 1000, // 15 minutes
     max: 100, // limit each IP to 100 requests per windowMs
   }),
+  loggingMiddleware,
 );
 export const options = {
   port: 4000,
