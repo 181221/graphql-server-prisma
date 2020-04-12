@@ -1,40 +1,24 @@
-import { GraphQLServer } from "graphql-yoga";
 import fetch from "node-fetch";
 import { polyfill } from "es6-promise";
+import { config as DotEnvConfig } from "dotenv";
+import { apolloServer, options } from "./initGraphQlServer";
 import { Movie, User, prisma, Configuration } from "./generated/prisma-client";
 import sendPushRequest from "./notification";
-import { resolvers } from "./resolvers";
-import { config as DotEnvConfig } from "dotenv";
 
 polyfill();
 
+const NODE_ENV = process.env.NODE_ENV;
 const dotenv = DotEnvConfig({
-  path: process.env.NODE_ENV === "development" ? ".env.development" : ".env.development",
+  path: NODE_ENV === "development" ? ".env.development" : ".env.production",
 });
 
 if (dotenv.error) {
   throw dotenv.error;
 }
 export const APP_SECRET = process.env.APP_SECRET;
-
 console.log(dotenv.parsed);
 async function main() {
-  const server = new GraphQLServer({
-    typeDefs: "./src/schema.graphql",
-    resolvers,
-    context: (request) => {
-      return {
-        ...request,
-        prisma,
-      };
-    },
-  });
-
-  const serverOptions = {
-    port: 4000,
-    debug: true,
-  };
-  server.start(serverOptions, ({ port }) =>
+  apolloServer.start(options, ({ port }) =>
     console.log(`Server is running on http://localhost:${port}`),
   );
 
@@ -107,7 +91,6 @@ async function main() {
       const config: Configuration = await prisma.user({ id: user[0].id }).configuration();
       if (config) {
         setInterval(() => {
-          console.log("running fetch");
           const radarrUrl = config.radarrEndpoint;
           const urlCollection = `${radarrUrl}/movie?apikey=${config.radarrApiKey}`;
           fetch(urlCollection)
@@ -116,7 +99,6 @@ async function main() {
               json.map(async (el) => {
                 const movie = await prisma.movie({ tmdbId: el.tmdbId });
                 if (movie && el.downloaded && !movie.downloaded) {
-                  console.log("found moive", movie);
                   return await prisma.updateMovie({
                     data: { downloaded: true },
                     where: { id: movie.id },
@@ -125,7 +107,7 @@ async function main() {
               });
             })
             .catch((err) => console.error(err));
-        }, 60000);
+        }, 300000);
       }
     }
   };

@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.ts",
   "scripts": {
-    "start": "ts-node src/index.ts",
-    "dev": "ts-node-dev --no-notify --respawn --transpileOnly src/index.ts src/index.ts",
+    "start": "NODE_ENV=production ts-node src/index.ts",
+    "dev": "NODE_ENV=development ts-node-dev --no-notify --respawn --transpileOnly src/index.ts src/index.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "tslint -c tslint.json 'src/**/*.ts'",
     "scaffold-resolvers": "graphql-resolver-codegen scaffold -s src/schema.graphql",
@@ -17,8 +17,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/graphql-depth-limit": "^1.1.2",
     "apollo-server-core": "^2.9.15",
     "dotenv": "^8.2.0",
+    "express-rate-limit": "^5.1.1",
     "graphql-yoga": "^1.18.0",
     "jsonwebtoken": "^8.5.1",
     "node-fetch": "^2.6.0",
