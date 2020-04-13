@@ -36,10 +36,3 @@ export const isUserLoggedIn = async (thaToken) => {
     });
   });
 };
-
-/*
-isUserLoggedIn()
-  .then((res) => {
-    console.log("resolved", res);
-  })
-  .catch((error) => console.log("error occured", error));*/
