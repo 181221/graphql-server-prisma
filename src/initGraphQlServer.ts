@@ -2,8 +2,11 @@ import { GraphQLServer } from "graphql-yoga";
 import depthLimit = require("graphql-depth-limit");
 import rateLimit = require("express-rate-limit");
 import { resolvers } from "./resolvers";
-import { prisma } from "./generated/prisma-client";
+import { prisma, User, Configuration } from "./generated/prisma-client";
 import { isUserLoggedIn } from "./utils";
+import bodyParser = require("body-parser");
+import { ApolloError } from "apollo-server-core";
+import fetch, { Response } from "node-fetch";
 export const apolloServer = new GraphQLServer({
   typeDefs: "./src/schema.graphql",
   resolvers,
@@ -15,7 +18,7 @@ export const apolloServer = new GraphQLServer({
   },
 });
 const loggingMiddleware = (req, res, next) => {
-  if (req.method === "POST" || req.method === "GET") {
+  if (req.method !== "OPTIONS") {
     isUserLoggedIn(req.headers.authorization)
       .then((auth0) => {
         req.user = auth0;
@@ -35,7 +38,33 @@ apolloServer.express.use(
     max: 100, // limit each IP to 100 requests per windowMs
   }),
   loggingMiddleware,
+  bodyParser.json(),
 );
+
+apolloServer.express.options("/api/checkConfiguration", async (req, res, done) => {
+  const params = req.body;
+  if (params && params.query) {
+    const users: User[] = await prisma.users({
+      where: { role: "ADMIN" },
+    });
+
+    if (users && users.length !== 0) {
+      const config: Configuration = await prisma.user({ id: users[0].id }).configuration();
+      if (config) {
+        const radarrUrl = config.radarrEndpoint;
+        const url = `${radarrUrl}/movie?apikey=${config.radarrApiKey}`;
+        const response: Response = await fetch(url, { method: "HEAD" });
+        if (!response.ok)
+          res.status(404).send(new ApolloError(response.statusText, response.status.toString()));
+        res.status(200).send({ hasSettings: true });
+      }
+    } else {
+      res.status(200).send({ hasSettings: false });
+    }
+  } else {
+    res.status(404).send();
+  }
+});
 export const options = {
   port: 4000,
   debug: true,

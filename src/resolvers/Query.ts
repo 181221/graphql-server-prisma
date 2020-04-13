@@ -40,7 +40,6 @@ export const Query: QueryResolvers.Type = {
     context: Context,
     info: GraphQLResolveInfo,
   ) => {
-    authenticate(context);
     return context.prisma.movie({ id: args.id });
   },
 
@@ -50,7 +49,6 @@ export const Query: QueryResolvers.Type = {
     context: Context,
     info: GraphQLResolveInfo,
   ) => {
-    authenticate(context);
     const movies = await context.prisma.movies({
       orderBy: args.orderBy,
       first: args.first,
@@ -64,7 +62,6 @@ export const Query: QueryResolvers.Type = {
     context: Context,
     info: GraphQLResolveInfo,
   ) => {
-    authenticate(context);
     const tmdbUrl = `${tmdbEndpoint}/movie/${args.tmdbId}?api_key=${process.env.TMDB_API_KEY}`;
     const response = await fetch(tmdbUrl);
     const json = await response.json();
@@ -98,7 +95,6 @@ export const Query: QueryResolvers.Type = {
     context: Context,
     info: GraphQLResolveInfo,
   ) => {
-    authenticate(context);
     const url = `${tmdbEndpoint}/movie/${args.tmdbId}/similar?api_key=${process.env.TMDB_API_KEY}`;
     if (args && args.tmdbId) {
       return getSimilarMovies(url);
@@ -111,7 +107,6 @@ export const Query: QueryResolvers.Type = {
     context: Context,
     info: GraphQLResolveInfo,
   ) => {
-    authenticate(context);
     if (args && args.tmdbId) {
       const configs = await context.prisma.configurations();
       if (configs && configs.length > 0) {
@@ -188,9 +183,11 @@ export const Query: QueryResolvers.Type = {
     context: Context,
     info: GraphQLResolveInfo,
   ) => {
-    const { userId, claims } = authenticate(context);
-    if (claims === "admin") {
-      const config: Configuration = await context.prisma.user({ id: userId }).configuration();
+    const user: User = await context.prisma.user({ email: context.request.user.email });
+    if (user.role === "ADMIN") {
+      const config: Configuration = await context.prisma
+        .user({ email: context.request.user.email })
+        .configuration();
       if (!config) {
         throw new Error("no config");
       }
@@ -205,7 +202,6 @@ export const Query: QueryResolvers.Type = {
     context: Context,
     info: GraphQLResolveInfo,
   ) => {
-    authenticate(context);
     const user: User[] = await context.prisma.users();
     return user;
   },
