@@ -1,12 +1,14 @@
 import { GraphQLServer } from "graphql-yoga";
 import depthLimit = require("graphql-depth-limit");
 import rateLimit = require("express-rate-limit");
-import { resolvers } from "./resolvers";
-import { prisma, User, Configuration } from "./generated/prisma-client";
-import { isUserLoggedIn } from "./utils";
 import bodyParser = require("body-parser");
 import { ApolloError } from "apollo-server-core";
 import fetch, { Response } from "node-fetch";
+import { resolvers } from "./resolvers";
+import { prisma, User, Configuration } from "./generated/prisma-client";
+import { isUserLoggedIn } from "./utils";
+import { NODE_ENV } from "./config";
+
 export const apolloServer = new GraphQLServer({
   typeDefs: "./src/schema.graphql",
   resolvers,
@@ -68,7 +70,7 @@ apolloServer.express.options("/api/checkConfiguration", async (req, res, done) =
 export const options = {
   port: 4000,
   debug: true,
-  playground: process.env.NODE_ENV === "development" ? "/" : "false",
+  playground: NODE_ENV === "development" ? "/" : "false",
   validationRules: [depthLimit(7)],
   formatError: (err): Error => {
     if (err.message.startsWith("Database Error: ")) {
