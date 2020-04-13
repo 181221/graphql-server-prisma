@@ -5,6 +5,7 @@ import { authenticate, signKey } from "../utils";
 import { Context } from "./Context";
 import { Configuration, Movie, User } from "../generated/prisma-client";
 import { MutationResolvers } from "../generated/prisma";
+import { radarrCollectionCache } from "../constants";
 
 const addMovieToRadarrCollection = async (
   args: MutationResolvers.ArgsCreateMovie,
@@ -51,7 +52,13 @@ export const Mutation: MutationResolvers.Type = {
     const configs = await context.prisma.configurations();
     if (configs && configs.length > 0) {
       const config: Configuration = configs[0];
-      addMovieToRadarrCollection(args, config);
+      addMovieToRadarrCollection(args, config).then(async (res) => {
+        console.log("added movie", res);
+        await context.redisClient.lpush(
+          radarrCollectionCache,
+          JSON.stringify({ ...args, hasFile: false, downloaded: false }),
+        );
+      });
     } else {
       throw new ApolloError("No config", "400");
     }

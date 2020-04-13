@@ -27,26 +27,34 @@ const isInQueue = async (found) => {
   return isQueued;
 };
 
-const getSimilarMovies = async (url: string) => {
-  const response = await fetch(url);
-  if (response.ok) {
-    const { results } = await response.json();
-    const movies: Movie[] = Object.values(results).map((el: TmdbMovieResponse) => {
-      return {
-        id: null,
-        title: el.title,
-        tmdbId: el.id,
-        img: el.poster_path,
-        genres: Object.values(el.genre_ids).map((id: number) => genresMap[id]),
-        overview: el.overview,
-        voteCount: el.vote_count,
-        voteAverage: el.vote_average,
-        year: new Date(el.release_date).getFullYear(),
-      };
-    });
-    return movies;
+const getSimilarMovies = async (url: string, redisClient) => {
+  const data = (await redisClient.lrange(url, 0, -1)) || [];
+  if (data && data.length > 0) {
+    const sim = data.map((el: string) => JSON.parse(el));
+    return sim;
+  } else {
+    const response = await fetch(url);
+    if (response.ok) {
+      const { results } = await response.json();
+      const movies: Movie[] = Object.values(results).map((el: TmdbMovieResponse) => {
+        return {
+          id: null,
+          title: el.title,
+          tmdbId: el.id,
+          img: el.poster_path,
+          genres: Object.values(el.genre_ids).map((id: number) => genresMap[id]),
+          overview: el.overview,
+          voteCount: el.vote_count,
+          voteAverage: el.vote_average,
+          year: new Date(el.release_date).getFullYear(),
+        };
+      });
+      const similarMovies = movies.map((x) => JSON.stringify(x));
+      await redisClient.lpush(url, ...similarMovies);
+      return movies;
+    }
+    return Promise.reject(response);
   }
-  return Promise.reject(response);
 };
 
 export const Query: QueryResolvers.Type = {
@@ -116,7 +124,7 @@ export const Query: QueryResolvers.Type = {
   ) => {
     const url = `${tmdbEndpoint}/movie/${args.tmdbId}/similar?api_key=${process.env.TMDB_API_KEY}`;
     if (args && args.tmdbId) {
-      return getSimilarMovies(url);
+      return getSimilarMovies(url, context.redisClient);
     }
   },
 
