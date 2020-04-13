@@ -4,10 +4,24 @@ import rateLimit = require("express-rate-limit");
 import bodyParser = require("body-parser");
 import { ApolloError } from "apollo-server-core";
 import fetch, { Response } from "node-fetch";
+import redis = require("redis");
+// tslint:disable-next-line: no-var-requires
+import asyncRedis = require("async-redis");
+
 import { resolvers } from "./resolvers";
 import { prisma, User, Configuration } from "./generated/prisma-client";
 import { isUserLoggedIn } from "./utils";
-import { NODE_ENV } from "./config";
+import { NODE_ENV, redisUrl } from "./config";
+import { radarrCollectionCacheKey } from "./constants";
+
+export const client = redis.createClient(redisUrl);
+export const asyncRedisClient = asyncRedis.decorate(client);
+
+client.on("error", (error) => {
+  console.error(error);
+});
+
+client.del(radarrCollectionCacheKey);
 
 export const apolloServer = new GraphQLServer({
   typeDefs: "./src/schema.graphql",
@@ -16,9 +30,11 @@ export const apolloServer = new GraphQLServer({
     return {
       ...request,
       prisma,
+      redisClient: asyncRedisClient,
     };
   },
 });
+
 const loggingMiddleware = (req, res, next) => {
   if (req.method !== "OPTIONS") {
     isUserLoggedIn(req.headers.authorization)
@@ -39,7 +55,7 @@ apolloServer.express.use(
     windowMs: 15 * 60 * 1000, // 15 minutes
     max: 100, // limit each IP to 100 requests per windowMs
   }),
-  loggingMiddleware,
+  //loggingMiddleware,
   bodyParser.json(),
 );
 

@@ -48,6 +48,16 @@ services:
     ports:
       - 4000:4000
     command: bash -c "yarn generate && yarn prisma generate && yarn prisma deploy && yarn dev"
+
+  redis:
+    image: redis:alpine
+    container_name: redisCache
+    ports:
+      - 6379:6379
+    networks:
+      - web
+    restart: unless-stopped
+
 networks:
   web:
     external: true

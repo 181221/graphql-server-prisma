@@ -86,3 +86,37 @@ export const radarrCollectionFetcher = async () => {
     }
   }
 };
+
+const handleFetch = async (url) => {
+  const response = await fetch(url);
+  if (!response.ok) return Promise.reject(response);
+  const json = await response.json();
+  return json;
+};
+
+export const getRadarrCollection = async () => {
+  const user: User[] = await prisma.users({ where: { role: "ADMIN" } });
+  if (user && user.length !== 0) {
+    const config: Configuration = await prisma.user({ id: user[0].id }).configuration();
+    const radarrUrl = config.radarrEndpoint;
+    const urlCollection = `${radarrUrl}/movie?apikey=${config.radarrApiKey}`;
+    const radarr = await handleFetch(urlCollection).catch((error) => {
+      return false;
+    });
+    return radarr;
+  }
+  return false;
+};
+
+export const getQueue = async () => {
+  const configs = await prisma.configurations();
+  if (configs && configs.length > 0) {
+    const config: Configuration = configs[0];
+    const radarrUrl = config.radarrEndpoint;
+    const urlQueue = `${radarrUrl}/queue?apikey=${config.radarrApiKey}`;
+    const queue = await handleFetch(urlQueue).catch((error) => {
+      return false;
+    });
+    return queue;
+  }
+};

@@ -1,4 +1,5 @@
 export const tmdbEndpoint = "https://api.themoviedb.org/3";
+export const radarrCollectionCacheKey = "radarrCollectionCache";
 export const genresMap = {
   28: "Action",
   12: "Adventure",
