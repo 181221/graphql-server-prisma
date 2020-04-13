@@ -5,7 +5,7 @@ import { authenticate, signKey } from "../utils";
 import { Context } from "./Context";
 import { Configuration, Movie, User } from "../generated/prisma-client";
 import { MutationResolvers } from "../generated/prisma";
-import { radarrCollectionCache } from "../constants";
+import { radarrCollectionCacheKey } from "../constants";
 
 const addMovieToRadarrCollection = async (
   args: MutationResolvers.ArgsCreateMovie,
@@ -55,7 +55,7 @@ export const Mutation: MutationResolvers.Type = {
       addMovieToRadarrCollection(args, config).then(async (res) => {
         console.log("added movie", res);
         await context.redisClient.lpush(
-          radarrCollectionCache,
+          radarrCollectionCacheKey,
           JSON.stringify({ ...args, hasFile: false, downloaded: false }),
         );
       });
