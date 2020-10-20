@@ -3,8 +3,9 @@ import { GraphQLResolveInfo } from "graphql";
 import fetch from "node-fetch";
 import { authenticate, signKey } from "../utils";
 import { Context } from "./Context";
-import { Configuration, Movie } from "../generated/prisma-client";
+import { Configuration, Movie, User } from "../generated/prisma-client";
 import { MutationResolvers } from "../generated/prisma";
+import { radarrCollectionCacheKey } from "../constants";
 
 const addMovieToRadarrCollection = async (
   args: MutationResolvers.ArgsCreateMovie,
@@ -47,17 +48,23 @@ export const Mutation: MutationResolvers.Type = {
     context: Context,
     info: GraphQLResolveInfo,
   ) => {
-    const { userId } = authenticate(context);
+    const user: User = await context.prisma.user({ email: context.request.user.email });
     const configs = await context.prisma.configurations();
     if (configs && configs.length > 0) {
       const config: Configuration = configs[0];
-      addMovieToRadarrCollection(args, config);
+      addMovieToRadarrCollection(args, config).then(async (res) => {
+        console.log("added movie", res);
+        await context.redisClient.lpush(
+          radarrCollectionCacheKey,
+          JSON.stringify({ ...args, hasFile: false, downloaded: false }),
+        );
+      });
     } else {
       throw new ApolloError("No config", "400");
     }
     return await context.prisma.createMovie({
       title: args.title,
-      requestedBy: { connect: { id: userId } },
+      requestedBy: { connect: { id: user.id } },
       genres: { set: args.genres },
       img: args.img,
       tmdbId: args.tmdbId,
@@ -74,7 +81,6 @@ export const Mutation: MutationResolvers.Type = {
     context: Context,
     info: GraphQLResolveInfo,
   ) => {
-    authenticate(context);
     return await context.prisma.deleteMovie({ id: args.id });
   },
 
@@ -84,7 +90,6 @@ export const Mutation: MutationResolvers.Type = {
     context: Context,
     info: GraphQLResolveInfo,
   ) => {
-    authenticate(context);
     return await context.prisma.updateMovie({
       data: {
         downloaded: args.downloaded,
@@ -101,7 +106,6 @@ export const Mutation: MutationResolvers.Type = {
     context: Context,
     info: GraphQLResolveInfo,
   ) => {
-    const { userId } = authenticate(context);
     return await context.prisma.updateUser({
       data: args,
       where: { email: args.email },
@@ -114,8 +118,8 @@ export const Mutation: MutationResolvers.Type = {
     context: Context,
     info: GraphQLResolveInfo,
   ) => {
-    const { userId, claims } = authenticate(context);
-    if (claims !== "admin") {
+    const user: User = await context.prisma.user({ email: context.request.user.email });
+    if (user.role !== "ADMIN") {
       throw new ApolloError("Unauthorized", "401");
     }
     return await context.prisma.createConfiguration({
@@ -134,11 +138,11 @@ export const Mutation: MutationResolvers.Type = {
     context: Context,
     info: GraphQLResolveInfo,
   ) => {
-    const { userId, claims } = authenticate(context);
-    if (claims !== "admin") {
+    const user: User = await context.prisma.user({ email: context.request.user.email });
+    if (user.role !== "ADMIN") {
       throw new ApolloError("Unauthorized", "401");
     }
-    const config = await context.prisma.user({ id: userId }).configuration();
+    const config = await context.prisma.user({ id: user.id }).configuration();
     if (!config) {
       return await context.prisma.createConfiguration({
         radarrApiKey: args.radarrApiKey || "",
@@ -147,7 +151,7 @@ export const Mutation: MutationResolvers.Type = {
         pushoverEndpoint: args.pushoverEndpoint || "",
         pushoverApiKey: args.pushoverApiKey || "",
         pushoverUserKey: args.pushoverUserKey || "",
-        user: { connect: { id: userId } },
+        user: { connect: { id: user.id } },
       });
     }
     return await context.prisma.updateConfiguration({

@@ -9,12 +9,14 @@ RUN echo "Build number: $buildno"
 WORKDIR /usr/src/prisma
 
 COPY package.json ./
+
+RUN npm install
+
+RUN npm audit fix
+
 COPY tsconfig.json ./
 COPY graphqlgen.yml ./
 COPY .env* ./
-
-RUN npm install
-RUN npm audit fix
 
 ENV PRISMA_MANAGEMENT_API_SECRET="my-secret"
 
