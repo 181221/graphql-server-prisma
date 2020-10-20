@@ -66,12 +66,6 @@ services:
       - 8080:8080
     restart: unless-stopped
 
-volumes:
-  nginx:
-    external: true
-
-    command: bash -c "yarn generate && yarn prisma generate && yarn prisma deploy && yarn dev"
-
   redis:
     image: redis:alpine
     container_name: redisCache
@@ -80,6 +74,10 @@ volumes:
     networks:
       - web
     restart: unless-stopped
+
+volumes:
+  nginx:
+    external: true
 
 networks:
   web:
